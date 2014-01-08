@@ -11,3 +11,8 @@
 *.lai
 *.la
 *.a
+
+.ucpp
+.wrmakefile
+Makefile
+PPC603gnu
