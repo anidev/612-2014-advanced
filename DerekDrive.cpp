@@ -10,7 +10,7 @@
  */
 
 
-DerekDrive::DerekDrive(/*hw info for the talons*/)
+DerekDrive::DerekDrive(uint32_t shift1, uint32_t shift2)
 {
     /*
      *   frontLeft = *fL;
@@ -19,6 +19,7 @@ DerekDrive::DerekDrive(/*hw info for the talons*/)
      *   rearRight = *rR;
      */
     //make shifter object
+    shifter = new Shift(shift1,shift2); //Check ports here
     isAsync = false;
     //robot_class* robot = (robot_class*)o;
     drivePower = 1.0f;

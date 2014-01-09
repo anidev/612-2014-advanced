@@ -29,5 +29,6 @@ private:
      */
     float drivePower; // 1.0 Normal and 0.6 Climbing
     bool isAsync;
+    Shift shifter;
 };
 #endif
