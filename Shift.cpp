@@ -1,7 +1,8 @@
 #include "main.h"
 #include <DoubleSolenoid.h>
+#include "Shift.h"
 
-Shift::Shift(uint32_t shift1, uint32_t shift2)
+Shift::Shift(uint32_t,uint32_t)
 {
     shift = new DoubleSolenoid(shift1,shift2);
     //make it default high gear to avoid it being bumped in between gears
@@ -16,7 +17,7 @@ Shift::~Shift()
 
 void Shift::shiftGear()
 {
-    if (gear == LOW)
+    if (this.highGear())
     {
         shift -> Set(DoubleSolenoid::kForward);
         shift -> Set(DoubleSolenoid::kOff);
@@ -26,13 +27,10 @@ void Shift::shiftGear()
     {
         shift -> Set(DoubleSolenoid::kReverse);
         shift -> Set(DoubleSolenoid::kOff);
-        gear = Low;
+        gear = LOW;
     }
 }
 bool highGear()
 {
-    if (gear == HIGH)
-        return true;
-    else
-        return false;
+    return (gear == HIGH);
 }

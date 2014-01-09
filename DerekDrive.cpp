@@ -10,7 +10,7 @@
  */
 
 
-DerekDrive::DerekDrive(uint32_t shift1, uint32_t shift2)
+DerekDrive::DerekDrive(uint32_t a,uint32_t b)
 {
     /*
      *   frontLeft = *fL;
@@ -19,7 +19,7 @@ DerekDrive::DerekDrive(uint32_t shift1, uint32_t shift2)
      *   rearRight = *rR;
      */
     //make shifter object
-    shifter = new Shift(shift1,shift2); //Check ports here
+    shifter = new Shift(a,b); //Check ports here
     isAsync = false;
     //robot_class* robot = (robot_class*)o;
     drivePower = 1.0f;
