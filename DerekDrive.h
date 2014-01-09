@@ -11,7 +11,7 @@
 class DerekDrive
 {
 public:
-    DerekDrive();
+    DerekDrive(uint32_t a, uint32_t b);
     ~DerekDrive();
     void autoDrive(float,float);
     void autoRotate();

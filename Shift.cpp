@@ -2,7 +2,7 @@
 #include <DoubleSolenoid.h>
 #include "Shift.h"
 
-Shift::Shift(uint32_t,uint32_t)
+Shift::Shift(uint32_t a,uint32_t b)
 {
     shift = new DoubleSolenoid(shift1,shift2);
     //make it default high gear to avoid it being bumped in between gears
