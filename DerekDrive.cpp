@@ -2,27 +2,19 @@
 #include "main.h"
 #include "Shift.h"
 
-/* Talons can be implemented after we make ports
- * 
- * 
- * 
- * 
- */
-
-
-DerekDrive::DerekDrive(uint32_t a,uint32_t b)
+DerekDrive::DerekDrive(uint32_t shift1, uint32_t shift2, SpeedController* fL,SpeedController* rL,SpeedController* fR,SpeedController* rR,void* o) : RobotDrive(fL,rL,fR,rR)
 {
     /*
-     *   frontLeft = *fL;
-     *   frontRight = *fR;
-     *   rearLeft = *rL;
-     *   rearRight = *rR;
+    frontLeft = *fL;
+    frontRight = *fR;
+    rearLeft = *rL;
+    rearRight = *rR;
      */
-    //make shifter object
-    shifter = new Shift(a,b); //Check ports here
+    shifter = new Shift(shift1,shift2);
     isAsync = false;
     //robot_class* robot = (robot_class*)o;
-    drivePower = 1.0f;
+    drivePower = 1.0;
+    //shift LOW (or high, but we need to have a default as seen from last year)
 }
 
 DerekDrive::~DerekDrive()
@@ -47,10 +39,10 @@ void DerekDrive::doTeleOp()
     //do controls
     //TODO
 }
-void DerekDrive::shift()
+void DerekDrive::shiftGear()
 {
     //TODO
-//shift
+    shifter -> shiftGear();
 }
 void DerekDrive::stop()
 {
@@ -66,7 +58,9 @@ void DerekDrive::setSafety()
 {
     //TODO
 }
+
 void DerekDrive::update(bool mode)
 {
     //TODO
 }
+
