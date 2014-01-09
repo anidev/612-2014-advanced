@@ -1,13 +1,22 @@
+#ifndef SHIFT_H
+#define SHIFT_H
+
+
+#include "main.h"
+#include <DoubleSolenoid.h>
 class Shift
 {
 enum Gear
 {
-    HIGH = 1,
-    LOW = 0
+    HIGH,
+    LOW
 };
 public:
-        void Shift();
+        Shift();
+        ~Shift();
+        void shiftGear();
 private:
     Gear gear;
-}
-    
+    DoubleSolenoid shift;
+};
+#endif

@@ -2,6 +2,8 @@
 #define MAIN_H
 
 #include <IterativeRobot.h>
+//#include <Relay.h>
+//#include <DigitalInput.h>
 
 class robot_class : public IterativeRobot
 {
@@ -21,6 +23,9 @@ public:
 
     void TestInit();
     void TestPeriodic();
+private:
+    //Relay compressor;
+    //DigitalInput pnumSwitch;
 };
 
 #endif // MAIN_H

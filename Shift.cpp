@@ -9,6 +9,10 @@ Shift::Shift(int a, int b)
     shift -> Set(DoubleSolenoid::kOff);
     Gear gear = HIGH;
 }
+Shift::~Shift()
+{
+    
+}
 
 void Shift::shiftGear()
 {
@@ -25,7 +29,10 @@ void Shift::shiftGear()
         gear = Low;
     }
 }
-Gear getGear()
+bool highGear()
 {
-    return gear;
+    if (gear == HIGH)
+        return true;
+    else
+        return false;
 }
