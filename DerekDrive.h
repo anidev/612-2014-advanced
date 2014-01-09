@@ -11,7 +11,7 @@
 class DerekDrive
 {
 public:
-    DerekDrive(uint32_t a, uint32_t b);
+    DerekDrive(uint32_t, uint32_t);
     ~DerekDrive();
     void autoDrive(float,float);
     void autoRotate();
@@ -29,6 +29,6 @@ private:
      */
     float drivePower; // 1.0 Normal and 0.6 Climbing
     bool isAsync;
-    Shift shifter;
+    Shift* shifter;
 };
 #endif

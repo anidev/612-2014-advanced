@@ -12,12 +12,12 @@ enum Gear
     LOW
 };
 public:
-        Shift(uint32_t a,uint32_t b);
+        Shift(uint32_t,uint32_t);
         ~Shift();
         void shiftGear();
         bool highGear();
 private:
     Gear gear;
-    DoubleSolenoid shift;
+    DoubleSolenoid* shift;
 };
 #endif
