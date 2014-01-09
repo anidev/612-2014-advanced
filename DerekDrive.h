@@ -4,18 +4,13 @@
 #include <RobotDrive.h>
 #include <SpeedController.h>
 #include <Talon.h>
-//#include "main.h"
-
-enum Gear
-{
-    HIGH = 1,
-    LOW = 0
-};
+#include "main.h"
+#include "Shift.h"
 
 class DerekDrive : public RobotDrive 
 {
     public:
-        DerekDrive(SpeedController*,SpeedController*,SpeedController*,SpeedController*,void*);
+        DerekDrive(uint32_t, uint32_t,SpeedController*,SpeedController*,SpeedController*,SpeedController*,void*);
         ~DerekDrive();
         void autoDrive(float,float);
         void autoRotate();
@@ -23,15 +18,16 @@ class DerekDrive : public RobotDrive
         void stop();
         void setSafety();
         void update(bool);
-        void shift(Gear);
+        void shiftGear();
     private:
         /*
-        Talon frontLeft;
-        Talon frontRight;
-        Talon rearLeft;
-        Talon rearRight;
+        SpeedController frontLeft;
+        SpeedController frontRight;
+        SpeedController rearLeft;
+        SpeedController rearRight;
         */
         float drivePower; // 1.0 Normal and 0.6 Climbing
         bool isAsync;
+        Shift* shifter;
 };
 #endif
