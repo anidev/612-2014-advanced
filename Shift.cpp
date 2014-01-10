@@ -4,7 +4,7 @@
 
 Shift::Shift(uint32_t a,uint32_t b)
 {
-    shift = new DoubleSolenoid(shift1,shift2);
+    shift = new DoubleSolenoid(a, b);
     //make it default high gear to avoid it being bumped in between gears
     shift -> Set(DoubleSolenoid::kForward);
     shift -> Set(DoubleSolenoid::kOff);
@@ -17,7 +17,7 @@ Shift::~Shift()
 
 void Shift::shiftGear()
 {
-    if (this.highGear())
+    if (this->highGear())
     {
         shift -> Set(DoubleSolenoid::kForward);
         shift -> Set(DoubleSolenoid::kOff);
@@ -30,7 +30,7 @@ void Shift::shiftGear()
         gear = LOW;
     }
 }
-bool highGear()
+bool Shift::highGear()
 {
     return (gear == HIGH);
 }
