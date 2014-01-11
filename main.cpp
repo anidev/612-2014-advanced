@@ -5,12 +5,16 @@
 
 robot_class* robot=NULL;
 
-robot_class::robot_class()
+robot_class::robot_class():
+    test_gamepad(1),
+    test_shifter(1,8,(void*)this)
 {
     /*
     compressor = new Relay(1,8,Relay::kForwardOnly);
     pnumSwitch =  new DigitalInput(1,2);
     */
+    //test_drivetrain = new DerekDrive(new Talon(), new Talon(), new Talon(), new Talon());
+    
     robot=this;
 }
 
@@ -44,6 +48,7 @@ void robot_class::TeleopPeriodic()
 
 void robot_class::TestInit()
 {
+    
 }
 
 void robot_class::TestPeriodic()
@@ -54,6 +59,7 @@ void robot_class::TestPeriodic()
     else
         compressor.Set(kOff);
     */
+    test_gamepad.updateSJ();
 }
 
 START_ROBOT_CLASS(robot_class)

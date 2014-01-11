@@ -4,6 +4,8 @@
 #include <IterativeRobot.h>
 //#include <Relay.h>
 //#include <DigitalInput.h>
+#include "SmoothJoystick.h"
+#include "Shift.h"
 
 class robot_class : public IterativeRobot
 {
@@ -23,6 +25,10 @@ public:
 
     void TestInit();
     void TestPeriodic();
+    
+    //DerekDrive* test_drivetrain;
+    SmoothJoystick test_gamepad;
+    Shift test_shifter;
 private:
     //Relay compressor;
     //DigitalInput pnumSwitch;
