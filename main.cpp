@@ -20,6 +20,7 @@ robot_class::robot_class():
 
 void robot_class::RobotInit()
 {
+    
 }
 
 void robot_class::DisabledInit()
@@ -59,6 +60,7 @@ void robot_class::TestPeriodic()
     else
         compressor.Set(kOff);
     */
+    printf("does test even run?");
     test_gamepad.updateSJ();
 }
 
