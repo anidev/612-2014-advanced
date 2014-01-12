@@ -2,6 +2,7 @@
 #define MAIN_H
 
 #include <IterativeRobot.h>
+#include <Joystick.h>
 //#include <Relay.h>
 //#include <DigitalInput.h>
 #include "SmoothJoystick.h"
@@ -27,6 +28,8 @@ public:
     void TestPeriodic();
     
     //DerekDrive* test_drivetrain;
+    Joystick* driverJoy;
+    Joystick* gunnerJoy;
     SmoothJoystick test_gamepad;
     Shift test_shifter;
 private:
