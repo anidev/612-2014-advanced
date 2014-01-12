@@ -33,8 +33,8 @@ public:
     SmoothJoystick test_gamepad;
     Shift test_shifter;
 private:
-    Relay* compressor;
-    DigitalInput* pnumSwitch;
+    //Relay* compressor;
+    //DigitalInput* pnumSwitch;
 };
 
 #endif // MAIN_H
