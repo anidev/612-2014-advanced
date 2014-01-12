@@ -3,8 +3,8 @@
 
 #include <IterativeRobot.h>
 #include <Joystick.h>
-//#include <Relay.h>
-//#include <DigitalInput.h>
+#include <Relay.h>
+#include <DigitalInput.h>
 #include "SmoothJoystick.h"
 #include "Shift.h"
 
@@ -33,8 +33,8 @@ public:
     SmoothJoystick test_gamepad;
     Shift test_shifter;
 private:
-    //Relay compressor;
-    //DigitalInput pnumSwitch;
+    Relay* compressor;
+    DigitalInput* pnumSwitch;
 };
 
 #endif // MAIN_H
