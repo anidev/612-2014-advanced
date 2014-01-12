@@ -2,8 +2,15 @@
 #include "main.h"
 #include "Shift.h"
 
-DerekDrive::DerekDrive(uint32_t shift1, uint32_t shift2, SpeedController* fL,SpeedController* rL,SpeedController* fR,SpeedController* rR, void* o):
-    RobotDrive(fL,rL,fR,rR)
+DerekDrive::DerekDrive(uint32_t shift1, uint32_t shift2,
+                       uint8_t modFL,uint32_t chanFL,
+                       uint8_t modRL,uint32_t chanRL,
+                       uint8_t modFR,uint32_t chanFR,
+                       uint8_t modRR,uint32_t chanRR,void* o)
+                    :RobotDrive(new Talon(modFL,chanFL),
+                                new Talon(modRL,chanRL),
+                                new Talon(modFR,chanFR),
+                                new Talon(modRR,chanRR))
 {
     /*
     frontLeft = *fL;

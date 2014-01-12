@@ -1,5 +1,6 @@
 #include "main.h"
 #include "612.h"
+#include <Joystick.h>
 //#include <Relay.h>
 //#include <DigitalInput.h>
 
@@ -20,7 +21,11 @@ robot_class::robot_class():
 
 void robot_class::RobotInit()
 {
-    
+    /*
+    driverJoy = new Joystick(1);
+    gunnerJoy = new Joystick(2);
+    Commented out to compiler warning barf
+    */
 }
 
 void robot_class::DisabledInit()
@@ -45,6 +50,12 @@ void robot_class::TeleopInit()
 
 void robot_class::TeleopPeriodic()
 {
+    /*
+    float left = driverJoy->GetRawAxis(2);
+    float right = driverJoy->GetRawAxis(5);
+    // drive->TankDrive(left, right);
+    commented out to avoid compiler warning barf
+    */
 }
 
 void robot_class::TestInit()
