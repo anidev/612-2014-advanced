@@ -4,6 +4,10 @@ SmoothJoystick::SmoothJoystick(UINT32 a) : Joystick(a) {
     
 }
 
+SmoothJoystick::~SmoothJoystick() {
+    
+}
+
 void SmoothJoystick::pushBtn(UINT32 btn, obj o, helpFunc h) {
     btnNumbers.push_back(btn);
     objects.push_back(o);
