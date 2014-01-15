@@ -3,6 +3,8 @@
 #include "Shift.h"
 
 DerekDrive::DerekDrive(uint32_t shift1, uint32_t shift2,
+                       uint32_t shift3, uint32_t shift4,
+                       uint32_t pnumSwitch, uint32_t compressor,
                        uint8_t modFL,uint32_t chanFL,
                        uint8_t modRL,uint32_t chanRL,
                        uint8_t modFR,uint32_t chanFR,
@@ -18,7 +20,7 @@ DerekDrive::DerekDrive(uint32_t shift1, uint32_t shift2,
     rearLeft = *rL;
     rearRight = *rR;
      */
-    shifter = new Shift(shift1,shift2,o);
+    shifter = new Shift(shift1,shift2,shift3,shift4,pnumSwitch,compressor,o);
     isAsync = false;
     //robot_class* robot = (robot_class*)o;
     drivePower = 1.0;
@@ -50,7 +52,7 @@ void DerekDrive::doTeleOp()
 void DerekDrive::shiftGear()
 {
     //TODO
-    shifter -> shiftGear(&shifter);
+    shifter -> shiftGear(&shifter,5);
 }
 void DerekDrive::stop()
 {

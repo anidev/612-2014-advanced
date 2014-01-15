@@ -43,7 +43,7 @@ Trigger SmoothJoystick::GetTriggerState() {
 }
 
 void SmoothJoystick::callFunct(unsigned int x) {
-    (helpers.at(x))(objects.at(x));
+    (helpers.at(x))(objects.at(x),btnNumbers.at(x));
 }
 
 bool SmoothJoystick::GetRawButton(UINT32 btn) {

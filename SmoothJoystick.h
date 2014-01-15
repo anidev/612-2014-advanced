@@ -17,7 +17,7 @@ public:
     bool IsAxisZero(unsigned int);
     Trigger GetTriggerState();
     typedef void* obj;
-    typedef void(*helpFunc)(obj);
+    typedef void(*helpFunc)(obj,unsigned int);
     void pushBtn(UINT32,obj,helpFunc);
     void updateSJ();
 private:
