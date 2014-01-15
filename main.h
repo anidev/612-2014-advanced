@@ -5,8 +5,10 @@
 #include <Joystick.h>
 #include <Relay.h>
 #include <DigitalInput.h>
+
 #include "SmoothJoystick.h"
 #include "Shift.h"
+#include "Phoomatics.h"
 
 class robot_class : public IterativeRobot
 {
@@ -33,8 +35,7 @@ public:
     SmoothJoystick test_gamepad;
     Shift test_shifter;
 private:
-    //Relay* compressor;
-    //DigitalInput* pnumSwitch;
+    Phoomatics* pnum;
 };
 
 #endif // MAIN_H
