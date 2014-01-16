@@ -9,7 +9,7 @@ class Phoomatics
 {
 public:
     Phoomatics(uint8_t switchMod,uint32_t switchPort,uint8_t compMod,uint32_t compPort);
-    void pressure();
+    void pressurize();
 private:
     DigitalInput* pnumSwitch;
     Relay* compressor;

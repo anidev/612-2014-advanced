@@ -39,12 +39,12 @@ void robot_class::DisabledPeriodic()
 
 void robot_class::AutonomousInit()
 {
-    pnum->pressure(); //maintains air pressure, should be in all periodic functions
+
 }
 
 void robot_class::AutonomousPeriodic()
 {
-    
+    pnum->pressurize(); //maintains air pressure, should be in all periodic functions    
 }
 
 void robot_class::TeleopInit()
@@ -54,7 +54,7 @@ void robot_class::TeleopInit()
 
 void robot_class::TeleopPeriodic()
 {
-    pnum->pressure();
+    pnum->pressurize();
     /*
     float left = driverJoy->GetRawAxis(2);
     float right = driverJoy->GetRawAxis(5);
@@ -70,7 +70,7 @@ void robot_class::TestInit()
 
 void robot_class::TestPeriodic()
 {
-    pnum->pressure();
+    pnum->pressurize();
 }
 
 START_ROBOT_CLASS(robot_class)
