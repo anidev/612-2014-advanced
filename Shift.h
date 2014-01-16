@@ -18,6 +18,8 @@ public:
         ~Shift();
         static void shiftGear(void*);
         static void update(void*);
+        static void shiftLow(void*);
+        static void shiftHigh(void*);
 private:
     SmoothJoystick* test_gamepad_shift;
     Gear gear;

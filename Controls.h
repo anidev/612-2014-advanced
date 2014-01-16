@@ -9,7 +9,8 @@ enum Trigger {
     TRIG_L = -1,
     TRIG_R = 1
 };
-
+static const float JOYSTICK_ZERO_TOLERANCE = 0.1;
+static const float TRIGGER_TOLERANCE = 0.25;
 static const Axis TRIGGER_AXIS = 3; //may need to rename this later
 //TODO Rumble
 

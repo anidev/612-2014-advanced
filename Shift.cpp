@@ -19,9 +19,11 @@ Shift::~Shift()
     
 }
 
-void Shift::update(void* o) {
+void Shift::update(void* o) 
+{
     Shift* sh = (Shift*)o;
-    if(sh -> timer.Get()>=0.15) {
+    if(sh -> timer.Get()>=0.15) 
+    {
         sh -> shift -> Set(DoubleSolenoid::kOff);
     }
 }
@@ -32,14 +34,24 @@ void Shift::shiftGear(void* o)
     Shift* sh = (Shift*)o;
     if (sh->gear==HIGH)
     {
-        sh -> shift -> Set(DoubleSolenoid::kReverse);
-        sh -> gear = LOW;
+        shiftHigh(o);
     }
     else
     {
-        sh -> shift -> Set(DoubleSolenoid::kForward);
-        sh -> gear = HIGH;
+        shiftLow(o);
     }
     sh -> timer.Reset();
+}
+void Shift::shiftLow(void* o)
+{
+    Shift* sh = (Shift*)o;
+    sh -> shift -> Set(DoubleSolenoid::kReverse);
+    sh -> gear = LOW;
+}
+void Shift::shiftHigh(void* o)
+{
+    Shift* sh = (Shift*)o;
+    sh -> shift -> Set(DoubleSolenoid::kForward);
+    sh -> gear = HIGH;
 }
 
