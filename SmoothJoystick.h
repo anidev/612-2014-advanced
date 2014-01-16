@@ -7,7 +7,8 @@
 #include <bitset>
 
 
-class SmoothJoystick : public Joystick {
+class SmoothJoystick : public Joystick 
+{
 public:
     static const float JOYSTICK_ZERO_TOLERANCE = 0.1;
     static const float TRIGGER_TOLERANCE = 0.25;
