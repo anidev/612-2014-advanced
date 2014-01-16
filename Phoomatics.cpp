@@ -7,10 +7,14 @@ Phoomatics::Phoomatics(uint8_t switchMod, uint32_t switchPort, uint8_t compMod, 
     compressor = new Relay(compMod, compPort, kForwardOnly);
 }
 
-void Phoomatics::pressure()
+void Phoomatics::pressurize()
 {
     if ((pnumSwitch->Get()) == 1)
     {
         compressor->Set(Relay::kOn);
+    }
+    else
+    {
+        compressor->Set(Relay::kOff);
     }
 }
