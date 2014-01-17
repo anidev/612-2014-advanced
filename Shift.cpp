@@ -7,7 +7,7 @@ Shift::Shift(uint32_t forwardChan,uint32_t reverseChan, void* o):timer()
 {
     robot_class* robot = (robot_class*)o;
     test_gamepad_shift = &robot->test_gamepad;
-    test_gamepad_shift -> pushBtn(5, (void*)this, &shiftGear); // L1 to shift gears
+    //test_gamepad_shift -> pushBtn(5, (void*)this, &shiftGear); // L1 to shift gears
     shift = new DoubleSolenoid(1,forwardChan, reverseChan);
     //make it default high gear to avoid it being bumped in between gears
     shift -> Set(DoubleSolenoid::kForward);
@@ -28,30 +28,27 @@ void Shift::update(void* o)
     }
 }
 
-void Shift::shiftGear(void* o)
+void Shift::shiftGear()
 {
     printf("========== shifting gears all dei errdei ==========\n");
-    Shift* sh = (Shift*)o;
-    if (sh->gear==HIGH)
+    if (gear==HIGH)
     {
-        shiftHigh(o);
+        shiftHigh();
     }
     else
     {
-        shiftLow(o);
+        shiftLow();
     }
-    sh -> timer.Reset();
+    timer.Reset();
 }
-void Shift::shiftLow(void* o)
+void Shift::shiftLow()
 {
-    Shift* sh = (Shift*)o;
-    sh -> shift -> Set(DoubleSolenoid::kReverse);
-    sh -> gear = LOW;
+    shift -> Set(DoubleSolenoid::kReverse);
+    gear = LOW;
 }
-void Shift::shiftHigh(void* o)
+void Shift::shiftHigh()
 {
-    Shift* sh = (Shift*)o;
-    sh -> shift -> Set(DoubleSolenoid::kForward);
-    sh -> gear = HIGH;
+    shift -> Set(DoubleSolenoid::kForward);
+    gear = HIGH;
 }
 
