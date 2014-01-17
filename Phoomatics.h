@@ -1,7 +1,6 @@
 #ifndef PHOOMATICS
 #define PHOOMATICS
 
-#include <main.h>
 #include <Relay.h>
 #include <DigitalInput.h>
 

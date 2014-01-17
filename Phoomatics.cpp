@@ -1,10 +1,11 @@
+#include "Phoomatics.h"
 #include <Relay.h>
 #include <DigitalInput.h>
 
 Phoomatics::Phoomatics(uint8_t switchMod, uint32_t switchPort, uint8_t compMod, uint32_t compPort)
 {
     pnumSwitch = new DigitalInput(switchMod, switchPort);
-    compressor = new Relay(compMod, compPort, kForwardOnly);
+    compressor = new Relay(compMod, compPort, Relay::kForwardOnly);
 }
 
 void Phoomatics::pressurize()
