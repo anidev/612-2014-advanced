@@ -10,21 +10,7 @@
  */
 
 FileProcessor::FileProcessor(char* name, fileMode mode=rw) {
-    fname = name;
-    fmode = mode;
-    switch(mode) {
-        case r:
-            file.open(name, std::fstream::in);
-            break;
-        case w:
-            file.open(name, std::fstream::out|std::fstream::app);
-            break;
-        case rw:
-            file.open(name, std::fstream::in|std::fstream::out|std::fstream::app);
-            break;
-        default:
-            file.open(name, std::fstream::in|std::fstream::out|std::fstream::app);
-    }
+    open(name, mode);
     updateBuffer();
 }
 
