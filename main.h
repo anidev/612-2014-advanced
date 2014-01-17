@@ -30,10 +30,9 @@ public:
     void TestPeriodic();
     
     //DerekDrive* test_drivetrain;
-    Joystick* driverJoy;
-    Joystick* gunnerJoy;
-    SmoothJoystick test_gamepad;
-    Shift test_shifter;
+    SmoothJoystick* driverJoy;
+    SmoothJoystick* gunnerJoy;
+    Shift* shifter;
 private:
     Phoomatics* pnum;
 };

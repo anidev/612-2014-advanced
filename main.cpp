@@ -6,27 +6,26 @@
 #include "main.h"
 #include "612.h"
 #include "Phoomatics.h"
+#include "SmoothJoystick.h"
+#include "Shift.h"
 
 
 robot_class* robot=NULL;
 
-robot_class::robot_class():
-    test_gamepad(1),
-    test_shifter(7,8,(void*)this)
+robot_class::robot_class()
 {
-    //test_drivetrain = new DerekDrive(new Talon(), new Talon(), new Talon(), new Talon());
-    pnum = new Phoomatics(1,8, 1,8);
-    //Fist one is for the switch, second is for the compressor
-    robot=this;
 }
 
 void robot_class::RobotInit()
 {
-    /*
-    driverJoy = new Joystick(1);
-    gunnerJoy = new Joystick(2);
-    Commented out to compiler warning barf
-    */
+    shifter = new Shift(7,8);
+
+    //test_drivetrain = new DerekDrive(new Talon(), new Talon(), new Talon(), new Talon());
+
+    //Fist one is for the switch, second is for the compressor
+    pnum = new Phoomatics(1,8, 1,8);
+
+    robot=this;
 }
 
 void robot_class::DisabledInit()
