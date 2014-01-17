@@ -15,6 +15,16 @@ FileProcessor::FileProcessor(char* name, fileMode mode=rw) {
 }
 
 /*
+ * deletes the name of file and 
+ * the buffer which holds the data of the file
+ */ 
+
+FileProcessor::~FileProcessor() {
+    delete fname;
+    delete buffer;
+}
+
+/*
  * Essentially a mirror of the constructor in the case 
  * if a file is already open, close it, and let the function open another one
  * 

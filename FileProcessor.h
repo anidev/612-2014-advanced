@@ -13,6 +13,7 @@ typedef enum {
 class FileProcessor {
 public:
     FileProcessor(char*, fileMode);
+    ~FileProcessor();
     void open(char*, fileMode);
     void close();
     void write(double);
