@@ -16,8 +16,10 @@ enum Gear
 public:
         Shift(uint32_t,uint32_t, void*);
         ~Shift();
-        static void shiftGear(void*);
-        static void update(void*);
+        void shiftGear();
+        void update(void*);
+        void shiftLow();
+        void shiftHigh();
 private:
     SmoothJoystick* test_gamepad_shift;
     Gear gear;

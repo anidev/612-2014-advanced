@@ -50,7 +50,7 @@ void DerekDrive::doTeleOp()
 void DerekDrive::shiftGear()
 {
     //TODO
-    shifter -> shiftGear(&shifter);
+    shifter -> shiftGear();
 }
 void DerekDrive::stop()
 {
