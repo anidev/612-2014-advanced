@@ -14,6 +14,9 @@ static const float TRIGGER_TOLERANCE = 0.25;
 static const Axis TRIGGER_AXIS = 3; //may need to rename this later
 //TODO Rumble
 
+static const unsigned int SHIFT_LOW = 5; //L1
+static const unsigned int SHIFT_HIGH = 6; //R1
+
 
 //Copied post from XBOX thread
 /*
