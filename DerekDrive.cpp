@@ -3,10 +3,13 @@
 #include "Shift.h"
 
 DerekDrive::DerekDrive(uint32_t shift1, uint32_t shift2,
+                       uint32_t modEncA, uint32_t chanEncA,
+                       uint32_t modEncB, uint32_t chanEncB,
                        uint8_t modFL,uint32_t chanFL,
                        uint8_t modRL,uint32_t chanRL,
                        uint8_t modFR,uint32_t chanFR,
-                       uint8_t modRR,uint32_t chanRR,void* o)
+                       uint8_t modRR,uint32_t chanRR,
+                       void* o)
                     :RobotDrive(new Talon(modFL,chanFL),
                                 new Talon(modRL,chanRL),
                                 new Talon(modFR,chanFR),
@@ -18,6 +21,9 @@ DerekDrive::DerekDrive(uint32_t shift1, uint32_t shift2,
     rearLeft = *rL;
     rearRight = *rR;
      */
+    encoderState = false;
+    encoder = new Encoder(modEncA, chanEncA, modEncB, chanEncB);
+    encoder->SetDistancePerPulse(0.015);
     shifter = new Shift(shift1,shift2,o);
     isAsync = false;
     //robot_class* robot = (robot_class*)o;
