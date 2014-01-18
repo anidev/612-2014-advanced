@@ -1,24 +1,27 @@
 #ifndef DATA_LOGGER_H
 #define DATA_LOGGER_H
 
-#include<fstream>
+#include <fstream>
+#include <vector>
+#include "FileProcessor.h"
 
 typedef void* obj;
-typedef void(*dataFunc)(obj);
+typedef double(*dataFunc)(obj);
 
-
-//@anirudh sorry for redundancy
 struct logger_object {
     obj o;
-    helper h;
+    dataFunc datafn;
+    FileProcessor file;
 };
 
 class DataLogger {
 public:
-    DataLogger(obj, dataFunc, char*);
+    DataLogger();
     ~DataLogger();
+    void add(logger_object*);
+    void update();
 private:
-    char* name;
+    std::vector<logger_object*> loggers;
 };
 
 #endif
