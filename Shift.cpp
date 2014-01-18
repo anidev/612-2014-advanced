@@ -44,11 +44,11 @@ void Shift::shiftGear()
     printf("========== shifting gears all dei errdei ==========\n");
     if (gear==HIGH)
     {
-        shiftHigh();
+        shiftLow();
     }
     else
     {
-        shiftLow();
+        shiftHigh();
     }
     timer.Reset();
 }
