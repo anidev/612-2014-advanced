@@ -14,14 +14,14 @@ enum Gear
     LOW
 };
 public:
-        Shift(uint32_t,uint32_t, void*);
+        Shift(uint32_t,uint32_t);
         ~Shift();
         void shiftGear();
-        void update(void*);
         void shiftLow();
         void shiftHigh();
+        static void eventHandler(void*,unsigned int);
+        static void update(void*);
 private:
-    SmoothJoystick* test_gamepad_shift;
     Gear gear;
     DoubleSolenoid* shift;
     Timer timer;

@@ -10,12 +10,10 @@ SmoothJoystick::~SmoothJoystick()
     
 }
 
-void SmoothJoystick::pushBtn(UINT32 btn, obj o, helpFunc h) 
+void SmoothJoystick::pushBtn(unsigned int btn, obj o, helpFunc h) 
 {
-    btnNumbers.push_back(btn);
-    objects.push_back(o);
-    helpers.push_back(h);
-    prevState.push_back(false);
+    Handler handler={o,h,btn,false};
+    handlers.push_back(handler);
 }
 
 void SmoothJoystick::updateSJ() 
@@ -28,16 +26,18 @@ void SmoothJoystick::updateSJ()
         }
         buttons[f][WAIT_TIME - 1] = Joystick::GetRawButton(f+1);
     } 
-    for (unsigned int x = 0; x < btnNumbers.size(); x++) 
+    for (unsigned int x = 0; x < handlers.size(); x++) 
     {
-        if(GetRawButton(btnNumbers.at(x)) && !prevState.at(x)) 
+        Handler handler = handlers[x];
+        bool btnState = GetRawButton(handler.btnNumber);
+        if(btnState && !handler.prevState) 
         {
-            callFunct(x);
-            prevState.at(x) = true;
+            callHandler(x);
+            handler.prevState = true;
         } 
-        else if (!GetRawButton(btnNumbers.at(x))) 
+        else if (!btnState) 
         {
-            prevState.at(x) = false;
+            handler.prevState = false;
         }
     }
 }
@@ -56,9 +56,10 @@ Trigger SmoothJoystick::GetTriggerState()
     return TRIG_NONE;
 }
 
-void SmoothJoystick::callFunct(unsigned int x) 
+void SmoothJoystick::callHandler(unsigned int x) 
 {
-    (helpers.at(x))(objects.at(x));
+    Handler handler = handlers[x];
+    handler.callback(handler.param,handler.btnNumber);
 }
 
 bool SmoothJoystick::GetRawButton(UINT32 btn) 

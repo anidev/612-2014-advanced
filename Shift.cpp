@@ -2,21 +2,32 @@
 #include <DoubleSolenoid.h>
 #include "Shift.h"
 #include "SmoothJoystick.h"
+#include "Controls.h"
+#include "612.h"
 
-Shift::Shift(uint32_t forwardChan,uint32_t reverseChan, void* o):timer()
+Shift::Shift(uint32_t forwardChan,uint32_t reverseChan):timer()
 {
-    robot_class* robot = (robot_class*)o;
-    test_gamepad_shift = &robot->test_gamepad;
-    //test_gamepad_shift -> pushBtn(5, (void*)this, &shiftGear); // L1 to shift gears
+    SmoothJoystick* joy = robot->driverJoy;
+    joy -> pushBtn(SHIFT_LOW, (void*)this, &eventHandler);
+    joy -> pushBtn(SHIFT_HIGH, (void*)this, &eventHandler);
     shift = new DoubleSolenoid(1,forwardChan, reverseChan);
     //make it default high gear to avoid it being bumped in between gears
     shift -> Set(DoubleSolenoid::kForward);
     timer.Start();
     gear = HIGH;
 }
+
 Shift::~Shift()
 {
-    
+}
+
+void Shift::eventHandler(void* o,unsigned int btn) {
+    Shift* sh = (Shift*)o;
+    if(btn==SHIFT_LOW) {
+        sh->shiftLow();
+    } else {
+        sh->shiftHigh();
+    }
 }
 
 void Shift::update(void* o) 
@@ -33,11 +44,11 @@ void Shift::shiftGear()
     printf("========== shifting gears all dei errdei ==========\n");
     if (gear==HIGH)
     {
-        shiftHigh();
+        shiftLow();
     }
     else
     {
-        shiftLow();
+        shiftHigh();
     }
     timer.Reset();
 }
