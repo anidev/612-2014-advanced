@@ -19,7 +19,7 @@ class DerekDrive : public RobotDrive
         uint8_t modFR,uint32_t chanFR,
         uint8_t modRR,uint32_t chanRR);
         ~DerekDrive();
-        void autoDrive(float,float);
+        void autoDrive(float);
         void autoRotate();
         void doTeleOp();
         void stop();

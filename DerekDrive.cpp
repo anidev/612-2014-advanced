@@ -32,16 +32,24 @@ DerekDrive::DerekDrive(uint32_t shift1, uint32_t shift2,
 
 DerekDrive::~DerekDrive()
 {
-    
+    delete encoder;
+    delete shifter;
 }
-void DerekDrive::autoDrive(float left, float right) 
+void DerekDrive::autoDrive(float dist) 
 {
-    /*
-     *   frontLeft.Set(1.0f);
-     *   frontRight.Set(1.0f);
-     *   rearLeft.Set(1.0f);
-     *   rearRight.Set(1.0f);
-     */
+    if (!encoderState)
+    {
+        encoder->Start();
+        encoderState = true;
+    }
+    TankDrive(0.7,0.7);
+    if (encoder->GetDistance() >= dist) {
+        encoder->Stop();
+        encoderState = false;
+        return;
+    }
+    
+    
 }
 void DerekDrive::autoRotate()
 {
