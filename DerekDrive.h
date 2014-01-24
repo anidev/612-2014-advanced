@@ -7,6 +7,7 @@
 #include "main.h"
 #include "Shift.h"
 #include <Encoder.h>
+#include "SmoothJoystick.h"
 
 class DerekDrive : public RobotDrive 
 {
@@ -38,5 +39,7 @@ class DerekDrive : public RobotDrive
         float drivePower; // 1.0 Normal and 0.6 Climbing
         bool isAsync;
         Shift* shifter;
+        
+        SmoothJoystick* driver;
 };
 #endif
