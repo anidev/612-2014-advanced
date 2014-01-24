@@ -84,6 +84,7 @@ void DerekDrive::stop()
      *   rearRight.Disable();
      */
     //set jags to 0,0
+    TankDrive(0.0f, 0.0f);
 }
 void DerekDrive::setSafety()
 {

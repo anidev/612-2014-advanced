@@ -54,6 +54,7 @@ void robot_class::TeleopInit()
 void robot_class::TeleopPeriodic()
 {
     pnum->pressurize();
+    
     /*
     float left = driverJoy->GetRawAxis(2);
     float right = driverJoy->GetRawAxis(5);
