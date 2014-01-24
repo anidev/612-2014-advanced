@@ -1,8 +1,15 @@
 #include "SmoothJoystick.h"
+#include "UpdateRegistry.h"
+#include "612.h"
+#include "main.h"
 
 SmoothJoystick::SmoothJoystick(UINT32 a) : Joystick(a) 
 {
+    registry_object r;
+    r.o = this;
+    r.h = &updateHelper;
     
+    robot->updateRegistry.add(r);
 }
 
 SmoothJoystick::~SmoothJoystick() 
@@ -40,6 +47,10 @@ void SmoothJoystick::updateSJ()
             handler.prevState = false;
         }
     }
+}
+
+void SmoothJoystick::updateHelper(obj o) {
+    ((SmoothJoystick*)(o)) -> updateSJ();
 }
 
 Trigger SmoothJoystick::GetTriggerState() 

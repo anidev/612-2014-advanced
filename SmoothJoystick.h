@@ -20,6 +20,11 @@ public:
     typedef void(*helpFunc)(obj,unsigned int);
     void pushBtn(unsigned int,obj,helpFunc);
     void updateSJ();
+    
+    typedef void* obj;
+    typedef void(*funcName)(obj);
+    static void updateHelper(obj);
+    
 private:
     struct Handler {
         obj param;
