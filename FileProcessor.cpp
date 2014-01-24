@@ -11,7 +11,6 @@
 
 FileProcessor::FileProcessor(char* name, fileMode mode=rw) {
     open(name, mode);
-    updateBuffer();
 }
 
 /*
