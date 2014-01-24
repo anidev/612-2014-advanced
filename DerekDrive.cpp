@@ -65,6 +65,10 @@ void DerekDrive::doTeleOp()
     {
         TankDrive((driver -> GetRawAxis(DRIVER_LEFT_DRIVE_AXIS)),(driver -> GetRawAxis(DRIVER_RIGHT_DRIVE_AXIS)));
     }
+    else
+    {
+        TankDrive(0.0f, 0.0f);
+    }
 }
 void DerekDrive::shiftGear()
 {
