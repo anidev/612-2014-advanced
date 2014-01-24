@@ -10,6 +10,7 @@
 class SmoothJoystick : public Joystick 
 {
 public:
+    static const float JOYSTICK_ZERO_TOLERANCE = 0.1;
     SmoothJoystick(UINT32);
     ~SmoothJoystick();
     bool GetRawButton(UINT32 btn);

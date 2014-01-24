@@ -10,6 +10,7 @@
 #include "Shift.h"
 #include "Phoomatics.h"
 
+
 class robot_class : public IterativeRobot
 {
 public:
@@ -31,8 +32,9 @@ public:
     
     //DerekDrive* test_drivetrain;
     SmoothJoystick* driverJoy;
-    SmoothJoystick* gunnerJoy;
     Shift* shifter;
+    
+    SmoothJoystick* driver;
 private:
     Phoomatics* pnum;
 };

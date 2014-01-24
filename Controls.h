@@ -42,5 +42,8 @@ Axes
 */
 //no D-Pad Y axis
 
+static const Axis DRIVER_LEFT_DRIVE_AXIS = 2;//L Stick
+static const Axis DRIVER_RIGHT_DRIVE_AXIS = 5;//R Stick
+
 
 #endif
