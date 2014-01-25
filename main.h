@@ -6,6 +6,7 @@
 #include <Relay.h>
 #include <DigitalInput.h>
 #include <Talon.h>
+#include <ADXL345_SPI.h>
 #include "SmoothJoystick.h"
 #include "Shift.h"
 
@@ -34,6 +35,7 @@ public:
     SmoothJoystick test_gamepad;
     Shift test_shifter;
     Talon* test_talon;
+    ADXL345_SPI* accel;
     int talon_state;
     
     static void changeMotor(void*,unsigned int);

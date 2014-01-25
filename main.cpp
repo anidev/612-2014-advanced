@@ -3,6 +3,7 @@
 #include <Joystick.h>
 #include <Relay.h>
 #include <DigitalInput.h>
+#include <ADXL345_SPI.h>
 
 robot_class* robot=NULL;
 
@@ -20,6 +21,8 @@ robot_class::robot_class():
     robot=this;
     test_talon = new Talon(1,5);
     test_gamepad.pushBtn(1,(void*)this,&changeMotor);
+    
+    accel = new ADXL345_SPI(1,1,2,3,4);
 }
 
 void robot_class::RobotInit()
@@ -64,12 +67,24 @@ void robot_class::TestInit()
 void robot_class::TestPeriodic()
 {
     static int output=0;
-    if(output%20==0) {
-        std::printf("test periodic\n");
-    }
-    output++;
     test_gamepad.updateSJ();
     test_shifter.update(&test_shifter);
+    
+    if(output%10==0) {
+//        std::printf("beforeX ");
+        double axisX=accel->GetAcceleration(ADXL345_SPI::kAxis_X);
+//        std::printf("afterX ");
+//        std::printf("beforeY ");
+        double axisY=accel->GetAcceleration(ADXL345_SPI::kAxis_Y);
+//        std::printf("afterY ");
+//        std::printf("beforeZ ");
+        double axisZ=accel->GetAcceleration(ADXL345_SPI::kAxis_Y);
+//        std::printf("afterZ ");
+//        std::printf("axes X: %f, Y: %f, Z: %f\n",axisX,axisY,axisZ);
+        std::printf("Z: %f\n",axisZ);
+    }
+    
+    output++;
 }
 
 void robot_class::changeMotor(void* o,unsigned int btn) {
