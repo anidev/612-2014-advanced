@@ -21,7 +21,13 @@ class Phoomatics
 public:
     Phoomatics(uint8_t switchMod,uint32_t switchPort,uint8_t compMod,uint32_t compPort);
     void pressurize();
-    void addSolenoid(pnumObj);
+    void addSolenoid(double, DoubleSolenoid*, DoubleSolenoid::Value);
+    void updateSolenoids();
+    
+    typedef void* obj;
+    typedef void(*funcName)(obj);
+    static void updateHelper(obj);
+    
 private:
     DigitalInput* pnumSwitch;
     Relay* compressor;
