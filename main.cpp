@@ -70,6 +70,7 @@ void robot_class::TestInit()
 void robot_class::TestPeriodic()
 {
     pnum->pressurize();
+    updateRegistry.update();
 }
 
 START_ROBOT_CLASS(robot_class)
