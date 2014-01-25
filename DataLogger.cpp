@@ -14,6 +14,10 @@ void DataLogger::add(logger_object* lo) {
 
 void DataLogger::update() {
     for (int i = 0; i < (int)loggers.size(); i++) {
-        loggers.at(i) -> file.write(((loggers.at(i) -> datafn)(loggers.at(i) -> o)));
+        logger_object* cur = loggers.at(i);
+        if (cur->timer.Get() >= cur->interval) {
+            cur->file.write(((cur->datafn)(cur->o)));
+            cur->timer.Reset();
+        }
     }
 }
