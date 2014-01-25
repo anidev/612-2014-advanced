@@ -40,7 +40,8 @@ void Phoomatics::addSolenoid(double time, DoubleSolenoid* solenoid, DoubleSoleno
     p.timer->Start();
 }
 
-void Phoomatics::updateSolenoids() {
+void Phoomatics::updateSolenoids()
+{
     for (unsigned int i = 0; i < solenoids.size();)
     {
         pnumObj p = solenoids[i];
@@ -55,6 +56,6 @@ void Phoomatics::updateSolenoids() {
     }
 }
 
-void updateHelper(obj o) {
+void Phoomatics::updateHelper(obj o) {
     ((Phoomatics*)(o))->updateSolenoids();
 }
