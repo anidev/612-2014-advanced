@@ -4,6 +4,9 @@
 #include <fstream>
 #include <ctime> 
 
+#include <cstdio>
+#include <cstdlib>
+
 typedef enum {
     r,
     w,
@@ -21,9 +24,10 @@ public:
     void updateBuffer();
     void print();
 private:
+
+    FILE* file;   
     char* fname;
     fileMode fmode;
-    std::fstream file;
     char* buffer;
     int length;
 };  
