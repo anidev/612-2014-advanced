@@ -20,8 +20,8 @@ FileProcessor::FileProcessor(char* name, fileMode mode=rw) {
  */ 
 
 FileProcessor::~FileProcessor() {
-    delete fname;
-    delete buffer;
+    fclose(file);
+    free(buffer);
 }
 
 /*
@@ -32,23 +32,23 @@ FileProcessor::~FileProcessor() {
  */
 
 void FileProcessor::open(char* name, fileMode mode) {
-    if (file.is_open()) {
-        file.close();
-    }
+    //if (file != 0) {
+    //    fclose(file);
+    //}
     fname = name;
     fmode = mode;
     switch(mode) {
         case r:
-            file.open(name, std::fstream::in);
+            file = fopen(fname, "r");
             break;
         case w:
-            file.open(name, std::fstream::out|std::fstream::app);
+            file = fopen(fname, "a");
             break;
         case rw:
-            file.open(name, std::fstream::in|std::fstream::out|std::fstream::app);
+            file = fopen(fname, "a+");
             break;
         default:
-            file.open(name, std::fstream::in|std::fstream::out|std::fstream::app);
+            file = fopen(fname, "a+");
     }
     updateBuffer();
 }
@@ -65,7 +65,7 @@ void FileProcessor::open(char* name, fileMode mode) {
  */ 
 
 void FileProcessor::close() {
-    file.close();
+    fclose(file);
 }
 
 /*
@@ -85,8 +85,9 @@ void FileProcessor::write(double val) {
     char output[100];
     char* curtime = asctime (timeinfo); 
     curtime[24] = '\0';
-    snprintf(output, 100, "%s: %f", curtime, val);
-    file << output << std::endl;
+    snprintf(output, 100, "%s: %f\n", curtime, val);
+    
+    fprintf(file, output);
     updateBuffer();
 }
 
@@ -138,14 +139,13 @@ void FileProcessor::updateBuffer() {
     if (!(fmode == r || fmode == rw)) {
         return;
     }
-    file.seekg(0, file.end);
-    int length_ = file.tellg();
+    fseek(file, 0, SEEK_END);
+    int length_ = ftell(file);
     length = length_;
-    file.seekg(0, file.beg);
+    rewind(file);
+    buffer = (char*) malloc (sizeof(char)*length_);
+    fread(buffer, 1, length_, file);
     
-    buffer = NULL;
-    buffer = new char[length_];
-    file.read(buffer, length_);
 }
 
 /*
@@ -157,5 +157,5 @@ void FileProcessor::print() {
     if (!(fmode == r || fmode == rw)) {
         return;
     }
-    printf("%s", buffer);
+    printf("buffer: \n%s", buffer);
 }

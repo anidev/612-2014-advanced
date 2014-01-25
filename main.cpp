@@ -24,7 +24,6 @@ void robot_class::RobotInit()
 
     //Fist one is for the switch, second is for the compressor
     pnum = new Phoomatics(1,8, 1,8);
-
     robot=this;
 }
 
