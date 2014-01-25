@@ -32,7 +32,8 @@ void addSolenoid(double time, DoubleSolenoid* solenoid, DoubleSolenoid::Value va
     p.timer->Start();
 }
 
-void updateSolenoids() {
+void updateSolenoids() 
+{
     for (unsigned int i = 0; i < solenoids.size();)
     {
         pnumObj p = solenoids[i];
