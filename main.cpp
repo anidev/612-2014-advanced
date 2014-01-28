@@ -2,7 +2,6 @@
 #include <Relay.h>
 #include <DigitalInput.h>
 
-
 #include "main.h"
 #include "612.h"
 #include "Phoomatics.h"
@@ -20,11 +19,12 @@ void robot_class::RobotInit()
 {
     shifter = new Shift(7,8);
 
-    //test_drivetrain = new DerekDrive(new Talon(), new Talon(), new Talon(), new Talon());
-
     //Fist one is for the switch, second is for the compressor
     pnum = new Phoomatics(1,8, 1,8);
-    robot=this;
+    
+    robot = this;
+    
+    //drivetrain = new DerekDrive(/*soooo many arguments*/);
 }
 
 void robot_class::DisabledInit()
@@ -64,13 +64,14 @@ void robot_class::TeleopPeriodic()
 
 void robot_class::TestInit()
 {
-
+    
 }
 
 void robot_class::TestPeriodic()
 {
     pnum->pressurize();
     updateRegistry.update();
+//    drivetrain->doTeleop();
 }
 
 START_ROBOT_CLASS(robot_class)

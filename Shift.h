@@ -2,7 +2,7 @@
 #define SHIFT_H
 
 
-#include "main.h"
+//#include "main.h"
 #include <DoubleSolenoid.h>
 #include <Timer.h>
 #include "SmoothJoystick.h"
