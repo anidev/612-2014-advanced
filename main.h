@@ -9,6 +9,7 @@
 #include "SmoothJoystick.h"
 #include "Shift.h"
 #include "Phoomatics.h"
+#include "DerekDrive.h"
 
 #include "UpdateRegistry.h"
 
@@ -37,6 +38,7 @@ public:
     Shift* shifter;
     
     SmoothJoystick* driver;
+    DerekDrive* drivetrain;
     
     UpdateRegistry updateRegistry;
     

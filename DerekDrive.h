@@ -4,7 +4,6 @@
 #include <RobotDrive.h>
 #include <SpeedController.h>
 #include <Talon.h>
-#include "main.h"
 #include "Shift.h"
 #include <Encoder.h>
 #include "SmoothJoystick.h"
@@ -19,14 +18,10 @@ class DerekDrive : public RobotDrive
 {
     public:
         DerekDrive::DerekDrive(uint32_t shift1, uint32_t shift2,
-                               uint32_t modEncFRA, uint32_t chanEncFRA,
-                               uint32_t modEncFRB, uint32_t chanEncFRB,
-                               uint32_t modEncFLA, uint32_t chanEncFLA,
-                               uint32_t modEncFLB, uint32_t chanEncFLB,
-                               uint32_t modEncRRA, uint32_t chanEncRRA,
-                               uint32_t modEncRRB, uint32_t chanEncRRB,
-                               uint32_t modEncRLA, uint32_t chanEncRLA,
-                               uint32_t modEncRLB, uint32_t chanEncRLB,
+                               uint32_t modEncRA, uint32_t chanEncRA,
+                               uint32_t modEncRB, uint32_t chanEncRB,
+                               uint32_t modEncLA, uint32_t chanEncLA,
+                               uint32_t modEncLB, uint32_t chanEncLB,
                                uint8_t modFL,uint32_t chanFL,
                                uint8_t modRL,uint32_t chanRL,
                                uint8_t modFR,uint32_t chanFR,
@@ -47,10 +42,8 @@ class DerekDrive : public RobotDrive
         SpeedController rearRight;
         */
         bool encoderState;
-        Encoder* encoderFR;
-        Encoder* encoderFL;
-        Encoder* encoderRR;
-        Encoder* encoderRL;
+        Encoder* encoderR;
+        Encoder* encoderL;
         float encoderDistance(side s);
         void startEncoders();
         void stopEncoders();
