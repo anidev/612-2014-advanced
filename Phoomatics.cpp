@@ -36,17 +36,21 @@ void Phoomatics::addSolenoid(double time, DoubleSolenoid* solenoid, DoubleSoleno
     p.timer = timer;
     p.solenoid = solenoid;
     p.val = value;
+    p.solenoid->Set(value);
     solenoids.push_back(p);
     p.timer->Start();
 }
 
 void Phoomatics::updateSolenoids()
 {
+    pressurize();
     for (unsigned int i = 0; i < solenoids.size();)
     {
         pnumObj p = solenoids[i];
         if (p.timer -> Get() >= p.time)
         {
+            delete p.timer;
+            p.solenoid->Set(DoubleSolenoid::kOff);
             solenoids.erase(solenoids.begin()+i);
         } 
         else
