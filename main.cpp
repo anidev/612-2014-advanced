@@ -1,12 +1,14 @@
 #include <Joystick.h>
 #include <Relay.h>
 #include <DigitalInput.h>
+#include <Ultrasonic.h>
 
 #include "main.h"
 #include "612.h"
 #include "Phoomatics.h"
 #include "SmoothJoystick.h"
 #include "Shift.h"
+#include "ports.h"
 
 
 robot_class* robot=NULL;
@@ -24,7 +26,16 @@ void robot_class::RobotInit()
     
     robot = this;
     
-    //drivetrain = new DerekDrive(/*soooo many arguments*/);
+    drivetrain = new DerekDrive(SHIFT_MOD_F, SHIFT_MOD_R,
+                                1,1,
+                                2,2,
+                                3,3,
+                                4,4,
+                                TALON_FL_MODULE, TALON_FL_CHANNEL,
+                                TALON_RL_MODULE, TALON_RL_CHANNEL,
+                                TALON_FR_MODULE, TALON_FR_CHANNEL,
+                                TALON_RR_MODULE, TALON_RR_CHANNEL);
+    //Ultrasonic* ultrasonic = new Ultrasonic(port1, port2);
 }
 
 void robot_class::DisabledInit()
@@ -64,14 +75,16 @@ void robot_class::TeleopPeriodic()
 
 void robot_class::TestInit()
 {
-    
+    //ultrasonic->SetEnabled(true);
+    //ultrasonic->SetAutomaticMode(true);
 }
 
 void robot_class::TestPeriodic()
 {
     pnum->pressurize();
     updateRegistry.update();
-//    drivetrain->doTeleop();
+    drivetrain->doTeleOp();
+    //std::printf("ultrasonic value: %f\n", ultrasonic->GetRangeInches());
 }
 
 START_ROBOT_CLASS(robot_class)

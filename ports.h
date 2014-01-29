@@ -4,15 +4,15 @@
 #include <stdint.h>
 
 // DriveTrain Channels
-const static uint32_t TALON_FL_CHANNEL = 0;
-const static uint32_t TALON_FR_CHANNEL = 1;
-const static uint32_t TALON_RL_CHANNEL = 3;
-const static uint32_t TALON_RR_CHANNEL = 4;
+const static uint32_t TALON_FL_CHANNEL = 1; //real
+const static uint32_t TALON_FR_CHANNEL = 6; //real
+const static uint32_t TALON_RL_CHANNEL = 2; //real
+const static uint32_t TALON_RR_CHANNEL = 7; //real
 // DriveTrain Modules
-const static uint8_t  TALON_FL_MODULE  = 0;
-const static uint8_t  TALON_FR_MODULE  = 1;
-const static uint8_t  TALON_RL_MODULE  = 3;
-const static uint8_t  TALON_RR_MODULE  = 4;
+const static uint8_t  TALON_FL_MODULE  = 1; //real
+const static uint8_t  TALON_FR_MODULE  = 1; //real
+const static uint8_t  TALON_RL_MODULE  = 1; //real
+const static uint8_t  TALON_RR_MODULE  = 1; //real
 
 // Pneumatics Channels
 const static uint32_t PNUM_DIGIN_CHANNEL = 1;
@@ -29,5 +29,7 @@ const static uint8_t  SHIFT_MOD_R = 2;
 // Joystick
 const uint32_t DRIVER_JOY_PORT = 1;
 const uint32_t GUNNER_JOY_PORT = 2;
+
+//Encoders
 
 #endif
