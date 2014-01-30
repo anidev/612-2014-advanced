@@ -2,7 +2,6 @@
 #include <CANJaguar.h>
 #include <DoubleSolenoid.h>
 #include "Arm.h"
-#include "ports.h"
 #include "612.h"
 #include "SmoothJoystick.h"
 #include "main.h"

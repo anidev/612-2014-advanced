@@ -18,10 +18,10 @@ struct pnumObj
     DoubleSolenoid::Value val;
 };
 
-class Phoomatics
+class Pneumatics
 {
 public:
-    Phoomatics(uint8_t switchMod,uint32_t switchPort,uint8_t compMod,uint32_t compPort);
+    Pneumatics(uint8_t switchMod,uint32_t switchPort,uint8_t compMod,uint32_t compPort);
     void pressurize();
     void addSolenoid(double, DoubleSolenoid*, DoubleSolenoid::Value);
     void updateSolenoids();

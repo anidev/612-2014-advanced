@@ -4,11 +4,15 @@
 typedef unsigned int Button;
 typedef unsigned int Axis;
 
-enum Trigger {
+enum Trigger 
+{
     TRIG_NONE = 0,
     TRIG_L = -1,
     TRIG_R = 1
 };
+
+static const float DRIVE_POWER = 1.0;
+
 static const float JOYSTICK_ZERO_TOLERANCE = 0.1;
 static const float TRIGGER_TOLERANCE = 0.25;
 static const Axis TRIGGER_AXIS = 3; //may need to rename this later
@@ -16,6 +20,9 @@ static const Axis TRIGGER_AXIS = 3; //may need to rename this later
 
 static const unsigned int SHIFT_LOW = 5; //L1
 static const unsigned int SHIFT_HIGH = 6; //R1
+
+static const unsigned int DRIVER_JOY = 1;
+static const unsigned int GUNNER_JOY = 2;
 
 
 //Copied post from XBOX thread

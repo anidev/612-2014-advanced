@@ -1,10 +1,10 @@
-#include "Phoomatics.h"
 #include <Relay.h>
 #include <DigitalInput.h>
 #include "main.h"
 #include "612.h"
+#include "Pneumatics.h"
 
-Phoomatics::Phoomatics(uint8_t switchMod, uint32_t switchPort, uint8_t compMod, uint32_t compPort)
+Pneumatics::Pneumatics(uint8_t switchMod, uint32_t switchPort, uint8_t compMod, uint32_t compPort)
 {
     pnumSwitch = new DigitalInput(switchMod, switchPort);
     compressor = new Relay(compMod, compPort, Relay::kForwardOnly);
@@ -12,7 +12,7 @@ Phoomatics::Phoomatics(uint8_t switchMod, uint32_t switchPort, uint8_t compMod, 
     robot->updateRegistry.add(this, &updateHelper);
 }
 
-void Phoomatics::pressurize()
+void Pneumatics::pressurize()
 {
     if ((pnumSwitch->Get()) == 1)
     {
@@ -24,7 +24,7 @@ void Phoomatics::pressurize()
     }
 }
 
-void Phoomatics::addSolenoid(double time, DoubleSolenoid* solenoid, DoubleSolenoid::Value value)
+void Pneumatics::addSolenoid(double time, DoubleSolenoid* solenoid, DoubleSolenoid::Value value)
 {
     Timer* timer = new Timer();
     pnumObj p;
@@ -37,7 +37,7 @@ void Phoomatics::addSolenoid(double time, DoubleSolenoid* solenoid, DoubleSoleno
     p.timer->Start();
 }
 
-void Phoomatics::updateSolenoids()
+void Pneumatics::updateSolenoids()
 {
     pressurize();
     for (unsigned int i = 0; i < solenoids.size();)
@@ -56,6 +56,7 @@ void Phoomatics::updateSolenoids()
     }
 }
 
-void Phoomatics::updateHelper(obj o) {
-    ((Phoomatics*)(o))->updateSolenoids();
+void Pneumatics::updateHelper(obj o) 
+{
+    ((Pneumatics*)(o))->updateSolenoids();
 }
