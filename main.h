@@ -8,7 +8,7 @@
 
 #include "SmoothJoystick.h"
 #include "Shift.h"
-#include "Phoomatics.h"
+#include "Pneumatics.h"
 #include "DerekDrive.h"
 #include "Arm.h"
 
@@ -44,7 +44,7 @@ public:
     DerekDrive* drivetrain;
     
     UpdateRegistry updateRegistry;
-    Phoomatics* pnum;
+    Pneumatics* pnum;
     
 private:
 };

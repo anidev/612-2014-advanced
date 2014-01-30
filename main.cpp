@@ -5,9 +5,7 @@
 
 #include "main.h"
 #include "612.h"
-#include "Phoomatics.h"
 #include "SmoothJoystick.h"
-#include "Shift.h"
 #include "ports.h"
 #include "Controls.h"
 
@@ -24,20 +22,19 @@ void robot_class::RobotInit()
     driverJoy = new SmoothJoystick(DRIVER_JOY_PORT);
     gunnerJoy = new SmoothJoystick(GUNNER_JOY_PORT);
     
-    shifter = new Shift(7,8);
+    shifter = new Shift(SHIFT_MOD_F,SHIFT_MOD_R);
 
     //Fist one is for the switch, second is for the compressor
-    pnum = new Phoomatics(1,8, 1,8);
+    pnum = new Pneumatics(PNUM_DIGIN_MODULE, PNUM_DIGIN_CHANNEL, 
+                          PNUM_RELAY_MODULE, PNUM_RELAY_CHANNEL);
     
     arm = new Arm(TILT_DEV,
                   GRAB_MOD, GRAB_CHAN,
                   CLAMP_MOD, CLAMP_PORT_1, CLAMP_PORT_2);
     
     drivetrain = new DerekDrive(SHIFT_MOD_F, SHIFT_MOD_R,
-                                1,1,
-                                2,2,
-                                3,3,
-                                4,4,
+                                LEFT_ENCODER_A_CHAN, LEFT_ENCODER_B_CHAN,
+                                RIGHT_ENCODER_A_CHAN, RIGHT_ENCODER_B_CHAN,
                                 TALON_FL_MODULE, TALON_FL_CHANNEL,
                                 TALON_RL_MODULE, TALON_RL_CHANNEL,
                                 TALON_FR_MODULE, TALON_FR_CHANNEL,

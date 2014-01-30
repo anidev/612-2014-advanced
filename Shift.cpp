@@ -1,9 +1,9 @@
-#include "main.h"
 #include <DoubleSolenoid.h>
+#include "main.h"
+#include "612.h"
 #include "Shift.h"
 #include "SmoothJoystick.h"
 #include "Controls.h"
-#include "612.h"
 
 Shift::Shift(uint32_t forwardChan,uint32_t reverseChan):timer()
 {
@@ -35,7 +35,7 @@ void Shift::eventHandler(void* o,unsigned int btn) {
 
 void Shift::shiftGear()
 {
-    printf("========== shifting gears all dei errdei ==========\n");
+    printf("-=SHIFTING=-\n");
     if (gear==HIGH)
     {
         shiftLow();
