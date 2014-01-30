@@ -6,6 +6,8 @@
 #include "SmoothJoystick.h"
 #include "main.h"
 
+static const float ARM_SPEED  = 0.4;
+
 Arm::Arm(uint8_t tiltDev, 
          uint8_t grabMod, uint32_t grabChan, 
          uint8_t SolMod, uint32_t SolPort1, uint32_t SolPort2)

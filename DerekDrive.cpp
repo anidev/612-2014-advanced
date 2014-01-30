@@ -3,6 +3,7 @@
 #include "612.h"
 #include "UpdateRegistry.h"
 #include "Controls.h"
+#include "ports.h"
 
 DerekDrive::DerekDrive(uint8_t shiftMod, uint32_t shift1, uint32_t shift2,
                        //left encoders
