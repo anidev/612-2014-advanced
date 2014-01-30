@@ -17,6 +17,8 @@ public:
     void closeArm();
     void grab(/*will have parameter based on sensor*/);
     void setAngle(float ang);
+    void tiltUp();
+    void tiltDown();
     static void updateArm(void*, unsigned int);
 private:
     CANJaguar* tiltControl;
@@ -27,6 +29,7 @@ private:
     bool isGrabbing;
     float curAngle;
     static const float GRAB_SPEED = 0.0;
+    static const float ARM_SPEED  = 0.4;
     clampPosition clampPos;
 };
 
