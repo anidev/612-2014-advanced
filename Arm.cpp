@@ -74,12 +74,12 @@ void Arm::updateArm(void* o, unsigned int btn)
 
 void Arm::tiltUp() 
 {
-    tiltControl->Set(ARM_SPEED);
+    tiltControl->Set(-ARM_SPEED);
 }
 
 void Arm::tiltDown() 
 {
-    tiltControl->Set(-ARM_SPEED);
+    tiltControl->Set(ARM_SPEED);
 }
 
 void Arm::tiltZero()
