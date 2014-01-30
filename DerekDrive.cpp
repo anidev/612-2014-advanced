@@ -2,12 +2,11 @@
 #include "main.h"
 #include "612.h"
 #include "UpdateRegistry.h"
+#include "Controls.h"
 
 DerekDrive::DerekDrive(uint32_t shift1, uint32_t shift2,
-                       uint32_t modEncRA, uint32_t chanEncRA,
-                       uint32_t modEncRB, uint32_t chanEncRB,
-                       uint32_t modEncLA, uint32_t chanEncLA,
-                       uint32_t modEncLB, uint32_t chanEncLB,
+                       uint32_t encLCA, uint32_t encLCB,
+                       uint32_t encRCA, uint32_t encRCB,
                        uint8_t modFL,uint32_t chanFL,
                        uint8_t modRL,uint32_t chanRL,
                        uint8_t modFR,uint32_t chanFR,
@@ -25,8 +24,8 @@ DerekDrive::DerekDrive(uint32_t shift1, uint32_t shift2,
     driver = robot->driver;
     //Encoders
     encoderState = false;
-    encoderL = new Encoder(modEncRA, chanEncRA, modEncRB, chanEncRB);
-    encoderR = new Encoder(modEncLA, chanEncLA, modEncLB, chanEncLB);
+    encoderL = new Encoder(encLCA, encLCB);
+    encoderR = new Encoder(encRCA, encRCB);
     
     encoderL->SetDistancePerPulse(0.015);
     encoderR->SetDistancePerPulse(0.015);
@@ -64,9 +63,10 @@ void DerekDrive::doTeleOp()
     {
         float left = driver -> GetRawAxis(DRIVER_LEFT_DRIVE_AXIS);
         float right = driver -> GetRawAxis(DRIVER_RIGHT_DRIVE_AXIS);
-        TankDrive(left,right);
+        TankDrive(left * DRIVE_POWER, right * DRIVE_POWER);
         static int output = 0;
-        if (output%20 == 0) {
+        if (output%20 == 0) 
+        {
             printf("left: %f, right: %f", left, right);
         }
         output++;

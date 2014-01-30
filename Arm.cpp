@@ -2,7 +2,6 @@
 #include <CANJaguar.h>
 #include <DoubleSolenoid.h>
 #include "Arm.h"
-#include "ports.h"
 #include "612.h"
 #include "SmoothJoystick.h"
 #include "main.h"
@@ -43,11 +42,15 @@ void Arm::grab()
     grabWheel -> Set(GRAB_SPEED);
 }
 
-void Arm::updateArm(void* o, unsigned int btn) {
+void Arm::updateArm(void* o, unsigned int btn) 
+{
     Arm* a = (Arm*)o;
-    if(btn==2) {
+    if(btn==2) 
+    {
         a->closeArm();
-    } else {
+    }
+    else 
+    {
         a->openArm();
     }
 }
