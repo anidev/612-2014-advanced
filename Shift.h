@@ -14,7 +14,7 @@ enum Gear
     LOW
 };
 public:
-        Shift(uint32_t,uint32_t);
+        Shift(uint8_t shiftMod, uint32_t forwardChan, uint32_t reverseChan);
         ~Shift();
         void shiftGear();
         void shiftLow();

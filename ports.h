@@ -23,9 +23,9 @@ const static uint32_t PNUM_DIGIN_CHANNEL = 1;
 const static uint32_t PNUM_RELAY_CHANNEL = 0;
 
 // Shifter
-const static uint32_t SHIFT_CHAN  = 0;
-const static uint8_t  SHIFT_MOD_F = 1;
-const static uint8_t  SHIFT_MOD_R = 2;
+const static uint32_t SHIFT_MOD  = 0;
+const static uint8_t  SHIFT_CHAN_F = 1;
+const static uint8_t  SHIFT_CHAN_R = 2;
 
 // Joystick
 const static uint32_t DRIVER_JOY_PORT = 1;
@@ -41,10 +41,18 @@ const static uint32_t CLAMP_PORT_1 = 5;
 const static uint32_t CLAMP_PORT_2 = 6;
 
 //Encoders
+const uint8_t  LEFT_ENCODER_A_MOD  = 1;
 const uint32_t LEFT_ENCODER_A_CHAN = 1;
+
+const uint8_t  LEFT_ENCODER_B_MOD  = 1;
 const uint32_t LEFT_ENCODER_B_CHAN = 1;
 
+
+
+const uint8_t  RIGHT_ENCODER_A_MOD  = 1;
 const uint32_t RIGHT_ENCODER_A_CHAN = 2;
+
+const uint8_t  RIGHT_ENCODER_B_MOD  = 1;
 const uint32_t RIGHT_ENCODER_B_CHAN = 2;
 
 #endif

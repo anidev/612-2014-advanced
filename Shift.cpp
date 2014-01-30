@@ -5,14 +5,14 @@
 #include "SmoothJoystick.h"
 #include "Controls.h"
 
-Shift::Shift(uint32_t forwardChan,uint32_t reverseChan):timer()
+Shift::Shift(uint8_t shiftMod, uint32_t forwardChan,uint32_t reverseChan):timer()
 {
     SmoothJoystick* joy = robot->driverJoy;
     joy -> pushBtn(SHIFT_LOW, (void*)this, &eventHandler);
     joy -> pushBtn(SHIFT_HIGH, (void*)this, &eventHandler);
     
     
-    shift = new DoubleSolenoid(1,forwardChan, reverseChan);
+    shift = new DoubleSolenoid(shiftMod,forwardChan, reverseChan);
     //make it default high gear to avoid it being bumped in between gears
     shift -> Set(DoubleSolenoid::kForward);
     timer.Start();

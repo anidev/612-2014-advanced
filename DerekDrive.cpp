@@ -4,9 +4,14 @@
 #include "UpdateRegistry.h"
 #include "Controls.h"
 
-DerekDrive::DerekDrive(uint32_t shift1, uint32_t shift2,
-                       uint32_t encLCA, uint32_t encLCB,
-                       uint32_t encRCA, uint32_t encRCB,
+DerekDrive::DerekDrive(uint8_t shiftMod, uint32_t shift1, uint32_t shift2,
+                       //left encoders
+                       uint8_t LAModF, uint32_t LAChanR,
+                       uint8_t LBModF, uint32_t LBChanR,
+                       //right encoders
+                       uint8_t RAModF, uint32_t RAChanR,
+                       uint8_t RBModF, uint32_t RBChanR,
+                       //talons
                        uint8_t modFL,uint32_t chanFL,
                        uint8_t modRL,uint32_t chanRL,
                        uint8_t modFR,uint32_t chanFR,
@@ -16,7 +21,7 @@ DerekDrive::DerekDrive(uint32_t shift1, uint32_t shift2,
                                 new Talon(modFR,chanFR),
                                 new Talon(modRR,chanRR))
 {
-    shifter = new Shift(shift1,shift2);
+    shifter = new Shift(shiftMod,shift1,shift2);
     isAsync = false;
     //robot_class* robot = (robot_class*)o;
     drivePower = 1.0;
@@ -24,13 +29,14 @@ DerekDrive::DerekDrive(uint32_t shift1, uint32_t shift2,
     driver = robot->driverJoy;
     //Encoders
     encoderState = false;
-    encoderL = new Encoder(encLCA, encLCB);
-    encoderR = new Encoder(encRCA, encRCB);
+    encoderL = new Encoder(LAModF, LAChanR, LBModF, LBChanR);
+    encoderR = new Encoder(RAModF, RAChanR, RBModF, RBChanR);
     
     encoderL->SetDistancePerPulse(0.015);
     encoderR->SetDistancePerPulse(0.015);
     
     robot->updateRegistry.add(this, &update);
+    
 
 }
 
