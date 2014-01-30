@@ -9,6 +9,7 @@
 #include "SmoothJoystick.h"
 #include "Shift.h"
 #include "ports.h"
+#include "Controls.h"
 
 
 robot_class* robot=NULL;
@@ -36,7 +37,7 @@ void robot_class::RobotInit()
                                 TALON_FR_MODULE, TALON_FR_CHANNEL,
                                 TALON_RR_MODULE, TALON_RR_CHANNEL);
     //Ultrasonic* ultrasonic = new Ultrasonic(port1, port2);
-    driverJoy = new SmoothJoystick(1);
+    driverJoy = new SmoothJoystick(DRIVER_JOY_PORT);
 }
 
 void robot_class::DisabledInit()
