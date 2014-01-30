@@ -1,6 +1,7 @@
 #include "DerekDrive.h"
 #include "main.h"
 #include "612.h"
+#include "UpdateRegistry.h"
 
 DerekDrive::DerekDrive(uint32_t shift1, uint32_t shift2,
                        uint32_t modEncRA, uint32_t chanEncRA,
@@ -29,6 +30,12 @@ DerekDrive::DerekDrive(uint32_t shift1, uint32_t shift2,
     
     encoderL->SetDistancePerPulse(0.015);
     encoderR->SetDistancePerPulse(0.015);
+    
+    registry_object r;
+    r.o = this;
+    r.h = &update;
+    
+    robot->updateRegistry.add(r);
 
 }
 
@@ -59,7 +66,14 @@ void DerekDrive::doTeleOp()
 {
     if(!(driver -> IsAxisZero(DRIVER_LEFT_DRIVE_AXIS)) || !(driver -> IsAxisZero(DRIVER_RIGHT_DRIVE_AXIS)))
     {
-        TankDrive((driver -> GetRawAxis(DRIVER_LEFT_DRIVE_AXIS)),(driver -> GetRawAxis(DRIVER_RIGHT_DRIVE_AXIS)));
+        float left = driver -> GetRawAxis(DRIVER_LEFT_DRIVE_AXIS);
+        float right = driver -> GetRawAxis(DRIVER_RIGHT_DRIVE_AXIS);
+        TankDrive(left,right);
+        static int output = 0;
+        if (output%20 == 0) {
+            printf("left: %f, right: %f", left, right);
+        }
+        output++;
     }
     else
     {
@@ -80,9 +94,10 @@ void DerekDrive::setSafety()
     //TODO
 }
 
-void DerekDrive::update(bool mode)
+void DerekDrive::update(void* o)
 {
-    //TODO
+    DerekDrive* thisObj = (DerekDrive*)o;
+    thisObj->doTeleOp();
 }
 
 float DerekDrive::encoderDistance(side s)
