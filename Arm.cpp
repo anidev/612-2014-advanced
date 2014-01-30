@@ -13,11 +13,8 @@ Arm::Arm(uint8_t tiltDev,
          uint8_t SolMod, uint32_t SolPort1, uint32_t SolPort2)
 {
     SmoothJoystick* joy = robot->gunnerJoy;
-    joy -> pushBtn(1, (void*)this, &updateArm); //A -- open
-    joy -> pushBtn(2, (void*)this, &updateArm); //B -- close
-    
-    joy -> pushBtn(3, (void*)this, &updateArm); //X -- tilt up
-    joy -> pushBtn(4, (void*)this, &updateArm); //Y -- tilt down
+    joy -> pushBtn(1, (void*)this, &updateHelper); //A -- open
+    joy -> pushBtn(2, (void*)this, &updateHelper); //B -- close
     
     grabWheel = new Talon(grabMod,grabChan); //fake values
     tiltControl = new CANJaguar(tiltDev);
@@ -49,27 +46,31 @@ void Arm::grab()
     grabWheel -> Set(GRAB_SPEED);
 }
 
-void Arm::updateArm(void* o, unsigned int btn) 
+void Arm::updateArm(unsigned int btn) 
 {
-    Arm* a = (Arm*)o;
-    if(btn==2)
+    SmoothJoystick* joy = robot->gunnerJoy;
+    if(btn == BUTTON_CLAMP_DOWN)
     {
-        a->closeArm();
+        closeArm();
     }
-    else if (btn==1)
+    else if (btn == BUTTON_CLAMP_UP)
     {
-        a->openArm();
+        openArm();
     } 
-    else if (btn==3)
+    else if (joy->GetRawButton(BUTTON_TILT_UP))
     {
-        a->tiltUp();
+        tiltUp();
     } 
-    else if (btn==4)
+    else if (joy->GetRawButton(BUTTON_TILT_DOWN))
     {
-        a->tiltDown();
+        tiltDown();
     } else {
-        a->tiltZero();
+        tiltZero();
     }
+}
+
+void Arm::updateHelper(void* o, unsigned int btn) {
+    ((Arm*)o) -> updateArm(btn);
 }
 
 void Arm::tiltUp() 
