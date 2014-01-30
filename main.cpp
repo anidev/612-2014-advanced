@@ -18,11 +18,17 @@ robot_class::robot_class()
 
 void robot_class::RobotInit()
 {
+    robot = this;
+    driverJoy = new SmoothJoystick(DRIVER_JOY_PORT);
+    gunnerJoy = new SmoothJoystick(GUNNER_JOY_PORT);
+
     //Fist one is for the switch, second is for the compressor
     pnum = new Pneumatics(PNUM_DIGIN_MODULE, PNUM_DIGIN_CHANNEL, 
                           PNUM_RELAY_MODULE, PNUM_RELAY_CHANNEL);
     
-    robot = this;
+    arm = new Arm(TILT_DEV,
+                  GRAB_MOD, GRAB_CHAN,
+                  CLAMP_MOD, CLAMP_PORT_1, CLAMP_PORT_2);
     
     drivetrain = new DerekDrive(SHIFT_MOD, SHIFT_CHAN_F, SHIFT_CHAN_R,
                                 
@@ -37,7 +43,6 @@ void robot_class::RobotInit()
                                 TALON_FR_MODULE, TALON_FR_CHANNEL,
                                 TALON_RR_MODULE, TALON_RR_CHANNEL);
     //Ultrasonic* ultrasonic = new Ultrasonic(port1, port2);
-    driverJoy = new SmoothJoystick(DRIVER_JOY);
 }
 
 void robot_class::DisabledInit()
@@ -65,7 +70,7 @@ void robot_class::TeleopInit()
 
 void robot_class::TeleopPeriodic()
 {
-    pnum->pressurize();
+    updateRegistry.update();
     
     /*
     float left = driverJoy->GetRawAxis(2);
@@ -83,7 +88,6 @@ void robot_class::TestInit()
 
 void robot_class::TestPeriodic()
 {
-    pnum->pressurize();
     updateRegistry.update();
     //std::printf("ultrasonic value: %f\n", ultrasonic->GetRangeInches());
 }

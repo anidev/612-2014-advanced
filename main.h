@@ -10,6 +10,7 @@
 #include "Shift.h"
 #include "Pneumatics.h"
 #include "DerekDrive.h"
+#include "Arm.h"
 
 #include "UpdateRegistry.h"
 
@@ -35,9 +36,11 @@ public:
     
     //DerekDrive* test_drivetrain;
     SmoothJoystick* driverJoy;
+    SmoothJoystick* gunnerJoy;
     Shift* shifter;
+
+    Arm* arm;
     
-    SmoothJoystick* driver;
     DerekDrive* drivetrain;
     
     UpdateRegistry updateRegistry;

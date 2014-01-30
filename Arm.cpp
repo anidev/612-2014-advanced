@@ -6,18 +6,20 @@
 #include "SmoothJoystick.h"
 #include "main.h"
 
-Arm::Arm(uint8_t tiltDev, uint8_t grabDev, uint32_t SolMod, uint32_t SolPort)
+Arm::Arm(uint8_t tiltDev, 
+         uint8_t grabMod, uint32_t grabChan, 
+         uint8_t SolMod, uint32_t SolPort1, uint32_t SolPort2)
 {
-    SmoothJoystick* joy = robot->driverJoy;
+    SmoothJoystick* joy = robot->gunnerJoy;
     joy -> pushBtn(1, (void*)this, &updateArm); //A -- open
     joy -> pushBtn(2, (void*)this, &updateArm); //B -- close
     
     joy -> pushBtn(3, (void*)this, &updateArm); //X -- tilt up
     joy -> pushBtn(4, (void*)this, &updateArm); //Y -- tilt down
     
-    grabWheel = new Talon(3,4); //fake values
+    grabWheel = new Talon(grabMod,grabChan); //fake values
     tiltControl = new CANJaguar(tiltDev);
-    clamp = new DoubleSolenoid(SolMod, SolPort);
+    clamp = new DoubleSolenoid(SolMod, SolPort1, SolPort2);
     openArm();
     isAdjusting = false;
 }
@@ -60,9 +62,11 @@ void Arm::updateArm(void* o, unsigned int btn)
     {
         a->tiltUp();
     } 
-    else
+    else if (btn==4)
     {
         a->tiltDown();
+    } else {
+        a->tiltZero();
     }
 }
 
@@ -74,4 +78,9 @@ void Arm::tiltUp()
 void Arm::tiltDown() 
 {
     tiltControl->Set(-ARM_SPEED);
+}
+
+void Arm::tiltZero()
+{
+    tiltControl->Set(0);
 }

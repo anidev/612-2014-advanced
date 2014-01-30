@@ -28,8 +28,17 @@ const static uint8_t  SHIFT_CHAN_F = 1;
 const static uint8_t  SHIFT_CHAN_R = 2;
 
 // Joystick
-const uint32_t DRIVER_JOY_PORT = 1;
-const uint32_t GUNNER_JOY_PORT = 2;
+const static uint32_t DRIVER_JOY_PORT = 1;
+const static uint32_t GUNNER_JOY_PORT = 2;
+
+// Arm values
+const static uint32_t TILT_DEV = 3;
+const static uint8_t GRAB_MOD = 1;
+const static uint32_t GRAB_CHAN = 4;
+
+const static uint8_t CLAMP_MOD = 1;
+const static uint32_t CLAMP_PORT_1 = 5;
+const static uint32_t CLAMP_PORT_2 = 6;
 
 //Encoders
 const uint8_t  LEFT_ENCODER_A_MOD  = 1;

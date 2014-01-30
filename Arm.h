@@ -13,13 +13,14 @@ enum clampPosition
     LOW
 };
 public:
-    Arm(uint8_t tiltDev, uint8_t grabDev, uint32_t SolMod, uint32_t SolPort);
+    Arm(uint8_t tiltDev, uint8_t grabMod, uint32_t grabChan, uint8_t SolMod, uint32_t SolPort1, uint32_t SolPort2);
     void openArm();
     void closeArm();
     void grab(/*will have parameter based on sensor*/);
     void setAngle(float ang);
     void tiltUp();
     void tiltDown();
+    void tiltZero();
     static void updateArm(void*, unsigned int);
 private:
     CANJaguar* tiltControl;
