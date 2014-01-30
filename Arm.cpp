@@ -16,7 +16,7 @@ Arm::Arm(uint8_t tiltDev, uint8_t grabDev, uint32_t SolMod, uint32_t SolPort)
     joy -> pushBtn(3, (void*)this, &updateArm); // -- open
     joy -> pushBtn(4, (void*)this, &updateArm); //B -- close
     
-    grabWheel = new CANJaguar(grabDev);
+    grabWheel = new Talon(3,4); //fake values
     tiltControl = new CANJaguar(tiltDev);
     clamp = new DoubleSolenoid(SolMod, SolPort);
     openArm();

@@ -2,6 +2,7 @@
 #define ARM_H
 
 #include <CANJaguar.h>
+#include <Talon.h>
 //#include <Encoder.h>
 
 class Arm
@@ -22,7 +23,7 @@ public:
     static void updateArm(void*, unsigned int);
 private:
     CANJaguar* tiltControl;
-    CANJaguar* grabWheel;
+    Talon* grabWheel;
     DoubleSolenoid* clamp;
     //Encoder* arm;
     bool isAdjusting;
