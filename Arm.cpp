@@ -46,7 +46,8 @@ void Arm::grab()
     grabWheel -> Set(GRAB_SPEED);
 }
 
-void Arm::updateArm(void* o, unsigned int btn) {
+void Arm::updateArm(void* o, unsigned int btn) 
+{
     Arm* a = (Arm*)o;
     if(btn==2)
     {
@@ -66,10 +67,12 @@ void Arm::updateArm(void* o, unsigned int btn) {
     }
 }
 
-void Arm::tiltUp() {
+void Arm::tiltUp() 
+{
     tiltControl->Set(ARM_SPEED);
 }
 
-void Arm::tiltDown() {
+void Arm::tiltDown() 
+{
     tiltControl->Set(-ARM_SPEED);
 }
