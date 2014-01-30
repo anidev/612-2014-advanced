@@ -31,11 +31,7 @@ DerekDrive::DerekDrive(uint32_t shift1, uint32_t shift2,
     encoderL->SetDistancePerPulse(0.015);
     encoderR->SetDistancePerPulse(0.015);
     
-    registry_object r;
-    r.o = this;
-    r.h = &update;
-    
-    robot->updateRegistry.add(r);
+    robot->updateRegistry.add(this, &update);
 
 }
 

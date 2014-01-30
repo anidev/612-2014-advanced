@@ -8,7 +8,10 @@ UpdateRegistry::~UpdateRegistry() {
     
 }
 
-void UpdateRegistry::add(registry_object r) {
+void UpdateRegistry::add(obj o, helper h) {
+    registry_object r;
+    r.o = o;
+    r.h = h;
     registry.push_back(r);
 }
 
