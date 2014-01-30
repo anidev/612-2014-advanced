@@ -7,6 +7,7 @@
 #include "612.h"
 #include "SmoothJoystick.h"
 #include "ports.h"
+#include "Controls.h"
 
 
 robot_class* robot=NULL;
