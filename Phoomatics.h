@@ -8,6 +8,8 @@
 
 #include <vector>
 
+const double waitTime = 0.15;
+
 struct pnumObj
 {
     double time;

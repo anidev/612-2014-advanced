@@ -84,7 +84,6 @@ void robot_class::TestPeriodic()
 {
     pnum->pressurize();
     updateRegistry.update();
-    drivetrain->doTeleOp();
     //std::printf("ultrasonic value: %f\n", ultrasonic->GetRangeInches());
 }
 

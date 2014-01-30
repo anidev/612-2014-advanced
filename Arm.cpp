@@ -10,8 +10,8 @@
 Arm::Arm(uint8_t tiltDev, uint8_t grabDev, uint32_t SolMod, uint32_t SolPort)
 {
     SmoothJoystick* joy = robot->driverJoy;
-    joy -> pushBtn(1, (void*)this, &update); //A -- open
-    joy -> pushBtn(2, (void*)this, &update); //B -- close
+    joy -> pushBtn(1, (void*)this, &updateArm); //A -- open
+    joy -> pushBtn(2, (void*)this, &updateArm); //B -- close
     
     grabWheel = new CANJaguar(grabDev);
     tiltControl = new CANJaguar(tiltDev);
@@ -22,17 +22,18 @@ Arm::Arm(uint8_t tiltDev, uint8_t grabDev, uint32_t SolMod, uint32_t SolPort)
 void Arm::openArm()
 {
     //clamp -> Set(DoubleSolenoid::kForward);
-    robot->pnum->addSolenoid(0.15, clamp, DoubleSolenoid::kForward);
+    robot->pnum->addSolenoid(waitTime, clamp, DoubleSolenoid::kForward);
     clampPos = UP;
 }
 void Arm::closeArm()
 {
     //clamp -> Set(DoubleSolenoid::kReverse);
-    robot->pnum->addSolenoid(0.15, clamp, DoubleSolenoid::kReverse);
+    robot->pnum->addSolenoid(waitTime, clamp, DoubleSolenoid::kReverse);
     clampPos = LOW;
 }
-void Arm::aim(/*enter parameter here*/)
+void Arm::setAngle(float ang)
 {
+    
     isAdjusting = true;
     //Adjust to whatever value is given
 }
@@ -42,7 +43,7 @@ void Arm::grab()
     grabWheel -> Set(GRAB_SPEED);
 }
 
-void Arm::update(void* o, unsigned int btn) {
+void Arm::updateArm(void* o, unsigned int btn) {
     Arm* a = (Arm*)o;
     if(btn==2) {
         a->closeArm();

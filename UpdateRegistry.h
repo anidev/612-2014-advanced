@@ -15,7 +15,7 @@ class UpdateRegistry {
 public:
     UpdateRegistry();
     ~UpdateRegistry();
-    void add(registry_object);
+    void add(obj, helper);
     void update();
 private:
     std::vector<registry_object> registry;

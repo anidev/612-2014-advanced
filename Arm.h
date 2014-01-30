@@ -2,6 +2,8 @@
 #define ARM_H
 
 #include <CANJaguar.h>
+//#include <Encoder.h>
+
 class Arm
 {
 enum clampPosition
@@ -14,14 +16,16 @@ public:
     void openArm();
     void closeArm();
     void grab(/*will have parameter based on sensor*/);
-    void aim(/*this'll also have a parameter*/);
-    static void update(void*, unsigned int);
+    void setAngle(float ang);
+    static void updateArm(void*, unsigned int);
 private:
     CANJaguar* tiltControl;
     CANJaguar* grabWheel;
     DoubleSolenoid* clamp;
+    //Encoder* arm;
     bool isAdjusting;
     bool isGrabbing;
+    float curAngle;
     static const float GRAB_SPEED = 0.0;
     clampPosition clampPos;
 };

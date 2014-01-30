@@ -9,11 +9,7 @@ Phoomatics::Phoomatics(uint8_t switchMod, uint32_t switchPort, uint8_t compMod, 
     pnumSwitch = new DigitalInput(switchMod, switchPort);
     compressor = new Relay(compMod, compPort, Relay::kForwardOnly);
     
-    registry_object r;
-    r.o = this;
-    r.h = &updateHelper;
-    
-    robot->updateRegistry.add(r);
+    robot->updateRegistry.add(this, &updateHelper);
 }
 
 void Phoomatics::pressurize()

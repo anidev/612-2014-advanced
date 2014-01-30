@@ -5,11 +5,7 @@
 
 SmoothJoystick::SmoothJoystick(UINT32 a) : Joystick(a) 
 {
-    registry_object r;
-    r.o = this;
-    r.h = &updateHelper;
-    
-    robot->updateRegistry.add(r);
+    robot->updateRegistry.add(this, &updateHelper);
 }
 
 SmoothJoystick::~SmoothJoystick() 
