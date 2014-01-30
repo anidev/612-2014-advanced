@@ -21,15 +21,37 @@ static const Axis TRIGGER_AXIS = 3; //may need to rename this later
 static const unsigned int DRIVER_JOY = 1;
 static const unsigned int GUNNER_JOY = 2;
 
-static const Button SHIFT_LOW  = 5; //L1
-static const Button SHIFT_HIGH = 6; //R1
+static const Button BUTTON_A               = 1;
+static const Button BUTTON_B               = 2; 
+static const Button BUTTON_X               = 3;
+static const Button BUTTON_Y               = 4; 
+static const Button BUTTON_L1              = 5;
+static const Button BUTTON_R1              = 6;
+static const Button BUTTON_BACK            = 7; 
+static const Button BUTTON_START           = 8;
+static const Button BUTTON_LEFT_JOY_CLICK  = 9;
+static const Button BUTTON_RIGHT_JOY_CLICK = 10;
 
-static const Button BUTTON_CLAMP_DOWN = 1; //A
-static const Button BUTTON_CLAMP_UP   = 2; //B
+static const Axis LEFT_JOYSTICK_X          = 1;
+static const Axis LEFT_JOYSTICK_Y          = 2; 
+//not sure what to do for the triggers
+static const Axis RIGHT_JOYSTICK_X         = 4;
+static const Axis RIGHT_JOYSTICK_Y         = 5;
+static const Axis DPAD                     = 6;
 
-static const Button BUTTON_TILT_DOWN  = 3; //X
-static const Button BUTTON_TILT_UP    = 4; //Y
+//Button declarations
+static const Button SHIFT_LOW              = BUTTON_L1; 
+static const Button SHIFT_HIGH             = BUTTON_R1; 
 
+static const Button BUTTON_CLAMP_DOWN      = BUTTON_A;
+static const Button BUTTON_CLAMP_UP        = BUTTON_B;
+
+static const Button BUTTON_TILT_DOWN       = BUTTON_X;
+static const Button BUTTON_TILT_UP         = BUTTON_Y; 
+
+//Axis declarations
+static const Axis DRIVER_LEFT_DRIVE_AXIS   = LEFT_JOYSTICK_Y;
+static const Axis DRIVER_RIGHT_DRIVE_AXIS  = RIGHT_JOYSTICK_Y;
 
 //Copied post from XBOX thread
 /*
@@ -55,8 +77,6 @@ Axes
 */
 //no D-Pad Y axis
 
-static const Axis DRIVER_LEFT_DRIVE_AXIS = 2;//L Stick
-static const Axis DRIVER_RIGHT_DRIVE_AXIS = 5;//R Stick
 
 
 #endif
