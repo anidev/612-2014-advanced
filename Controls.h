@@ -18,11 +18,17 @@ static const float TRIGGER_TOLERANCE = 0.25;
 static const Axis TRIGGER_AXIS = 3; //may need to rename this later
 //TODO Rumble
 
-static const unsigned int SHIFT_LOW = 5; //L1
-static const unsigned int SHIFT_HIGH = 6; //R1
-
 static const unsigned int DRIVER_JOY = 1;
 static const unsigned int GUNNER_JOY = 2;
+
+static const Button SHIFT_LOW  = 5; //L1
+static const Button SHIFT_HIGH = 6; //R1
+
+static const Button BUTTON_CLAMP_DOWN = 1; //A
+static const Button BUTTON_CLAMP_UP   = 2; //B
+
+static const Button BUTTON_TILT_DOWN  = 3; //X
+static const Button BUTTON_TILT_UP    = 4; //Y
 
 
 //Copied post from XBOX thread

@@ -21,7 +21,8 @@ public:
     void tiltUp();
     void tiltDown();
     void tiltZero();
-    static void updateArm(void*, unsigned int);
+    void updateArm(unsigned int);
+    static void updateHelper(void*, unsigned int);
 private:
     CANJaguar* tiltControl;
     Talon* grabWheel;
@@ -31,7 +32,6 @@ private:
     bool isGrabbing;
     float curAngle;
     static const float GRAB_SPEED = 0.0;
-    static const float ARM_SPEED  = 0.4;
     clampPosition clampPos;
 };
 
