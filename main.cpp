@@ -18,17 +18,20 @@ robot_class::robot_class()
 
 void robot_class::RobotInit()
 {
-    shifter = new Shift(SHIFT_MOD_F,SHIFT_MOD_R);
-
     //Fist one is for the switch, second is for the compressor
     pnum = new Pneumatics(PNUM_DIGIN_MODULE, PNUM_DIGIN_CHANNEL, 
                           PNUM_RELAY_MODULE, PNUM_RELAY_CHANNEL);
     
     robot = this;
     
-    drivetrain = new DerekDrive(SHIFT_MOD_F, SHIFT_MOD_R,
-                                LEFT_ENCODER_A_CHAN, LEFT_ENCODER_B_CHAN,
-                                RIGHT_ENCODER_A_CHAN, RIGHT_ENCODER_B_CHAN,
+    drivetrain = new DerekDrive(SHIFT_MOD, SHIFT_CHAN_F, SHIFT_CHAN_R,
+                                
+                                LEFT_ENCODER_A_MOD,LEFT_ENCODER_A_CHAN, 
+                                LEFT_ENCODER_B_MOD,LEFT_ENCODER_B_CHAN,
+                                
+                                RIGHT_ENCODER_A_MOD,RIGHT_ENCODER_A_CHAN, 
+                                RIGHT_ENCODER_B_MOD,RIGHT_ENCODER_B_CHAN,
+                                
                                 TALON_FL_MODULE, TALON_FL_CHANNEL,
                                 TALON_RL_MODULE, TALON_RL_CHANNEL,
                                 TALON_FR_MODULE, TALON_FR_CHANNEL,
