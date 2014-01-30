@@ -14,7 +14,8 @@ public:
     void openArm();
     void closeArm();
     void grab(/*will have parameter based on sensor*/);
-    void aim();
+    void aim(/*this'll also have a parameter*/);
+    static void update(void*, unsigned int);
 private:
     CANJaguar* tiltControl;
     CANJaguar* grabWheel;

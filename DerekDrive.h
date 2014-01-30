@@ -32,7 +32,7 @@ class DerekDrive : public RobotDrive
         void doTeleOp();
         void stop();
         void setSafety();
-        void update(bool);
+        static void update(void*);
         void shiftGear();
     private:
         /*

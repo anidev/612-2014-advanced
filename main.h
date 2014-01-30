@@ -41,9 +41,9 @@ public:
     DerekDrive* drivetrain;
     
     UpdateRegistry updateRegistry;
+    Phoomatics* pnum;
     
 private:
-    Phoomatics* pnum;
 };
 
 #endif // MAIN_H

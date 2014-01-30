@@ -20,7 +20,6 @@ public:
         void shiftLow();
         void shiftHigh();
         static void eventHandler(void*,unsigned int);
-        static void update(void*);
 private:
     Gear gear;
     DoubleSolenoid* shift;
