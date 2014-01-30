@@ -21,7 +21,7 @@ DerekDrive::DerekDrive(uint32_t shift1, uint32_t shift2,
     //robot_class* robot = (robot_class*)o;
     drivePower = 1.0;
     //shift LOW (or high, but we need to have a default as seen from last year)
-    driver = robot->driver;
+    driver = robot->driverJoy;
     //Encoders
     encoderState = false;
     encoderL = new Encoder(encLCA, encLCB);
