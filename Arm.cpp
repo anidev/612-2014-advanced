@@ -5,6 +5,7 @@
 #include "612.h"
 #include "SmoothJoystick.h"
 #include "main.h"
+#include "Controls.h"
 
 static const float ARM_SPEED  = 0.4;
 
@@ -13,8 +14,8 @@ Arm::Arm(uint8_t tiltDev,
          uint8_t SolMod, uint32_t SolPort1, uint32_t SolPort2)
 {
     SmoothJoystick* joy = robot->gunnerJoy;
-    joy -> pushBtn(1, (void*)this, &updateHelper); //A -- open
-    joy -> pushBtn(2, (void*)this, &updateHelper); //B -- close
+    joy -> pushBtn(BUTTON_TILT_DOWN, (void*)this, &updateHelper);
+    joy -> pushBtn(BUTTON_TILT_UP, (void*)this, &updateHelper);
     
     grabWheel = new Talon(grabMod,grabChan); //fake values
     tiltControl = new CANJaguar(tiltDev);
@@ -57,11 +58,11 @@ void Arm::updateArm(unsigned int btn)
     {
         openArm();
     } 
-    else if (joy->GetRawButton(BUTTON_TILT_UP))
+    else if (joy->GetTriggerState() == TRIG_R)
     {
         tiltUp();
     } 
-    else if (joy->GetRawButton(BUTTON_TILT_DOWN))
+    else if (joy->GetTriggerState() == TRIG_L)
     {
         tiltDown();
     } else {
