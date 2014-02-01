@@ -5,6 +5,8 @@ class Shooter {
 public:
     Shooter();
     ~Shooter();
+    void shoot();
+    void rewind();
 };
 
 #endif
