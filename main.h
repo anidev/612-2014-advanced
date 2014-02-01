@@ -3,20 +3,20 @@
 
 #include <IterativeRobot.h>
 #include <Joystick.h>
-#include <Relay.h>
-#include <DigitalInput.h>
 
 #include "SmoothJoystick.h"
-#include "Shift.h"
+#include "Sensors.h"
 #include "Pneumatics.h"
-#include "DerekDrive.h"
-#include "Arm.h"
-
-#include "UpdateRegistry.h"
-
+#include "Motors.h"
 
 class robot_class : public IterativeRobot
 {
+enum BUTTON
+{
+    PNEUMATICS, //pnumatics
+    SENSORS, //sensors
+    MOTORS //motors
+};
 public:
     robot_class();
 
@@ -36,17 +36,15 @@ public:
     
     //DerekDrive* test_drivetrain;
     SmoothJoystick* driverJoy;
-    SmoothJoystick* gunnerJoy;
-    Shift* shifter;
-
-    Arm* arm;
-    
-    DerekDrive* drivetrain;
-    
+    Sensors* sense;
+    Motors* motors;
+    Pneumatics* pneumatics;
     UpdateRegistry updateRegistry;
-    Pneumatics* pnum;
-    
 private:
+    BUTTON button;
+    int selection;
+    void printStuff();
+    void getButtons();
 };
 
 #endif // MAIN_H

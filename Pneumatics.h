@@ -1,38 +1,24 @@
-#ifndef PHOOMATICS
-#define PHOOMATICS
+#ifndef Pneumatics_H
+#define Pneumatics_H
 
-#include <Relay.h>
-#include <DigitalInput.h>
-#include <Timer.h>
 #include <DoubleSolenoid.h>
+#include <Timer.h>
 
-#include <vector>
-
-const double waitTime = 0.15;
-
-struct pnumObj
-{
-    double time;
-    Timer* timer;
-    DoubleSolenoid* solenoid;
-    DoubleSolenoid::Value val;
-};
+#include "ports.h"
 
 class Pneumatics
 {
 public:
-    Pneumatics(uint8_t switchMod,uint32_t switchPort,uint8_t compMod,uint32_t compPort);
-    void pressurize();
-    void addSolenoid(double, DoubleSolenoid*, DoubleSolenoid::Value);
-    void updateSolenoids();
-    
-    typedef void* obj;
-    typedef void(*funcName)(obj);
-    static void updateHelper(obj);
-    
+    Pneumatics::Pneumatics();
+    void runPneumatics(int pnum);
 private:
-    DigitalInput* pnumSwitch;
-    Relay* compressor;
-    std::vector<pnumObj> solenoids;
+    bool toggleSolenoid();
+    DoubleSolenoid* shift1;
+    //DoubleSolenoid* shift2;
+    
+    DoubleSolenoid* clamp;
+    
+    Timer* time;
 };
+
 #endif

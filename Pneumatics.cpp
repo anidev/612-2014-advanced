@@ -1,66 +1,20 @@
-#include <Relay.h>
-#include <DigitalInput.h>
-#include "main.h"
-#include "612.h"
 #include "Pneumatics.h"
 
-Pneumatics::Pneumatics(uint8_t switchMod, uint32_t switchPort, uint8_t compMod, uint32_t compPort)
+Pneumatics::Pneumatics()
 {
-    pnumSwitch = new DigitalInput(switchMod, switchPort);
-    compressor = new Relay(compMod, compPort, Relay::kForwardOnly);
+    shift1 = new DoubleSolenoid(SHIFT_MOD,SHIFT_CHAN_F,SHIFT_CHAN_R);
     
-    robot->updateRegistry.add(this, &updateHelper);
+    clamp = new DoubleSolenoid(CLAMP_MOD,CLAMP_PORT_1,CLAMP_PORT_2);
 }
 
-void Pneumatics::pressurize()
+void Pneumatics::runPneumatics(int pnum)
 {
-    Relay::Value val = ((pnumSwitch->Get() == 0) ? Relay::kForward : Relay::kOff);
-    compressor->Set(val);
-    /*
-    if ((pnumSwitch->Get()) == 0)
-    {
-        compressor->Set(Relay::kForward);
-    }
-    else
-    {
-        compressor->Set(Relay::kOff);
-    }
-    */
+    if (pnum = 0)
+        toggleSolenoid();
+    else if (pnum == 1)
+        toggleSolenoid();
 }
-
-void Pneumatics::addSolenoid(double time, DoubleSolenoid* solenoid, DoubleSolenoid::Value value)
+bool Pneumatics::toggleSolenoid()
 {
-    Timer* timer = new Timer();
-    pnumObj p;
-    p.time = time;
-    p.timer = timer;
-    p.solenoid = solenoid;
-    p.val = value;
-    p.solenoid->Set(value);
-    solenoids.push_back(p);
-    p.timer->Start();
-}
-
-void Pneumatics::updateSolenoids()
-{
-    pressurize();
-    for (unsigned int i = 0; i < solenoids.size();)
-    {
-        pnumObj p = solenoids[i];
-        if (p.timer -> Get() >= p.time)
-        {
-            delete p.timer;
-            p.solenoid->Set(DoubleSolenoid::kOff);
-            solenoids.erase(solenoids.begin()+i);
-        } 
-        else
-        {
-            i++;
-        }
-    }
-}
-
-void Pneumatics::updateHelper(obj o) 
-{
-    ((Pneumatics*)(o))->updateSolenoids();
+    return true;
 }
