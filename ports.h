@@ -16,23 +16,23 @@ const static uint32_t TALON_RR_CHANNEL = 7; //real
 
 // Pneumatics Modules
 const static uint8_t  PNUM_DIGIN_MODULE  = 1;
-const static uint8_t  PNUM_RELAY_MODULE  = 0;
+const static uint8_t  PNUM_RELAY_MODULE  = 1;
 
 // Pneumatics Channels
-const static uint32_t PNUM_DIGIN_CHANNEL = 1;
-const static uint32_t PNUM_RELAY_CHANNEL = 0;
+const static uint32_t PNUM_DIGIN_CHANNEL = 8;
+const static uint32_t PNUM_RELAY_CHANNEL = 8;
 
 // Shifter
-const static uint32_t SHIFT_MOD  = 0;
-const static uint8_t  SHIFT_CHAN_F = 1;
-const static uint8_t  SHIFT_CHAN_R = 2;
+const static uint32_t SHIFT_MOD  = 1;
+const static uint8_t  SHIFT_CHAN_F = 7;
+const static uint8_t  SHIFT_CHAN_R = 8;
 
 // Joystick
 const static uint32_t DRIVER_JOY_PORT = 1;
 const static uint32_t GUNNER_JOY_PORT = 2;
 
 // Arm values
-const static uint32_t TILT_DEV = 3;
+const static uint32_t TILT_DEV = 1;
 const static uint8_t GRAB_MOD = 1;
 const static uint32_t GRAB_CHAN = 4;
 

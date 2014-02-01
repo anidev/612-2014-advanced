@@ -3,6 +3,8 @@
 #include "612.h"
 #include "main.h"
 
+#include <cmath>
+
 SmoothJoystick::SmoothJoystick(UINT32 a) : Joystick(a) 
 {
     robot->updateRegistry.add(this, &updateHelper);
@@ -80,3 +82,8 @@ bool SmoothJoystick::GetRawButton(UINT32 btn)
     }
     return true;
 }
+
+bool SmoothJoystick::IsAxisZero(unsigned int btn) {
+    return (fabs(Joystick::GetRawAxis(btn)) < TRIGGER_TOLERANCE);
+}
+

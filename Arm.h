@@ -2,6 +2,7 @@
 #define ARM_H
 
 #include <CANJaguar.h>
+#include <Jaguar.h>
 #include <Talon.h>
 //#include <Encoder.h>
 
@@ -21,8 +22,10 @@ public:
     void tiltUp();
     void tiltDown();
     void tiltZero();
-    void updateArm(unsigned int);
-    static void updateHelper(void*, unsigned int);
+    void armButtons(unsigned int);
+    void update();
+    static void buttonHelper(void*, unsigned int);
+    static void updateHelper(void*);
 private:
     CANJaguar* tiltControl;
     Talon* grabWheel;

@@ -14,14 +14,18 @@ Pneumatics::Pneumatics(uint8_t switchMod, uint32_t switchPort, uint8_t compMod, 
 
 void Pneumatics::pressurize()
 {
-    if ((pnumSwitch->Get()) == 1)
+    Relay::Value val = ((pnumSwitch->Get() == 0) ? Relay::kForward : Relay::kOff);
+    compressor->Set(val);
+    /*
+    if ((pnumSwitch->Get()) == 0)
     {
-        compressor->Set(Relay::kOn);
+        compressor->Set(Relay::kForward);
     }
     else
     {
         compressor->Set(Relay::kOff);
     }
+    */
 }
 
 void Pneumatics::addSolenoid(double time, DoubleSolenoid* solenoid, DoubleSolenoid::Value value)

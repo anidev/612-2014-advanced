@@ -70,14 +70,11 @@ void robot_class::TeleopInit()
 
 void robot_class::TeleopPeriodic()
 {
+    pnum -> pressurize();
     updateRegistry.update();
+    drivetrain -> doTeleOp();
+    //commented out to avoid compiler warning barf
     
-    /*
-    float left = driverJoy->GetRawAxis(2);
-    float right = driverJoy->GetRawAxis(5);
-    // drive->TankDrive(left, right);
-    commented out to avoid compiler warning barf
-    */
 }
 
 void robot_class::TestInit()
