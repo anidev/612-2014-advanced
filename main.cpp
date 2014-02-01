@@ -53,7 +53,7 @@ void robot_class::TeleopPeriodic()
 
 void robot_class::TestInit()
 {
-    button = SENSORS;
+    button = MOTORS;
     selection = 0;
 }
 
@@ -75,23 +75,48 @@ void robot_class::printStuff()
     std::printf("R1: Increment selection\nL1: Decrement selection\nLeft Analog stick for control\n\n");
     std::printf("TRIANGLE: Print instructions\n");
     std::printf("CIRCLE: Pneumatics\n\t0:Shifters\n\t1:Clamp\n");
-    std::printf("SQUARE: Sensors\n\t0: Digital Switch\n");
-    std::printf("X: MOTORS\n\t0: Drivetrain\n\t1: Talon 1\n\t2: Talon 2\n\t3: Talon 3\n\t4: Talon 4\n\n\t5: Grabber\n\t6: Tilt control\n\t7: Compressor");
+    std::printf("SQUARE: Sensors\n\t0: Digital Switch\n\t1: Left Encoder\n\t2:Right Encoder\n");
+    std::printf("X: MOTORS\n\t0: Drivetrain\n\t1: Talon 1\n\t2: Talon 2\n\t3: Talon 3\n\t4: Talon 4\n\n\t5: Grabber\n\t6: Tilt control\n\t7: Compressor\n");
 }
 void robot_class::getButtons()
 {
     if (driverJoy->GetRawButton(BUTTON_X))
+    {
         button = SENSORS;
-    else if (driverJoy->GetRawButton(BUTTON_A))
+        std::printf("SENSORS\n");
+    }
+    if (driverJoy->GetRawButton(BUTTON_A))
+    {
         button = MOTORS;
+        std::printf("MOTORS\n");
+    }
     else if (driverJoy->GetRawButton(BUTTON_B))
+    {
         button = PNEUMATICS;
+        std::printf("PNEUMATICS\n");
+    }
     else if (driverJoy->GetRawButton(BUTTON_Y))
+    {
         printStuff();
+    }
     if (driverJoy->GetRawButton(BUTTON_R1))
-        selection++;
+    {
+        selection = selection+10;
+        std::printf("INCREMENT\n");
+        if (button == MOTORS)
+        {
+            motors->disable();
+        }
+    }
     else if (driverJoy->GetRawButton(BUTTON_L1))
-        selection--;
+    {
+        selection = selection-10;
+        std::printf("DECREMENT\n");
+        if (button == MOTORS)
+        {
+            motors->disable();
+        }
+    }
 }
 
 START_ROBOT_CLASS(robot_class)

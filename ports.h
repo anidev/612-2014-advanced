@@ -55,4 +55,8 @@ const uint32_t RIGHT_ENCODER_A_CHAN = 2;
 const uint8_t  RIGHT_ENCODER_B_MOD  = 1;
 const uint32_t RIGHT_ENCODER_B_CHAN = 2;
 
+//Ultrasonic
+const uint8_t ULTRASONIC_MODULE = 1; //FILLER
+const uint32_t ULTRASONIC_CHANNEL = 1; //FILLER
+
 #endif

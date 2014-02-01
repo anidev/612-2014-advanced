@@ -41,9 +41,9 @@ public:
     Motors* motors;
     Pneumatics* pneumatics;
     UpdateRegistry updateRegistry;
+    int selection;
 private:
     BUTTON button;
-    int selection;
     void printStuff();
     void getButtons();
 };
