@@ -46,8 +46,8 @@ static const Button SHIFT_HIGH             = BUTTON_R1;
 static const Button BUTTON_CLAMP_DOWN      = BUTTON_A;
 static const Button BUTTON_CLAMP_UP        = BUTTON_B;
 
-static const Button BUTTON_TILT_DOWN       = BUTTON_X;
-static const Button BUTTON_TILT_UP         = BUTTON_Y; 
+static const Button BUTTON_GRAB            = BUTTON_X;
+//static const Button BUTTON_TILT_UP         = BUTTON_Y; 
 
 //Axis declarations
 static const Axis DRIVER_LEFT_DRIVE_AXIS   = LEFT_JOYSTICK_Y;

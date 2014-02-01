@@ -34,7 +34,7 @@ private:
     bool isAdjusting;
     bool isGrabbing;
     float curAngle;
-    static const float GRAB_SPEED = 0.0;
+    static const float GRAB_SPEED = 0.5f;
     clampPosition clampPos;
 };
 

@@ -7,7 +7,7 @@
 #include "main.h"
 #include "Controls.h"
 
-static const float ARM_SPEED  = 0.4;
+static const float ARM_SPEED  = 1.0f;
 
 Arm::Arm(uint8_t tiltDev, 
          uint8_t grabMod, uint32_t grabChan, 
@@ -58,17 +58,12 @@ void Arm::armButtons(unsigned int btn)
     else if (btn == BUTTON_CLAMP_UP)
     {
         openArm();
-    } 
+    }
 }
 
 void Arm::update()
 {
     SmoothJoystick* joy = robot->gunnerJoy;
-    static int output=0;
-    if(output%20==0)
-    {
-        printf("tilt up: %d, down: %d\n",joy->GetRawButton(BUTTON_TILT_UP),joy->GetRawButton(BUTTON_TILT_DOWN));
-    }
     if (joy->GetTriggerState() == TRIG_R)
     {
         tiltUp();
@@ -80,6 +75,14 @@ void Arm::update()
     else
     {
         tiltZero();
+    }
+    if (joy->GetRawButton(BUTTON_GRAB))
+    {
+        grab();
+    }
+    else
+    {
+        grabWheel -> Set(0.0f);
     }
 }
 
