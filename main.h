@@ -8,6 +8,7 @@
 #include "Sensors.h"
 #include "Pneumatics.h"
 #include "Motors.h"
+#include "UpdateRegistry.h"
 
 class robot_class : public IterativeRobot
 {

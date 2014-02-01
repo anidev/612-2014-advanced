@@ -1,4 +1,5 @@
 #include "Sensors.h"
+#include "ports.h"
 
 Sensors::Sensors()
 {
@@ -7,5 +8,5 @@ Sensors::Sensors()
 void Sensors::runSensors(int sense)
 {
     if (sense == 0)
-        std::printf(pnumSwitch -> Get());
+        std::printf("PnumSwitch: %i",pnumSwitch -> Get());
 }

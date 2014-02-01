@@ -15,7 +15,6 @@ robot_class::robot_class()
 
 void robot_class::RobotInit()
 {
-    updateRegistry = new UpdateRegistry();
     robot = this;
     driverJoy = new SmoothJoystick(DRIVER_JOY_PORT);
     
@@ -60,6 +59,7 @@ void robot_class::TestInit()
 
 void robot_class::TestPeriodic()
 {
+    updateRegistry.update();
     if (selection < 0)
         selection = 0;
     getButtons();

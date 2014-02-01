@@ -1,5 +1,6 @@
 #include "Motors.h"
-
+#include "main.h"
+#include "612.h"
 Motors::Motors()
 {
     FR = new Talon(TALON_FL_MODULE, TALON_FL_CHANNEL); //drivetrain
@@ -13,14 +14,12 @@ Motors::Motors()
     
     compressor = new Relay(PNUM_RELAY_MODULE, PNUM_RELAY_CHANNEL);
     
-    SmoothJoystick* joy = robot->driverJoy;
-    
-    pnumSwitch = new DigitalInput(PNUM_DIGIN_MODULE, PNUM_DIGIN_CHANNEL);
+    //joy = robot->driverJoy;
 }
 
 void Motors::runMotor(int motor)
 {
-    power = joy -> GetRawAxis(DRIVER_LEFT_DRIVE_AXIS);
+    power = robot->driverJoy -> GetRawAxis(DRIVER_LEFT_DRIVE_AXIS);
     if (motor == 0)
         drive(); //implementation of RobotDrive
     else if (motor == 1)
@@ -38,13 +37,13 @@ void Motors::runMotor(int motor)
         tilt -> Set(power);
     
     else if (motor == 7) //Compressor NEVER SET TO REVERSE
-        if ((joy -> isAxisZero(DRIVER_LEFT_DRIVE_AXIS) == false) && (robot->sense->pnumSwitch->Get() == 0))
+        if ((robot->driverJoy -> IsAxisZero(DRIVER_LEFT_DRIVE_AXIS) == false) && (robot->sense->pnumSwitch->Get() == 0))
             compressor->Set(Relay::kForward);
 }
 void Motors::drive()
 {
-    left = joy -> GetRawAxis(DRIVER_LEFT_DRIVE_AXIS);
-    right = joy -> GetRawAxis(DRIVER_RIGHT_DRIVE_AXIS);
+    left = robot->driverJoy->GetRawAxis(DRIVER_LEFT_DRIVE_AXIS);
+    right = robot->driverJoy->GetRawAxis(DRIVER_RIGHT_DRIVE_AXIS);
     
     FL -> Set(left);
     RL -> Set(left);
@@ -52,4 +51,3 @@ void Motors::drive()
     FR -> Set(right);
     RR -> Set(right);
 }
-    
