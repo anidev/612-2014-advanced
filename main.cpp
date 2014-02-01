@@ -42,7 +42,7 @@ void robot_class::RobotInit()
                                 TALON_RL_MODULE, TALON_RL_CHANNEL,
                                 TALON_FR_MODULE, TALON_FR_CHANNEL,
                                 TALON_RR_MODULE, TALON_RR_CHANNEL);
-    //Ultrasonic* ultrasonic = new Ultrasonic(port1, port2);
+    ultrasonic = new AnalogChannel(4,4); //fake
 }
 
 void robot_class::DisabledInit()
@@ -79,14 +79,13 @@ void robot_class::TeleopPeriodic()
 
 void robot_class::TestInit()
 {
-    //ultrasonic->SetEnabled(true);
-    //ultrasonic->SetAutomaticMode(true);
+    
 }
 
 void robot_class::TestPeriodic()
 {
     updateRegistry.update();
-    //std::printf("ultrasonic value: %f\n", ultrasonic->GetRangeInches());
+    printf("ultrasonic voltage: %f, ultrasonic value: %f\n", (float)ultrasonic->GetVoltage(), (float)ultrasonic->GetValue());;
 }
 
 START_ROBOT_CLASS(robot_class)
