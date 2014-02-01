@@ -30,12 +30,13 @@ DerekDrive::DerekDrive(uint8_t shiftMod, uint32_t shift1, uint32_t shift2,
     driver = robot->driverJoy;
     //Encoders
     encoderState = false;
+    /*
     encoderL = new Encoder(LAModF, LAChanR, LBModF, LBChanR);
     encoderR = new Encoder(RAModF, RAChanR, RBModF, RBChanR);
     
     encoderL->SetDistancePerPulse(0.015);
     encoderR->SetDistancePerPulse(0.015);
-    
+    */
     robot->updateRegistry.add(this, &update);
     
 
@@ -43,12 +44,13 @@ DerekDrive::DerekDrive(uint8_t shiftMod, uint32_t shift1, uint32_t shift2,
 
 DerekDrive::~DerekDrive()
 {
-    delete encoderR;
-    delete encoderL;
+    //delete encoderR;
+    //delete encoderL;
     delete shifter;
 }
 void DerekDrive::autoDrive(float dist) 
 {
+    /*
     if (!encoderState)
     {
         startEncoders();
@@ -59,6 +61,7 @@ void DerekDrive::autoDrive(float dist)
         stopEncoders();
         return;
     }
+//     */
 }
 void DerekDrive::autoRotate()
 {
