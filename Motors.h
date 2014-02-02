@@ -40,11 +40,12 @@ public:
     Relay* compressor; //Spike 1,1
 private:
     //SmoothJoystick* joy;
+    void setTalon(Talon* t, bool print, int motor);
     float joy;
     float power;
     float left;
     float right;
-    void drive();
+    void drive(bool print);
 
     Talon* FR; //Talon 7
     Talon* FL; //Talon 1
