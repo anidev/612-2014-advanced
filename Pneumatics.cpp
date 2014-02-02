@@ -12,39 +12,44 @@ Pneumatics::Pneumatics()
 
 void Pneumatics::runPneumatics(int pnum)
 {
-    int prevPnum = 0;
-//     bool isNotified = false;
-    pressurize();
-    unsigned long int prevVal = 0;
-    if (pnum >= 0 && pnum < 10)
+    static int run = 0;
+    if (run%50 == 0)
     {
-        toggleSolenoid(shift1);
-        if (prevPnum != pnum)
+        int prevPnum = 0;
+    //     bool isNotified = false;
+        pressurize();
+        unsigned long int prevVal = 0;
+        if (pnum >= 0 && pnum < 10)
         {
-            std::printf("Shift Solenoid\n");
+            toggleSolenoid(shift1);
+            if (prevPnum != pnum)
+            {
+                std::printf("Shift Solenoid\n");
+            }
         }
-    }
-    else if (pnum >= 10 && pnum < 20)
-    {
-        toggleSolenoid(clamp);
-        if (prevPnum != pnum)
+        else if (pnum >= 10 && pnum < 20)
         {
-            std::printf("Clamp Solenoid\n");
+            toggleSolenoid(clamp);
+            if (prevPnum != pnum)
+            {
+                std::printf("Clamp Solenoid\n");
+            }
         }
-    }
-    else if (pnum >= 20 && pnum < 30)
-    {
-        if (robot->sense->pnumSwitch->Get() != prevVal)
+        else if (pnum >= 20 && pnum < 30)
         {
-            std::printf("DigitalInput: %ld\n", robot->sense->pnumSwitch->Get()); 
+            if (robot->sense->pnumSwitch->Get() != prevVal)
+            {
+                std::printf("DigitalInput: %ld\n", robot->sense->pnumSwitch->Get()); 
+            }
         }
+        else if(pnum >= 30)
+        {
+            std::printf("MAX");
+            robot->selection = 29;
+        }
+        prevPnum = pnum;
     }
-    else if(pnum >= 30)
-    {
-        std::printf("MAX");
-        robot->selection = 29;
-    }
-    prevPnum = pnum;
+    run++;
 }
 void Pneumatics::toggleSolenoid(DoubleSolenoid* sol)
 {
