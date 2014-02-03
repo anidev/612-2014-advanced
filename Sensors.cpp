@@ -14,7 +14,7 @@ Sensors::Sensors()
 void Sensors::runSensors(int sense)
 {
     double prevVal = 0.0;
-    if ((sense == 0) && sense <10)
+    if (sense == 0)
     {
         if ((double)pnumSwitch -> Get() != prevVal)
         {
@@ -22,7 +22,7 @@ void Sensors::runSensors(int sense)
             prevVal = (double)pnumSwitch -> Get();
         }
     }
-    else if(sense >= 10 && sense < 20)
+    else if(sense == 1)
     {
         if ((double)left->Get() != prevVal)
         {
@@ -30,7 +30,7 @@ void Sensors::runSensors(int sense)
             prevVal = (double)left->Get();
         }
     }
-    else if (sense >= 20 && sense < 30)
+    else if (sense == 2)
     {
         if ((double)right->Get() != prevVal)
         {
@@ -38,7 +38,7 @@ void Sensors::runSensors(int sense)
             prevVal = (double)right->Get();
         }
     }
-    else if (sense >= 30 && sense < 40)
+    else if (sense == 3)
     {
         if ((double)ultrasonic->GetVoltage() != prevVal)
         {
@@ -46,7 +46,7 @@ void Sensors::runSensors(int sense)
             prevVal = (double)ultrasonic->GetVoltage();
         }
     }
-    else if (sense >= 40)
+    else if (sense >= 4)
     {
         std::printf("MAX");
         robot->selection = 39;

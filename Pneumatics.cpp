@@ -1,5 +1,6 @@
 #include "Pneumatics.h"
 #include "main.h"
+//#include <Relay.h>
 
 Pneumatics::Pneumatics()
 {
@@ -12,58 +13,81 @@ Pneumatics::Pneumatics()
 
 void Pneumatics::runPneumatics(int pnum)
 {
-    static int run = 0;
-    if (run%50 == 0)
+    static int prevPnum = -1;
+//     bool isNotified = false;
+    pressurize();
+    unsigned long int prevVal = 0;
+    if (pnum == 0)
     {
-        int prevPnum = 0;
-    //     bool isNotified = false;
-        pressurize();
-        unsigned long int prevVal = 0;
-        if (pnum >= 0 && pnum < 10)
+        toggleSolenoid(shift1);
+        if (prevPnum != pnum)
         {
-            toggleSolenoid(shift1);
-            if (prevPnum != pnum)
-            {
-                std::printf("Shift Solenoid\n");
-            }
+            std::printf("Shift Solenoid");
         }
-        else if (pnum >= 10 && pnum < 20)
-        {
-            toggleSolenoid(clamp);
-            if (prevPnum != pnum)
-            {
-                std::printf("Clamp Solenoid\n");
-            }
-        }
-        else if (pnum >= 20 && pnum < 30)
-        {
-            if (robot->sense->pnumSwitch->Get() != prevVal)
-            {
-                std::printf("DigitalInput: %ld\n", robot->sense->pnumSwitch->Get()); 
-            }
-        }
-        else if(pnum >= 30)
-        {
-            std::printf("MAX");
-            robot->selection = 29;
-        }
-        prevPnum = pnum;
     }
-    run++;
+    else if (pnum == 1)
+    {
+        toggleSolenoid(clamp);
+        if (prevPnum != pnum)
+        {
+            std::printf("Clamp Solenoid\n");
+        }
+    }
+    else if (pnum == 2)
+    {
+        if (robot->sense->pnumSwitch->Get() != prevVal)
+        {
+            std::printf("DigitalInput: %ld\n", robot->sense->pnumSwitch->Get()); 
+        }
+    }
+    else if(pnum >= 3)
+    {
+        std::printf("MAX");
+        robot->selection = 29;
+    }
+    prevPnum = pnum;
 }
 void Pneumatics::toggleSolenoid(DoubleSolenoid* sol)
 {
     axis = robot->driverJoy->GetRawAxis(DRIVER_LEFT_DRIVE_AXIS);
+    static DoubleSolenoid::Value solToggled = DoubleSolenoid::kOff;
     if (axis > JOYSTICK_ZERO_TOLERANCE)
+    {
         sol->Set(DoubleSolenoid::kForward);
+        if (solToggled != DoubleSolenoid::kForward)
+        {
+            std::printf("Solenoid Forward\n");
+            solToggled = DoubleSolenoid::kForward;
+        }
+    }
     else if (axis < JOYSTICK_ZERO_TOLERANCE*-1)
+    {
         sol->Set(DoubleSolenoid::kReverse);
+        if (solToggled != DoubleSolenoid::kReverse)
+        {
+            std::printf("Solenoid Reverse\n");
+            solToggled = DoubleSolenoid::kReverse;
+        }
+    }
+    else
+    {
+        sol->Set(DoubleSolenoid::kOff);
+        if (solToggled != DoubleSolenoid::kOff)
+        {
+            std::printf("Solenoid Off");
+            solToggled = DoubleSolenoid::kOff;
+        }
+    }
 }
 void Pneumatics::pressurize()
 {
     if (robot->sense->pnumSwitch->Get() == 0)
+    {
         robot->motors->compressor->Set(Relay::kForward);
+    }
     else
+    {
         robot->motors->compressor->Set(Relay::kOff);
+    }
 }
 

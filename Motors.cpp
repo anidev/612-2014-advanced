@@ -25,7 +25,6 @@ void Motors::runMotor(int motor)
     static bool print = false;
     static int previousMotor = -1;
     static float previousPower = 0.0;
-    motor = motor/10;
     power = robot->driverJoy -> GetRawAxis(DRIVER_LEFT_DRIVE_AXIS);
     
     if ((previousMotor != motor) || previousPower != power) 

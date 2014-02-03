@@ -59,6 +59,7 @@ void robot_class::TestInit()
 
 void robot_class::TestPeriodic()
 {
+    //static int lastSelection = -1;
     updateRegistry.update();
     if (selection < 0)
         selection = 0;
@@ -84,16 +85,19 @@ void robot_class::getButtons()
     {
         button = SENSORS;
         std::printf("SENSORS\n");
+        selection = 0;
     }
     if (driverJoy->GetRawButton(BUTTON_A))
     {
         button = MOTORS;
         std::printf("MOTORS\n");
+        selection = 0;
     }
     else if (driverJoy->GetRawButton(BUTTON_B))
     {
         button = PNEUMATICS;
         std::printf("PNEUMATICS\n");
+        selection = 0;
     }
     else if (driverJoy->GetRawButton(BUTTON_Y))
     {
@@ -101,7 +105,7 @@ void robot_class::getButtons()
     }
     if (driverJoy->GetRawButton(BUTTON_R1))
     {
-        selection = selection+10;
+        selection++;
         std::printf("INCREMENT\n");
         if (button == MOTORS)
         {
@@ -110,7 +114,7 @@ void robot_class::getButtons()
     }
     else if (driverJoy->GetRawButton(BUTTON_L1))
     {
-        selection = selection-10;
+        selection--;
         std::printf("DECREMENT\n");
         if (button == MOTORS)
         {
