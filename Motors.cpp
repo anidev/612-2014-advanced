@@ -14,14 +14,6 @@ Motors::Motors()
     tilt = new CANJaguar(TILT_DEV);
     
     compressor = new Relay(PNUM_RELAY_MODULE, PNUM_RELAY_CHANNEL);
-    /*
-    motors.push_back({"FRTalon",TALON,TALON_FR_MODULE,TALON_FR_CHANNEL,FR});
-    motor_info FLinfo   = {"FLTalon",TALON,TALON_FL_MODULE,TALON_FL_CHANNEL,FL};
-    motor_info RRinfo   = {"RRTalon",TALON,TALON_RR_MODULE,TALON_RR_CHANNEL,RR};
-    motor_info RLinfo   = {"RLTalon",TALON,TALON_RL_MODULE,TALON_RL_CHANNEL,RL};
-    motor_info compinfo = {"Compressor",RELAY,PNUM_RELAY_MODULE,PNUM_RELAY_CHANNEL,compressor};
-    */
-    //joy = robot->driverJoy;
 }
 
 Motors::~Motors()
@@ -33,7 +25,7 @@ void Motors::runMotor(int motor)
     static bool print = false;
     static int previousMotor = -1;
     static float previousPower = 0.0;
-    
+    motor = motor/10;
     power = robot->driverJoy -> GetRawAxis(DRIVER_LEFT_DRIVE_AXIS);
     
     if ((previousMotor != motor) || previousPower != power) 
