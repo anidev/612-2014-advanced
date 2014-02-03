@@ -49,7 +49,7 @@ void Sensors::runSensors(int sense)
     else if (sense >= 4)
     {
         std::printf("MAX");
-        robot->selection = 30
+        robot->selection = 30;
     }
     prevVal = sense;
 }
