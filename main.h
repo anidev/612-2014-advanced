@@ -5,6 +5,7 @@
 #include <Joystick.h>
 #include <Relay.h>
 #include <DigitalInput.h>
+#include <AnalogChannel.h>
 
 #include "SmoothJoystick.h"
 #include "Shift.h"
@@ -45,6 +46,8 @@ public:
     
     UpdateRegistry updateRegistry;
     Pneumatics* pnum;
+    
+    AnalogChannel* ultrasonic;
     
 private:
 };
