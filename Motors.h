@@ -38,14 +38,16 @@ public:
     motor_info mot;
     std::vector<motor_info> motors;
     Relay* compressor; //Spike 1,1
+    void setTalon(Talon* t, bool print, int motor);
+    void setTalon(int talon, bool print, int motor);
 private:
     //SmoothJoystick* joy;
-    void setTalon(Talon* t, bool print, int motor);
     float joy;
     float power;
     float left;
     float right;
     void drive(bool print);
+    void drive2(bool print);
 
     Talon* FR; //Talon 7
     Talon* FL; //Talon 1

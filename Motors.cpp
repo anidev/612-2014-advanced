@@ -9,6 +9,8 @@ Motors::Motors()
     RR = new Talon(TALON_FR_MODULE, TALON_FR_CHANNEL);
     RL = new Talon(TALON_RR_MODULE, TALON_RR_CHANNEL);
 
+    //Talon* drivetrain [4] = { FR, Fl, RR, RL };
+    
     grabber = new Talon(GRAB_MOD, GRAB_CHAN);
     
     tilt = new CANJaguar(TILT_DEV);
@@ -49,7 +51,7 @@ void Motors::runMotor(int motor)
         setTalon(RL,print,motor);
     else if (motor == 5)
         setTalon(grabber,print,motor);
-    else if (motor >= 70 && motor < 80) //tilt JAG
+    else if (motor == 7) //tilt JAG
     {
         tilt -> Set(power);
         if (print)
@@ -112,6 +114,18 @@ void Motors::drive(bool print)
     if (print)
         std::printf("Drivetrain: %f\n", power);
 }
+void Motors::drive2(bool print)
+{
+    left = robot->driverJoy->GetRawAxis(DRIVER_LEFT_DRIVE_AXIS);
+    right = robot->driverJoy->GetRawAxis(DRIVER_RIGHT_DRIVE_AXIS);
+/*
+    for (int i=0;i<4;i++)
+        drivetrain[i] ->Set(power);
+
+    if (print)
+        std::printf("%d: Talon %u : %f\n",motor, 0, power);
+*/
+}
 void Motors::disable()
 {
     FL->Set(0.0);
@@ -133,4 +147,11 @@ void Motors::setTalon(Talon* t, bool print, int motor)
         std::printf("%d: Talon %u : %f\n",motor, 0, power);
     }
 }
-
+void Motors::setTalon(int talon, bool print, int motor)
+{
+    //drivetrain[talon] -> Set(power);
+    if (print)
+    {
+        std::printf("%d: Talon %u : %f\n",motor, 0, power); //0 is placeholder
+    }
+}
