@@ -9,4 +9,5 @@ The Test branch has three modes. The modes are changed by pressing the correspon
 
 To Cycle between various devices in a mode, use the bumpers (L1 and R1 on PS) This will cycle between the devices on each mode
 
-To use a device that requires input, just use the left analog stick
+To use a device that requires input, just use the left analog stick.  
+There is also an override function for the compressor. When in motor function, press [Start] and move the stick to force the compressor to start, ignoreing the digitalSwitch
