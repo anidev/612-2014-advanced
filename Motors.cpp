@@ -9,7 +9,11 @@ Motors::Motors()
     RR = new Talon(TALON_FR_MODULE, TALON_FR_CHANNEL);
     RL = new Talon(TALON_RR_MODULE, TALON_RR_CHANNEL);
 
-    //Talon* drivetrain [4] = { FR, Fl, RR, RL };
+    drivetrain [0] = FR;
+    drivetrain [1] = FL;
+    drivetrain [2] = RR;
+    drivetrain [3] = RL;
+    
     
     grabber = new Talon(GRAB_MOD, GRAB_CHAN);
     
@@ -41,6 +45,7 @@ void Motors::runMotor(int motor)
     }
     if (motor == 0)
         drive(print); //implementation of RobotDrive
+    /*
     else if (motor == 1)
         setTalon(FR,print,motor);
     else if (motor == 2)
@@ -49,6 +54,13 @@ void Motors::runMotor(int motor)
         setTalon(RR,print,motor);
     else if (motor == 4)
         setTalon(RL,print,motor);
+    */
+    
+    
+    else if (motor >= 1 && motor <=4)
+        setTalon(motor,print);
+                 
+    
     else if (motor == 5)
         setTalon(grabber,print,motor);
     else if (motor == 7) //tilt JAG
@@ -98,7 +110,7 @@ void Motors::runMotor(int motor)
     else if (motor >= 8)
     {
         std::printf("MAX\n");
-        robot->selection = 79;
+        robot->selection = 70;
     }
 }
 void Motors::drive(bool print)
@@ -116,15 +128,16 @@ void Motors::drive(bool print)
 }
 void Motors::drive2(bool print)
 {
+    //TODO I want to test this first, not sure if it will work
     left = robot->driverJoy->GetRawAxis(DRIVER_LEFT_DRIVE_AXIS);
     right = robot->driverJoy->GetRawAxis(DRIVER_RIGHT_DRIVE_AXIS);
-/*
+
     for (int i=0;i<4;i++)
         drivetrain[i] ->Set(power);
 
     if (print)
-        std::printf("%d: Talon %u : %f\n",motor, 0, power);
-*/
+        std::printf("Drivetrain Power: %f\n", power);
+
 }
 void Motors::disable()
 {
@@ -147,11 +160,11 @@ void Motors::setTalon(Talon* t, bool print, int motor)
         std::printf("%d: Talon %u : %f\n",motor, 0, power);
     }
 }
-void Motors::setTalon(int talon, bool print, int motor)
+void Motors::setTalon(int motor, bool print)
 {
-    //drivetrain[talon] -> Set(power);
+    drivetrain[motor-1] -> Set(power);
     if (print)
     {
-        std::printf("%d: Talon %u : %f\n",motor, 0, power); //0 is placeholder
+        std::printf("%d: Talon %u : %f\n",motor-1, 0, power); //0 is placeholder
     }
 }

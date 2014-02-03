@@ -43,13 +43,13 @@ void Sensors::runSensors(int sense)
         if ((double)ultrasonic->GetVoltage() != prevVal)
         {
             std::printf("UltraSonic Voltage: %f\nUltraSonic Value: %f\n\n", (double)ultrasonic->GetVoltage(), (double)ultrasonic->GetValue());
-            prevVal = (double)ultrasonic->GetVoltage();
+            prevVal = (double)ultrasonic->GetValue();
         }
     }
     else if (sense >= 4)
     {
         std::printf("MAX");
-        robot->selection = 39;
+        robot->selection = 30
     }
     prevVal = sense;
 }

@@ -19,12 +19,13 @@ public:
     void pressurize();
 private:
     DoubleSolenoid* shift1;//8,7
+    DoubleSolenoid* clamp; //6,5
+    //DoubleSolenoid* solenoids[2];
     //DoubleSolenoid* shift2;
     float axis;
     //Relay* compressor;
     //DigitalInput* digiSwitch;
     
-    DoubleSolenoid* clamp; //6,5
 };
 
 #endif

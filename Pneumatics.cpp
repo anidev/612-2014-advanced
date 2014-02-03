@@ -43,7 +43,7 @@ void Pneumatics::runPneumatics(int pnum)
     else if(pnum >= 3)
     {
         std::printf("MAX");
-        robot->selection = 29;
+        robot->selection = 20;
     }
     prevPnum = pnum;
 }
