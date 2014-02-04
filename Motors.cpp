@@ -73,7 +73,7 @@ void Motors::runMotor(int motor)
     {
         static bool warned = false;
         static Relay::Value compressorDirection = Relay::kReverse;
-        if (robot->driverJoy->GetRawButton(BUTTON_START) && (power > JOYSTICK_ZERO_TOLERANCE))
+        if (robot->driverJoy->GetRawButton(BUTTON_START) && ((power > JOYSTICK_ZERO_TOLERANCE) || (power < JOYSTICK_ZERO_TOLERANCE*-1)))
         {
             compressor->Set(Relay::kForward);
             if (compressorDirection != Relay::kForward)
