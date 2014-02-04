@@ -17,7 +17,7 @@ Motors::Motors()
     
     grabber = new Talon(GRAB_MOD, GRAB_CHAN);
     
-    tilt = new CANJaguar(TILT_DEV);
+    //tilt = new CANJaguar(TILT_DEV);
     
     compressor = new Relay(PNUM_RELAY_MODULE, PNUM_RELAY_CHANNEL);
 }
@@ -63,14 +63,11 @@ void Motors::runMotor(int motor)
     
     else if (motor == 5)
         setTalon(grabber,print,motor);
-    else if (motor == 7) //tilt JAG
-    {
-        tilt -> Set(power);
-        if (print)
-            std::printf("6: Jag Tilt: %f\n", power);
-    }
+
     else if (motor == 6) //Compressor NEVER SET TO REVERSE
     {
+        if (print)
+            std::printf("Compressor\n");
         static bool warned = false;
         static Relay::Value compressorDirection = Relay::kReverse;
         if (robot->driverJoy->GetRawButton(BUTTON_START) && ((power > JOYSTICK_ZERO_TOLERANCE) || (power < JOYSTICK_ZERO_TOLERANCE*-1)))
@@ -80,10 +77,10 @@ void Motors::runMotor(int motor)
             {
                 if (!warned)
                 {
-                    std::printf("RELAY OVERRIDE: WILL NOT TURN OFF AUTOMATICALLY");
+                    std::printf("RELAY OVERRIDE: WILL NOT TURN OFF AUTOMATICALLY\n");
                     warned = true;
                 }
-                std::printf("Compressor: kForward");
+                std::printf("Compressor: kForward\n");
                 compressorDirection = Relay::kForward;
             }
         }
@@ -107,10 +104,18 @@ void Motors::runMotor(int motor)
             }
         }
     }
-    else if (motor >= 8)
+    /*
+    else if (motor == 7) //tilt JAG
+    {
+        tilt -> Set(power);
+        if (print)
+            std::printf("6: Jag Tilt: %f\n", power);
+    }
+    */
+    else if (motor >= 7)
     {
         std::printf("MAX\n");
-        robot->selection = 70;
+        robot->selection = 60;
     }
 }
 void Motors::drive(bool print)
@@ -148,7 +153,7 @@ void Motors::disable()
     
     grabber->Set(0.0);
     
-    tilt->Set(0.0);
+    //tilt->Set(0.0);
     
     compressor->Set(Relay::kOff);
 }

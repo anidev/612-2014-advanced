@@ -22,7 +22,7 @@ void Pneumatics::runPneumatics(int pnum)
         toggleSolenoid(shift1);
         if (prevPnum != pnum)
         {
-            std::printf("Shift Solenoid");
+            std::printf("Shift Solenoid\n");
         }
     }
     else if (pnum == 1)
@@ -74,7 +74,7 @@ void Pneumatics::toggleSolenoid(DoubleSolenoid* sol)
         sol->Set(DoubleSolenoid::kOff);
         if (solToggled != DoubleSolenoid::kOff)
         {
-            std::printf("Solenoid Off");
+            std::printf("Solenoid Off\n");
             solToggled = DoubleSolenoid::kOff;
         }
     }

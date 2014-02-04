@@ -64,16 +64,16 @@ void robot_class::TestPeriodic()
     if (selection < 0)
         selection = 0;
     if (selection < lastSelection)
-        std::printf("DECREMENT");
+        std::printf("DECREMENT\n");
     else if (selection > lastSelection)
-        std::printf("INCREMENT");
+        std::printf("INCREMENT\n");
     getButtons();
     if (button == SENSORS)
-        sense -> runSensors(selection);
+        sense -> runSensors(selection/10);
     else if (button == PNEUMATICS)
-        pneumatics -> runPneumatics(selection);
+        pneumatics -> runPneumatics(selection/10);
     else if (button == MOTORS)
-        motors -> runMotor(selection);
+        motors -> runMotor(selection/10);
     lastSelection = selection;
 }
 void robot_class::printStuff()
