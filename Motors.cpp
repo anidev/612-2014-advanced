@@ -162,7 +162,7 @@ void Motors::setTalon(Talon* t, bool print, int motor)
     t -> Set(power);
     if (print)
     {
-        std::printf("%d: Talon %u : %f\n",motor, 0, power);
+        std::printf("%d: Talon (Roller) %u : %f\n",motor, 0, power);
     }
 }
 void Motors::setTalon(int motor, bool print)
@@ -170,6 +170,6 @@ void Motors::setTalon(int motor, bool print)
     drivetrain[motor-1] -> Set(power);
     if (print)
     {
-        std::printf("%d: Talon %u : %f\n",motor-1, 0, power); //0 is placeholder
+        std::printf("%d: Talon %u : %f\n",motor+1, 0, power); //0 is placeholder
     }
 }

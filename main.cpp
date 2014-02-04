@@ -63,10 +63,12 @@ void robot_class::TestPeriodic()
     updateRegistry.update();
     if (selection < 0)
         selection = 0;
+    /*
     if (selection < lastSelection)
         std::printf("DECREMENT\n");
     else if (selection > lastSelection)
         std::printf("INCREMENT\n");
+    */
     getButtons();
     if (button == SENSORS)
         sense -> runSensors(selection/10);
