@@ -35,10 +35,15 @@ void Pneumatics::runPneumatics(int pnum)
     }
     else if (pnum == 2)
     {
-        if (robot->sense->pnumSwitch->Get() != prevVal)
+        static int count = 0;
+        if (count % 50 == 0)
         {
-            std::printf("DigitalInput: %ld\n", robot->sense->pnumSwitch->Get()); 
+            if (robot->sense->pnumSwitch->Get() != prevVal)
+            {
+                std::printf("DigitalInput: %ld\n", robot->sense->pnumSwitch->Get()); 
+            }
         }
+        count++;
     }
     else if(pnum >= 3)
     {

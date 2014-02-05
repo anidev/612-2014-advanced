@@ -10,9 +10,12 @@ Sensors::Sensors()
     left = new Encoder(LEFT_ENCODER_A_MOD,LEFT_ENCODER_A_CHAN,LEFT_ENCODER_B_MOD,LEFT_ENCODER_B_CHAN);
     right = new Encoder(RIGHT_ENCODER_A_MOD,RIGHT_ENCODER_A_CHAN,RIGHT_ENCODER_B_MOD,RIGHT_ENCODER_B_CHAN);
     ultrasonic = new AnalogChannel(ULTRASONIC_MODULE, ULTRASONIC_CHANNEL);
+    infared = new AnalogChannel(IR_MODULE,IR_CHANNEL);
+    ultrasonic2 = new Ultrasonic(2,1);
 }
 void Sensors::runSensors(int sense)
 {
+    static int count = 0;
     static double prevVal = -99.9;
     static int previousSense = -1;
     if (sense == 0)
@@ -61,17 +64,63 @@ void Sensors::runSensors(int sense)
             std::printf("!!UltraSonic!!\n");
             prevVal = -99.9;
         }
-        if ((double)ultrasonic->GetVoltage() != prevVal)
+        if (count % 50 == 0)
         {
-            std::printf("UltraSonic Voltage: %f\nUltraSonic Value: %f\n\n", (double)ultrasonic->GetVoltage(), (double)ultrasonic->GetValue());
+            if ((double)ultrasonic->GetVoltage() != prevVal)
+            {
+                std::printf("UltraSonic Voltage: %f\nUltraSonic Value: %f\n\n", (double)ultrasonic->GetVoltage(), (double)ultrasonic->GetVoltage()/(0.0098));
+            }
         }
         prevVal = (double)ultrasonic->GetValue();
     }
-    else if (sense >= 4)
+    else if (sense == 4)
+    {
+        if (previousSense != sense)
+        {
+            std::printf("!!UltraSonic2!!\n");
+            prevVal = -99.9;
+        }
+        if (count % 50 == 0)
+        {
+            if ((double)ultrasonic2->GetRangeInches() != prevVal)
+            {
+                std::printf("UltraSonic Voltage: %f\n", (double)ultrasonic2->GetRangeInches());
+            }
+        }
+        prevVal = (double)ultrasonic2->GetRangeInches();
+    }
+    else if (sense == 5)
+    {
+        if (previousSense != sense)
+        {
+            std::printf("!!Infared!!\n");
+            prevVal = -99.9;
+        }
+        if (count % 50 == 0)
+        {
+            if ((double)infared->GetVoltage() != prevVal)
+            {
+                std::printf("Infared Voltage: %f\nInfared Value: %f\n\n", (double)infared->GetVoltage(), (double)infared->GetValue());
+            }
+        }
+        prevVal = (double)infared->GetValue();
+    }
+    else if (sense >= 6)
     {
         std::printf("MAX\n");
-        robot->selection = 30;
+        robot->selection = 50;
     }
     previousSense = sense;
+    count++;
     //prevVal = sense;
 }
+/*
+void loop() 
+{
+    float analogVal = analogRead(INPUTPIN);
+    float volts = (analogVal/1023.0) * 5.0;
+    float dist = (volts/(0.0098));
+    dist = dist/12.0;
+    inputs = {volts
+}
+*/
