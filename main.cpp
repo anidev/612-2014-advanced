@@ -28,7 +28,8 @@ void robot_class::RobotInit()
     
     arm = new Arm(TILT_DEV,
                   GRAB_MOD, GRAB_CHAN,
-                  CLAMP_MOD, CLAMP_PORT_1, CLAMP_PORT_2);
+                  CLAMP_MOD, CLAMP_PORT_1, CLAMP_PORT_2,
+                  TILT_MOD_A, TILT_CHAN_A, TILT_MOD_B, TILT_CHAN_B);
     
     drivetrain = new DerekDrive(SHIFT_MOD, SHIFT_CHAN_F, SHIFT_CHAN_R,
                                 
@@ -42,7 +43,9 @@ void robot_class::RobotInit()
                                 TALON_RL_MODULE, TALON_RL_CHANNEL,
                                 TALON_FR_MODULE, TALON_FR_CHANNEL,
                                 TALON_RR_MODULE, TALON_RR_CHANNEL);
-    ultrasonic = new AnalogChannel(4,4); //fake
+    ultrasonic = new AnalogChannel(ULTRASONIC_MOD,ULTRASONIC_CHAN);
+    infrared = new AnalogChannel(INFRARED_MOD,INFRARED_CHAN);
+    
 }
 
 void robot_class::DisabledInit()
@@ -85,7 +88,25 @@ void robot_class::TestInit()
 void robot_class::TestPeriodic()
 {
     updateRegistry.update();
-    printf("ultrasonic voltage: %f, ultrasonic value: %f\n", (float)ultrasonic->GetVoltage(), (float)ultrasonic->GetValue());;
+    printf("ultrasonic voltage: %f, ultrasonic value: %f\n", (float)ultrasonic->GetVoltage(), (float)ultrasonic->GetValue());
+    printf("infrared voltage: %f, infrared value: %f\n", (float)infrared->GetVoltage(), (float)infrared->GetValue());
+}
+
+//vision
+void robot_class::init_vision() {
+    std::printf("init vision\n");
+    engine = new vision();
+}
+
+void robot_class::stop_vision() {
+    std::printf("stop vision\n");
+    if(engine!=NULL) {
+        if(engine->isContinuousRunning()) {
+            engine->stopContinuous();
+        }
+        delete engine;
+        engine=NULL;
+    }
 }
 
 START_ROBOT_CLASS(robot_class)

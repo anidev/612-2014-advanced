@@ -47,12 +47,23 @@ const uint32_t LEFT_ENCODER_A_CHAN = 1;
 const uint8_t  LEFT_ENCODER_B_MOD  = 1;
 const uint32_t LEFT_ENCODER_B_CHAN = 1;
 
-
-
 const uint8_t  RIGHT_ENCODER_A_MOD  = 1;
 const uint32_t RIGHT_ENCODER_A_CHAN = 2;
 
 const uint8_t  RIGHT_ENCODER_B_MOD  = 1;
 const uint32_t RIGHT_ENCODER_B_CHAN = 2;
+
+const uint8_t ULTRASONIC_MOD = 1;
+const uint32_t ULTRASONIC_CHAN = 1;
+
+const uint8_t INFRARED_MOD = 1;
+const uint32_t INFRARED_CHAN = 2;
+
+const uint8_t TILT_MOD_A = 4; //fake
+const uint32_t TILT_CHAN_A = 4; //fake
+
+const uint8_t TILT_MOD_B = 5; //fake
+const uint32_t TILT_CHAN_B = 5; //fake
+
 
 #endif

@@ -15,13 +15,15 @@
 
 #include "UpdateRegistry.h"
 
+#include "vision/vision.h"
+
 
 class robot_class : public IterativeRobot
 {
 public:
     robot_class();
 
-    void RobotInit();
+    void RobotInit();   
 
     void DisabledInit();
     void DisabledPeriodic();
@@ -34,6 +36,9 @@ public:
 
     void TestInit();
     void TestPeriodic();
+    
+    void init_vision();
+    void stop_vision();
     
     //DerekDrive* test_drivetrain;
     SmoothJoystick* driverJoy;
@@ -48,6 +53,9 @@ public:
     Pneumatics* pnum;
     
     AnalogChannel* ultrasonic;
+    AnalogChannel* infrared;
+    
+    vision* engine;
     
 private:
 };

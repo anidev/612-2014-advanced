@@ -11,7 +11,8 @@ static const float ARM_SPEED  = 1.0f;
 
 Arm::Arm(uint8_t tiltDev, 
          uint8_t grabMod, uint32_t grabChan, 
-         uint8_t SolMod, uint32_t SolPort1, uint32_t SolPort2)
+         uint8_t SolMod, uint32_t SolPort1, uint32_t SolPort2,
+         uint8_t tiltModA, uint32_t tiltChanA, uint8_t tiltModB, uint32_t tiltChanB)
 {
     SmoothJoystick* joy = robot->gunnerJoy;
 
@@ -24,6 +25,8 @@ Arm::Arm(uint8_t tiltDev,
     openArm();
     isAdjusting = false;
     robot->updateRegistry.add((void*)this,&updateHelper);
+    
+    tiltAngle = new Encoder(tiltModA, tiltChanA, tiltModB, tiltChanB);
 }
 void Arm::openArm()
 {

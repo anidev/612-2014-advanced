@@ -4,7 +4,7 @@
 #include <CANJaguar.h>
 #include <Jaguar.h>
 #include <Talon.h>
-//#include <Encoder.h>
+#include <Encoder.h>
 
 class Arm
 {
@@ -14,7 +14,10 @@ enum clampPosition
     LOW
 };
 public:
-    Arm(uint8_t tiltDev, uint8_t grabMod, uint32_t grabChan, uint8_t SolMod, uint32_t SolPort1, uint32_t SolPort2);
+    Arm(uint8_t tiltDev, 
+        uint8_t grabMod, uint32_t grabChan, 
+        uint8_t SolMod, uint32_t SolPort1, uint32_t SolPort2,
+        uint8_t tiltModA, uint32_t tiltChanA, uint8_t tiltModB, uint32_t tiltChanB);
     void openArm();
     void closeArm();
     void grab(/*will have parameter based on sensor*/);
@@ -36,6 +39,8 @@ private:
     float curAngle;
     static const float GRAB_SPEED = 0.5f;
     clampPosition clampPos;
+    
+    Encoder* tiltAngle;
 };
 
 #endif

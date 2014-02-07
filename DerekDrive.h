@@ -14,6 +14,8 @@ enum side
     LEFT
 };
 
+static const float robot_circumference = 2.0f;
+
 class DerekDrive : public RobotDrive 
 {
     public:
@@ -31,7 +33,7 @@ class DerekDrive : public RobotDrive
                                uint8_t modRR,uint32_t chanRR);
         ~DerekDrive();
         void autoDrive(float);
-        void autoRotate();
+        void autoRotate(float);
         void doTeleOp();
         void stop();
         void setSafety();

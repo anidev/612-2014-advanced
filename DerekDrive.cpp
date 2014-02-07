@@ -5,6 +5,8 @@
 #include "Controls.h"
 #include "ports.h"
 
+#include <cmath>
+
 DerekDrive::DerekDrive(uint8_t shiftMod, uint32_t shift1, uint32_t shift2,
                        //left encoders
                        uint8_t LAModF, uint32_t LAChanR,
@@ -30,13 +32,13 @@ DerekDrive::DerekDrive(uint8_t shiftMod, uint32_t shift1, uint32_t shift2,
     driver = robot->driverJoy;
     //Encoders
     encoderState = false;
-    /*
+    
     encoderL = new Encoder(LAModF, LAChanR, LBModF, LBChanR);
     encoderR = new Encoder(RAModF, RAChanR, RBModF, RBChanR);
     
     encoderL->SetDistancePerPulse(0.015);
     encoderR->SetDistancePerPulse(0.015);
-    */
+    
     robot->updateRegistry.add(this, &update);
     
 
@@ -50,22 +52,40 @@ DerekDrive::~DerekDrive()
 }
 void DerekDrive::autoDrive(float dist) 
 {
-    /*
     if (!encoderState)
     {
         startEncoders();
+        encoderState = true;
     }
     TankDrive(0.7,0.7);
     if (((encoderDistance(RIGHT) + encoderDistance(LEFT))/2) >= dist) 
     {
         stopEncoders();
+        encoderState = false;
         return;
     }
-//     */
 }
-void DerekDrive::autoRotate()
+void DerekDrive::autoRotate(float degrees)
 {
-    //TODO
+    double dist = robot_circumference * (degrees/360);
+    if (!encoderState)
+    {
+        startEncoders();
+        encoderState = true;
+    }
+    if (degrees > 0) {
+        TankDrive(-0.7,0.7);
+    } else {
+        TankDrive(0.7,-0.7);
+    }
+    
+    if (((encoderDistance(RIGHT) + encoderDistance(LEFT))/2) >= dist) 
+    {
+        stopEncoders();
+        encoderState = false;
+        return;
+    }
+    
 }
 void DerekDrive::doTeleOp()
 {
@@ -109,9 +129,9 @@ void DerekDrive::update(void* o)
 float DerekDrive::encoderDistance(side s)
 {
     if (s == RIGHT)
-        return (encoderR->GetRaw());
+        return (std::fabs(encoderR->GetDistance()));
     else 
-        return (encoderL->GetRaw());
+        return (std::fabs(encoderL->GetDistance()));
 }
 void DerekDrive::startEncoders()
 {
