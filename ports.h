@@ -62,8 +62,5 @@ const uint32_t INFRARED_CHAN = 2;
 const uint8_t TILT_MOD_A = 4; //fake
 const uint32_t TILT_CHAN_A = 4; //fake
 
-const uint8_t TILT_MOD_B = 5; //fake
-const uint32_t TILT_CHAN_B = 5; //fake
-
 
 #endif

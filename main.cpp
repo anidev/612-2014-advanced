@@ -29,7 +29,7 @@ void robot_class::RobotInit()
     arm = new Arm(TILT_DEV,
                   GRAB_MOD, GRAB_CHAN,
                   CLAMP_MOD, CLAMP_PORT_1, CLAMP_PORT_2,
-                  TILT_MOD_A, TILT_CHAN_A, TILT_MOD_B, TILT_CHAN_B);
+                  TILT_MOD_A, TILT_CHAN_A);
     
     drivetrain = new DerekDrive(SHIFT_MOD, SHIFT_CHAN_F, SHIFT_CHAN_R,
                                 
