@@ -12,8 +12,11 @@
 #include "Pneumatics.h"
 #include "DerekDrive.h"
 #include "Arm.h"
+#include "Shooter.h"
 
 #include "UpdateRegistry.h"
+
+#include "vision/vision.h"
 
 
 class robot_class : public IterativeRobot
@@ -21,7 +24,7 @@ class robot_class : public IterativeRobot
 public:
     robot_class();
 
-    void RobotInit();
+    void RobotInit();   
 
     void DisabledInit();
     void DisabledPeriodic();
@@ -34,6 +37,9 @@ public:
 
     void TestInit();
     void TestPeriodic();
+    
+    void init_vision();
+    void stop_vision();
     
     //DerekDrive* test_drivetrain;
     SmoothJoystick* driverJoy;
@@ -48,8 +54,15 @@ public:
     Pneumatics* pnum;
     
     AnalogChannel* ultrasonic;
+    AnalogChannel* infrared;
+    
+    vision* engine;
+    
+    Shooter* shooter;
     
 private:
+    bool imgFlag;
+    bool hgClose;
 };
 
 #endif // MAIN_H

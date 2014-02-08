@@ -11,7 +11,8 @@ static const float ARM_SPEED  = 1.0f;
 
 Arm::Arm(uint8_t tiltDev, 
          uint8_t grabMod, uint32_t grabChan, 
-         uint8_t SolMod, uint32_t SolPort1, uint32_t SolPort2)
+         uint8_t SolMod, uint32_t SolPort1, uint32_t SolPort2,
+         uint8_t tiltModA, uint32_t tiltChanA)
 {
     SmoothJoystick* joy = robot->gunnerJoy;
 
@@ -24,6 +25,8 @@ Arm::Arm(uint8_t tiltDev,
     openArm();
     isAdjusting = false;
     robot->updateRegistry.add((void*)this,&updateHelper);
+    
+    tiltAngle = new AnalogChannel(tiltModA, tiltChanA);
 }
 void Arm::openArm()
 {
@@ -36,12 +39,6 @@ void Arm::closeArm()
     //clamp -> Set(DoubleSolenoid::kReverse);
     robot->pnum->addSolenoid(waitTime, clamp, DoubleSolenoid::kReverse);
     clampPos = LOW;
-}
-void Arm::setAngle(float ang)
-{
-    
-    isAdjusting = true;
-    //Adjust to whatever value is given
 }
 void Arm::grab()
 {
@@ -108,4 +105,26 @@ void Arm::tiltDown()
 void Arm::tiltZero()
 {
     tiltControl->Set(0);
+}
+
+float Arm::voltageToDegree(float angle) {
+    return angle*60;
+}
+
+void Arm::setAngle(float angle) {
+    if (!isAdjusting) {
+        isAdjusting = true;
+    }
+    float newAngle = Arm::voltageToDegree(angle);
+    if (fabs(curAngle - newAngle) > VOLT_THRESH) {
+        if (curAngle > newAngle) {
+            tiltDown();
+        } else {
+            tiltUp();
+        }
+    } else {
+        isAdjusting = false;
+        tiltZero();
+        return;
+    }
 }
