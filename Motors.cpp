@@ -182,6 +182,10 @@ void Motors::setTalon(Talon* t, bool print, int motor) //bool print, int motor, 
     {
         t -> Set(power);
     }
+    else
+    {
+        t -> Set(0.0);
+    }
 }
 void Motors::setTalon(int motor, bool print)
 {
