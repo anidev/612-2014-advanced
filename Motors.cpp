@@ -111,7 +111,7 @@ void Motors::runMotor(int motor)
             }
             else
             {
-                tilt -> Set(power);
+                tilt -> Set(-power);
             }
             if (print)
                 std::printf("7: Jag Tilt: %f\n", power);
