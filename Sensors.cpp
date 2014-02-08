@@ -12,6 +12,7 @@ Sensors::Sensors()
     ultrasonic = new AnalogChannel(ULTRASONIC_MODULE, ULTRASONIC_CHANNEL);
     infared = new AnalogChannel(IR_MODULE,IR_CHANNEL);
     ultrasonic2 = new Ultrasonic(2,1);
+    accel = new ADXL345_I2C(1);
 }
 void Sensors::runSensors(int sense)
 {
@@ -106,7 +107,24 @@ void Sensors::runSensors(int sense)
         }
         prevVal = (double)infared->GetValue();
     }
-    else if (sense >= 6)
+    else if (sense == 6)
+    {
+        if(previousSense != sense)
+        {
+            std::printf("!!Accelerometer!!\n");
+            prevVal = -99.9;
+        }
+        if (count % 50 == 0)
+        {
+            double zAxis = accel->GetAcceleration(ADXL345_I2C::kAxis_Z);
+            if(zAxis != prevVal)
+            {
+                std::printf("Accelerometer Z: %f\n",zAxis);
+                prevVal = zAxis;
+            }
+        }
+    }
+    else if (sense >= 7)
     {
         std::printf("MAX\n");
         robot->selection = 50;
