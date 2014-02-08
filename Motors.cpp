@@ -101,7 +101,18 @@ void Motors::runMotor(int motor)
     {
         if (power > 0.15 || power < -0.15)
         {
-            tilt -> Set(power);
+            if (robot->driverJoy->GetRawButton(BUTTON_START))
+            {
+                if (power < 0)
+                    power = 0.6;
+                else
+                    power = -0.6;
+                tilt -> Set(power);
+            }
+            else
+            {
+                tilt -> Set(power);
+            }
             if (print)
                 std::printf("7: Jag Tilt: %f\n", power);
         }
