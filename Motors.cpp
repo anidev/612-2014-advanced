@@ -101,7 +101,7 @@ void Motors::runMotor(int motor)
     {
         if (power > 0.15 || power < -0.15)
         {
-            tilt -> Set(power*(2/3));
+            tilt -> Set(power);
             if (print)
                 std::printf("7: Jag Tilt: %f\n", power);
         }
