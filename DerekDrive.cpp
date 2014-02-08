@@ -1,3 +1,4 @@
+
 #include "DerekDrive.h"
 #include "main.h"
 #include "612.h"
@@ -65,7 +66,7 @@ void DerekDrive::autoDrive(float dist)
         return;
     }
 }
-void DerekDrive::autoRotate(float degrees)
+void DerekDrive::autoTurn(float degrees)
 {
     double dist = robot_circumference * (degrees/360);
     if (!encoderState)

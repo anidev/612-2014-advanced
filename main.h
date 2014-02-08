@@ -12,6 +12,7 @@
 #include "Pneumatics.h"
 #include "DerekDrive.h"
 #include "Arm.h"
+#include "Shooter.h"
 
 #include "UpdateRegistry.h"
 
@@ -57,7 +58,11 @@ public:
     
     vision* engine;
     
+    Shooter* shooter;
+    
 private:
+    bool imgFlag;
+    bool hgClose;
 };
 
 #endif // MAIN_H

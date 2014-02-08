@@ -45,7 +45,10 @@ void robot_class::RobotInit()
                                 TALON_RR_MODULE, TALON_RR_CHANNEL);
     ultrasonic = new AnalogChannel(ULTRASONIC_MOD,ULTRASONIC_CHAN);
     infrared = new AnalogChannel(INFRARED_MOD,INFRARED_CHAN);
-    
+
+    shooter = new Shooter(SHOOTER_WD_MOD, SHOOTER_WD_CHAN,
+                          INFRARED_MOD,   INFRARED_CHAN,
+                          DOG_CLUTCH_MOD, DOG_CLUTCH_FCHAN, DOG_CLUTCH_RCHAN);
 }
 
 void robot_class::DisabledInit()
@@ -58,12 +61,24 @@ void robot_class::DisabledPeriodic()
 
 void robot_class::AutonomousInit()
 {
-
+    imgFlag = false;
+    hgClose = false;
 }
 
 void robot_class::AutonomousPeriodic()
 {
-    pnum->pressurize(); //maintains air pressure, should be in all periodic functions    
+    pnum->pressurize(); //maintains air pressure, should be in all periodic functions  
+    init_vision();
+    if (!imgFlag) {
+        hgClose = (engine->getHotGoal());
+        imgFlag = true;
+    }
+    if (!hgClose) {
+        drivetrain->autoTurn(90); // fake
+    } else {
+        shooter->shoot(); //fake ports for shooter, a bunch of stuff needs to be tweaked
+        drivetrain->autoDrive(5); // fake
+    }
 }
 
 void robot_class::TeleopInit()

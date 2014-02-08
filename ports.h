@@ -62,5 +62,12 @@ const uint32_t INFRARED_CHAN = 2;
 const uint8_t TILT_MOD_A = 4; //fake
 const uint32_t TILT_CHAN_A = 4; //fake
 
+const uint8_t SHOOTER_WD_MOD = 5; //fake
+const uint32_t SHOOTER_WD_CHAN = 5; //fake
+
+const uint8_t DOG_CLUTCH_MOD = 6; //fake
+const uint32_t DOG_CLUTCH_FCHAN  = 6; //fake
+const uint32_t DOG_CLUTCH_RCHAN  = 6; //fake
+
 
 #endif
