@@ -22,6 +22,7 @@ void Shooter::shoot()
 
 void Shooter::rewind()
 {
+    dogClutch->Set(DoubleSolenoid::kForward);
     if (infrared->GetVoltage() > 5)
         wormDrive->Set(-0.7f);
 }
