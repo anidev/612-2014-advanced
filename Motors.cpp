@@ -17,7 +17,7 @@ Motors::Motors()
     
     grabber = new Talon(GRAB_MOD, GRAB_CHAN);
     
-    //tilt = new CANJaguar(TILT_DEV);
+    tilt = new CANJaguar(TILT_DEV);
     
     compressor = new Relay(PNUM_RELAY_MODULE, PNUM_RELAY_CHANNEL);
 }
@@ -26,13 +26,12 @@ Motors::~Motors()
 {
 }
 
-void Motors::runMotor(int motor)
+void Motors::runMotor(int motor, float speed)
 {
     static bool print = false;
     static int previousMotor = -1;
     static float previousPower = 0.0;
     power = robot->driverJoy -> GetRawAxis(DRIVER_LEFT_DRIVE_AXIS);
-    
     if ((previousMotor != motor) || previousPower != power) 
     {
         print = true;
@@ -43,20 +42,9 @@ void Motors::runMotor(int motor)
     {
         print = false;
     }
-    if (motor == 0)
+    if (motor == 0 && (power > 0.1 || power < -0.1))
         drive(print); //implementation of RobotDrive
-    /*
-    else if (motor == 1)
-        setTalon(FR,print,motor);
-    else if (motor == 2)
-        setTalon(FL,print,motor);
-    else if (motor == 3)
-        setTalon(RR,print,motor);
-    else if (motor == 4)
-        setTalon(RL,print,motor);
-    */
-    
-    
+        
     else if (motor >= 1 && motor <=4)
         setTalon(motor,print);
                  
@@ -103,20 +91,28 @@ void Motors::runMotor(int motor)
                 compressorDirection = Relay::kOff;
             }
         }
-    }
-    /*
+    }        
+    
     else if (motor == 7) //tilt JAG
     {
-        tilt -> Set(power);
-        if (print)
-            std::printf("6: Jag Tilt: %f\n", power);
+        if (!(robot->driverJoy->GetRawButton(BUTTON_START)))
+        {
+            tilt -> Set(speed);
+            if (print)
+                std::printf("7: Jag Tilt: %f\n", speed);
+        }
+        else 
+        {
+            tilt->Set(0.0);
+        }
     }
-    */
-    else if (motor >= 7)
+    
+    else if (motor >= 8)
     {
         std::printf("MAX\n");
-        robot->selection = 60;
+        robot->selection = 70;
     }
+    previousMotor = motor;
 }
 void Motors::drive(bool print)
 {
@@ -153,23 +149,31 @@ void Motors::disable()
     
     grabber->Set(0.0);
     
-    //tilt->Set(0.0);
+    tilt->Set(0.0);
     
     compressor->Set(Relay::kOff);
+    
+    robot->speed = 0.0;
 }
-void Motors::setTalon(Talon* t, bool print, int motor)
+void Motors::setTalon(Talon* t, bool print, int motor) //bool print, int motor, Talon* t = null
 {
-    t -> Set(power);
     if (print)
     {
         std::printf("%d: Talon (Roller) %u : %f\n",motor, 0, power);
     }
+    if (power > 0.1 || power < -0.1)
+    {
+        t -> Set(power);
+    }
 }
 void Motors::setTalon(int motor, bool print)
 {
-    drivetrain[motor-1] -> Set(power);
     if (print)
     {
         std::printf("%d: Talon %u : %f\n",motor+1, 0, power); //0 is placeholder
+    }
+    if (power > 0.1 || power < -0.1)
+    {
+        drivetrain[motor-1] -> Set(power);   
     }
 }

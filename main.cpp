@@ -15,6 +15,7 @@ robot_class::robot_class()
 
 void robot_class::RobotInit()
 {
+    std::printf("TEST CODE 1.0");
     robot = this;
     driverJoy = new SmoothJoystick(DRIVER_JOY_PORT);
     
@@ -75,7 +76,7 @@ void robot_class::TestPeriodic()
     else if (button == PNEUMATICS)
         pneumatics -> runPneumatics(selection/10);
     else if (button == MOTORS)
-        motors -> runMotor(selection/10);
+        motors -> runMotor(selection/10, speed);
     lastSelection = selection;
 }
 void robot_class::printStuff()
@@ -127,6 +128,16 @@ void robot_class::getButtons()
         {
             motors->disable();
         }
+    }
+    else if (driverJoy->GetRawButton(BUTTON_L2))
+    {
+        speed = speed + 0.02;
+        std::printf("Jag Speed: %f \n", speed);
+    }
+    else if (driverJoy->GetRawButton(BUTTON_R2))
+    {
+        speed = speed - 0.02;
+        std::printf("Jag Speed: %f \n", speed);
     }
 }
 
