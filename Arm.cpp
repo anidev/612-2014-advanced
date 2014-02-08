@@ -125,5 +125,6 @@ void Arm::setAngle(float angle) {
     } else {
         isAdjusting = false;
         tiltZero();
+        return;
     }
 }
