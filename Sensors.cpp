@@ -12,6 +12,7 @@ Sensors::Sensors()
     ultrasonic = new AnalogChannel(ULTRASONIC_MODULE, ULTRASONIC_CHANNEL);
     infared = new AnalogChannel(IR_MODULE,IR_CHANNEL);
     ultrasonic2 = new Ultrasonic(2,1);
+    accel = new ADXL345_I2C(1);
 }
 void Sensors::runSensors(int sense)
 {
@@ -106,22 +107,32 @@ void Sensors::runSensors(int sense)
         }
         prevVal = (double)infared->GetValue();
     }
-    else if (sense >= 6)
+    else if (sense == 6)
+    {
+        if (previousSense != sense)
+        {
+            std::printf("!!Accelorometer!!\n");
+            prevVal = -99.99;
+        }
+        if (count % 25 == 0)
+        {
+            double xAxis = accel->GetAcceleration(ADXL345_I2C::kAxis_X);
+            double yAxis = accel->GetAcceleration(ADXL345_I2C::kAxis_Y);
+            double zAxis = accel->GetAcceleration(ADXL345_I2C::kAxis_Z);
+            if(zAxis != prevVal)
+            {
+                std::printf("Accelerometer X: %f\n",xAxis);
+                std::printf("Accelerometer Y: %f\n",yAxis);
+                std::printf("Accelerometer Z: %f\n\n",zAxis);
+            }
+        }
+    }
+    else if (sense >= 7)
     {
         std::printf("MAX\n");
-        robot->selection = 50;
+        robot->selection = 60;
     }
     previousSense = sense;
     count++;
     //prevVal = sense;
 }
-/*
-void loop() 
-{
-    float analogVal = analogRead(INPUTPIN);
-    float volts = (analogVal/1023.0) * 5.0;
-    float dist = (volts/(0.0098));
-    dist = dist/12.0;
-    inputs = {volts
-}
-*/

@@ -5,6 +5,7 @@
 #include <Encoder.h>
 #include <AnalogChannel.h>
 #include <Ultrasonic.h>
+#include <ADXL345_I2C.h>
 
 #include "612.h"
 
@@ -24,6 +25,8 @@ public:
     Encoder* right; //6,7
     AnalogChannel* ultrasonic;
     AnalogChannel* infared;
+    
+    ADXL345_I2C* accel;
 private:
     //sensors
 };
