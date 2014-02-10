@@ -7,7 +7,7 @@
 #include "main.h"
 #include "Controls.h"
 
-static const float ARM_SPEED  = 1.0f;
+static const float ARM_SPEED  = 0.6f;
 
 Arm::Arm(uint8_t tiltDev, 
          uint8_t grabMod, uint32_t grabChan, 
@@ -19,7 +19,7 @@ Arm::Arm(uint8_t tiltDev,
     joy -> pushBtn(BUTTON_CLAMP_UP, (void*)this, &buttonHelper); //B -- close
 
     grabWheel = new Talon(grabMod,grabChan);
-    tiltControl = new CANJaguar(tiltDev); // fake values
+    tiltControl = new CANJaguar(tiltDev);
     clamp = new DoubleSolenoid(SolMod, SolPort1, SolPort2);
     openArm();
     isAdjusting = false;
@@ -37,11 +37,24 @@ void Arm::closeArm()
     robot->pnum->addSolenoid(waitTime, clamp, DoubleSolenoid::kReverse);
     clampPos = LOW;
 }
-void Arm::setAngle(float ang)
+void Arm::setAngle(float ang) // should work if being periodically called
 {
-    
-    isAdjusting = true;
     //Adjust to whatever value is given
+    if (accel->GetAngle() > ang+MAX_TOL)
+    {
+        isAdjusting = true;
+        tiltControl->Set(-ARM_SPEED);
+    }
+    else if (accel->GetAngle() < ang-MAX_TOL)
+    {
+        isAdjusting = true;
+        tiltControl->Set(ARM_SPEED);
+    }
+    else
+    {
+        isAdjusting = false;
+        tiltControl->Set(0.0f);
+    }
 }
 void Arm::grab()
 {

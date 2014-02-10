@@ -18,7 +18,7 @@ public:
     void openArm();
     void closeArm();
     void grab(/*will have parameter based on sensor*/);
-    void setAngle(float ang);
+    void setAngle(float ang); //works for periodic
     void tiltUp();
     void tiltDown();
     void tiltZero();
