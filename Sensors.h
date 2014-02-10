@@ -25,7 +25,7 @@ public:
     Encoder* right; //6,7
     AnalogChannel* ultrasonic;
     AnalogChannel* infared;
-    
+
     ADXL345_I2C* accel;
 private:
     //sensors
