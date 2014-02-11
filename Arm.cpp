@@ -27,6 +27,9 @@ Arm::Arm(uint8_t tiltDev,
     robot->updateRegistry.add((void*)this,&updateHelper);
     
     tiltAngle = new AnalogChannel(tiltModA, tiltChanA);
+    accel = new ADXL345_I2C(1);
+    pitch = 0.0f;
+    raw_val = 0.0f;
 }
 void Arm::openArm()
 {
@@ -115,7 +118,12 @@ void Arm::setAngle(float angle) {
     if (!isAdjusting) {
         isAdjusting = true;
     }
-    float newAngle = Arm::voltageToDegree(angle);
+    float newAngle = Arm::voltageToDegree(angle); 
+    float accel_x = accel->GetAcceleration(ADXL345_I2C::kAxis_X);
+    float accel_y = accel->GetAcceleration(ADXL345_I2C::kAxis_Y);
+    float accel_z = accel->GetAcceleration(ADXL345_I2C::kAxis_Z);
+    pitch = (atan2(accel_x, sqrt(accel_y * accel_y + accel_z * accel_z))) / PI;
+    printf("%f\n", pitch);
     if (fabs(curAngle - newAngle) > VOLT_THRESH) {
         if (curAngle > newAngle) {
             tiltDown();
@@ -128,3 +136,8 @@ void Arm::setAngle(float angle) {
         return;
     }
 }
+
+double Arm::getAngle() {
+    return pitch;
+}
+

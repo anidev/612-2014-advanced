@@ -49,6 +49,7 @@ void robot_class::RobotInit()
     shooter = new Shooter(SHOOTER_WD_MOD, SHOOTER_WD_CHAN,
                           INFRARED_MOD,   INFRARED_CHAN,
                           DOG_CLUTCH_MOD, DOG_CLUTCH_FCHAN, DOG_CLUTCH_RCHAN);
+    datalogger = new DataLogger();
 }
 
 void robot_class::DisabledInit()
@@ -67,17 +68,22 @@ void robot_class::AutonomousInit()
 
 void robot_class::AutonomousPeriodic()
 {
-    pnum->pressurize(); //maintains air pressure, should be in all periodic functions  
+    pnum->pressurize(); //maintains air pressure, should be in all periodic functions
     init_vision();
+    //get one image from vision engine
     if (!imgFlag) {
         hgClose = (engine->getHotGoal());
         imgFlag = true;
     }
+    //checks if hot goal is close
     if (!hgClose) {
-        drivetrain->autoTurn(90); // fake
+        if (shooter->shoot()) {
+            drivetrain->autoDrive(5); //fake distance
+        }
     } else {
-        shooter->shoot(); //fake ports for shooter, a bunch of stuff needs to be tweaked
-        drivetrain->autoDrive(5); // fake
+        if (drivetrain->autoTurn(90)) { //fake angle
+            shooter->shoot(); //fake ports for shooter, a bunch of stuff needs to be tweaked
+        }
     }
 }
 
@@ -90,7 +96,7 @@ void robot_class::TeleopPeriodic()
 {
     pnum -> pressurize();
     updateRegistry.update();
-    drivetrain -> doTeleOp();
+    //drivetrain -> doTeleOp();
     //commented out to avoid compiler warning barf
     
 }

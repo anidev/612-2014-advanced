@@ -4,7 +4,6 @@
 #include <fstream>
 #include <vector>
 #include "FileProcessor.h"
-#include <Timer.h>
 
 typedef void* obj;
 typedef double(*dataFunc)(obj);
@@ -14,14 +13,14 @@ struct logger_object {
     dataFunc datafn;
     FileProcessor file;
     double interval;
-    Timer timer;
+    double ctr;
 };
 
 class DataLogger {
 public:
     DataLogger();
     ~DataLogger();
-    void add(logger_object*);
+    void add(obj, dataFunc, FileProcessor, double, double);
     void update();
 private:
     std::vector<logger_object*> loggers;

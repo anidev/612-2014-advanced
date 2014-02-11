@@ -18,6 +18,8 @@
 
 #include "vision/vision.h"
 
+#include "DataLogger.h"
+
 
 class robot_class : public IterativeRobot
 {
@@ -60,9 +62,16 @@ public:
     
     Shooter* shooter;
     
+    DataLogger* datalogger;
+    
 private:
+    //autonomous flags
     bool imgFlag;
     bool hgClose;
+    //task booleans
+    bool shooting;
+    bool turning;
+    bool driving;
 };
 
 #endif // MAIN_H

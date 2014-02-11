@@ -5,14 +5,21 @@
 #include <Jaguar.h>
 #include <Talon.h>
 #include <AnalogChannel.h>
+#include <ADXL345_I2C.h>
+
+#include <cmath>
+
+static const float PI = atan(1) * 4;
 
 class Arm
 {
+
 enum clampPosition
 {
     UP,
     LOW
 };
+
 public:
     Arm(uint8_t tiltDev, 
         uint8_t grabMod, uint32_t grabChan, 
@@ -30,6 +37,7 @@ public:
     static void buttonHelper(void*, unsigned int);
     static void updateHelper(void*);
     static float voltageToDegree(float);
+    double getAngle();
 private:
     CANJaguar* tiltControl;
     Talon* grabWheel;
@@ -43,6 +51,11 @@ private:
     clampPosition clampPos;
     
     AnalogChannel* tiltAngle;
+    ADXL345_I2C* accel;
+    float pitch;
+    float raw_val;
+    
+    double accel_values[3];
 };
 
 #endif

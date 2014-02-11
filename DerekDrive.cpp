@@ -1,4 +1,3 @@
-
 #include "DerekDrive.h"
 #include "main.h"
 #include "612.h"
@@ -41,7 +40,9 @@ DerekDrive::DerekDrive(uint8_t shiftMod, uint32_t shift1, uint32_t shift2,
     encoderR->SetDistancePerPulse(0.015);
     
     robot->updateRegistry.add(this, &update);
-    
+    fname = "dlaxis.txt";
+    FileProcessor fp(fname, rw);
+    robot -> datalogger -> add(this, &getDriverLeftAxis, fp, 20, 0);
 
 }
 
@@ -51,7 +52,7 @@ DerekDrive::~DerekDrive()
     //delete encoderL;
     delete shifter;
 }
-void DerekDrive::autoDrive(float dist) 
+bool DerekDrive::autoDrive(float dist) 
 {
     if (!encoderState)
     {
@@ -63,10 +64,14 @@ void DerekDrive::autoDrive(float dist)
     {
         stopEncoders();
         encoderState = false;
-        return;
+        return true;
+    }
+    else
+    {
+        return false;
     }
 }
-void DerekDrive::autoTurn(float degrees)
+bool DerekDrive::autoTurn(float degrees)
 {
     double dist = robot_circumference * (degrees/360);
     if (!encoderState)
@@ -84,7 +89,11 @@ void DerekDrive::autoTurn(float degrees)
     {
         stopEncoders();
         encoderState = false;
-        return;
+        return true;
+    }
+    else
+    {
+        return false;
     }
     
 }
@@ -146,3 +155,8 @@ void DerekDrive::stopEncoders()
     encoderL->Stop();
     encoderState = false;
 }
+
+double DerekDrive::getDriverLeftAxis(void* obj) {
+    return ((DerekDrive*)obj) -> driver -> GetRawAxis(DRIVER_LEFT_DRIVE_AXIS);
+}
+
