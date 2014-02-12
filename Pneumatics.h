@@ -17,10 +17,10 @@ public:
     void runPneumatics(int pnum);
     void toggleSolenoid(DoubleSolenoid* sol);
     void pressurize();
+    DoubleSolenoid* piston;
 private:
     DoubleSolenoid* shift1;//8,7
     DoubleSolenoid* clamp; //6,5
-    DoubleSolenoid* piston;
     //DoubleSolenoid* solenoids[2];
     //DoubleSolenoid* shift2;
     float axis;

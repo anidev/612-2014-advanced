@@ -60,13 +60,11 @@ void Motors::runMotor(int motor)
     else if (motor == 7) //tilt JAG
         runJag(tilt, power, print);
     else if (motor == 8)
-        setTalon(wormdrive,print,motor);
-    else if (motor == 9)
-        //do more stuff
-    else if (motor >= 10)
+        setTalon(wormDrive,print,motor);
+    else if (motor >= 9)
     {
         std::printf("MAX\n");
-        robot->selection = 90;
+        robot->selection = 80;
     }
     previousMotor = motor;
 }
@@ -213,9 +211,9 @@ void Motors::runCompressor(Relay* relay, float power, bool print)
 void Motors::controlPiston()
 {
     if (robot->driverJoy->GetRawAxis(5) > 0.15)
-        robot->Pneumatics->piston->Set(DoubleSolenoid::kForward);
+        robot->pneumatics->piston->Set(DoubleSolenoid::kForward);
     else if (robot->driverJoy->GetRawAxis(5) < -0.15)
-        robot->Pneumatics->piston->Set(DoubleSolenoid::kReverse);
+        robot->pneumatics->piston->Set(DoubleSolenoid::kReverse);
     else
-        robot->Pneumatics->piston->Set(DoubleSolenoid::kOff);        
+        robot->pneumatics->piston->Set(DoubleSolenoid::kOff);        
 }
