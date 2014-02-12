@@ -57,10 +57,12 @@ private:
     Talon* RL; //T2
     
     Talon* grabber; //Talon 3
+    Talon* wormDrive;
     
     CANJaguar* tilt;
     
     void runJag(CANJaguar* jag, float power, bool print);
     void runCompressor(Relay* relay, float power, bool print);
+    void controlPiston();
 };
 #endif

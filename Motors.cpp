@@ -19,6 +19,7 @@ Motors::Motors()
     grabber = new Talon(1,3);
     
     tilt = new CANJaguar(1);
+    wormDrive = new Talon(1,1); //TODO NOT THE REAL PORTS
     
     compressor = new Relay(1,8);
 }
@@ -58,10 +59,14 @@ void Motors::runMotor(int motor)
         runCompressor(compressor, power, print);
     else if (motor == 7) //tilt JAG
         runJag(tilt, power, print);
-    else if (motor >= 8)
+    else if (motor == 8)
+        setTalon(wormdrive,print,motor);
+    else if (motor == 9)
+        //do more stuff
+    else if (motor >= 10)
     {
         std::printf("MAX\n");
-        robot->selection = 70;
+        robot->selection = 90;
     }
     previousMotor = motor;
 }
@@ -108,9 +113,13 @@ void Motors::disable()
 }
 void Motors::setTalon(Talon* t, bool print, int motor) //bool print, int motor, Talon* t = null
 {
-    if (print)
+    if (print == true && motor == 5)
     {
         std::printf("%d: Talon (Roller) %u : %f\n",motor, 0, power);
+    }
+    else if (print == true && motor == 8)
+    {
+        std::printf("%d: Talon (Worm Drive) %u : %f\n",motor, 0, power);
     }
     if (power > 0.1 || power < -0.1)
     {
@@ -120,6 +129,8 @@ void Motors::setTalon(Talon* t, bool print, int motor) //bool print, int motor, 
     {
         t -> Set(0.0);
     }
+    if (motor == 8)
+        controlPiston();
 }
 void Motors::setTalon(int motor, bool print)
 {
@@ -198,4 +209,13 @@ void Motors::runCompressor(Relay* relay, float power, bool print)
             compressorDirection = Relay::kOff;
         }
     }
+}
+void Motors::controlPiston()
+{
+    if (robot->driverJoy->GetRawAxis(5) > 0.15)
+        robot->Pneumatics->piston->Set(DoubleSolenoid::kForward);
+    else if (robot->driverJoy->GetRawAxis(5) < -0.15)
+        robot->Pneumatics->piston->Set(DoubleSolenoid::kReverse);
+    else
+        robot->Pneumatics->piston->Set(DoubleSolenoid::kOff);        
 }

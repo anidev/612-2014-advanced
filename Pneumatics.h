@@ -20,6 +20,7 @@ public:
 private:
     DoubleSolenoid* shift1;//8,7
     DoubleSolenoid* clamp; //6,5
+    DoubleSolenoid* piston;
     //DoubleSolenoid* solenoids[2];
     //DoubleSolenoid* shift2;
     float axis;
