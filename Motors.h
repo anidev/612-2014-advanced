@@ -44,7 +44,6 @@ public:
     Talon* drivetrain[4];
 
     char* curInfo;
-    static char* motorInfo(void* obj);
     char* filename;
     FileProcessor* fp;
     
