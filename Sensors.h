@@ -8,6 +8,7 @@
 #include <ADXL345_I2C.h>
 
 #include "612.h"
+#include "FileProcessor.h"
 
 class Sensors
 {
@@ -27,6 +28,11 @@ public:
     AnalogChannel* infared;
 
     ADXL345_I2C* accel;
+    
+    char* curInfo;
+    char* filename;
+    FileProcessor* fp;
+    
 private:
     //sensors
 };

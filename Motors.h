@@ -11,6 +11,7 @@
 #include "ports.h"
 #include "SmoothJoystick.h"
 #include "Controls.h"
+#include "FileProcessor.h"
 
 enum motor_type
 {
@@ -41,6 +42,12 @@ public:
     void setTalon(Talon* t, bool print, int motor);
     void setTalon(int motor, bool print);
     Talon* drivetrain[4];
+
+    char* curInfo;
+    static char* motorInfo(void* obj);
+    char* filename;
+    FileProcessor* fp;
+    
 private:
     //SmoothJoystick* joy;
     float joy;

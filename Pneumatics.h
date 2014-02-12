@@ -9,6 +9,7 @@
 //#include "main.h"
 #include "ports.h"
 #include "612.h"
+#include "FileProcessor.h"
 
 class Pneumatics
 {
@@ -18,6 +19,11 @@ public:
     void toggleSolenoid(DoubleSolenoid* sol);
     void pressurize();
     DoubleSolenoid* piston;
+    
+    char* curInfo;
+    char* filename;
+    FileProcessor* fp;
+    
 private:
     DoubleSolenoid* shift1;//8,7
     DoubleSolenoid* clamp; //6,5

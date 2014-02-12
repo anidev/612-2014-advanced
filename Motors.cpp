@@ -22,6 +22,8 @@ Motors::Motors()
     wormDrive = new Talon(1,1); //TODO NOT THE REAL PORTS
     
     compressor = new Relay(1,8);
+    filename = "Motors.txt";
+    fp = new FileProcessor(filename, rw);
 }
 
 Motors::~Motors()
@@ -48,7 +50,11 @@ void Motors::runMotor(int motor)
     if (motor == 0 && (power > 0.1 || power < -0.1))
     {
         if (print)
-            std::printf("Drivetrain\n");
+        {
+            snprintf(curInfo, 100, "Drivetrain\n");
+            std::printf("%s", curInfo);
+            fp->write(curInfo);
+        }
         drive(print); //implementation of RobotDrive
     }
     else if (motor >= 1 && motor <=4)
@@ -63,7 +69,9 @@ void Motors::runMotor(int motor)
         setTalon(wormDrive,print,motor);
     else if (motor >= 9)
     {
-        std::printf("MAX\n");
+        snprintf(curInfo, 100, "MAX\n");
+        std::printf("%s", curInfo);
+        fp->write(curInfo);
         robot->selection = 80;
     }
     previousMotor = motor;
@@ -79,7 +87,11 @@ void Motors::drive(bool print)
     FR -> Set(right);
     RR -> Set(right);
     if (print)
-        std::printf("Drivetrain: %f\n", power);
+    {
+        snprintf(curInfo, 100, "Drivetrain: %f\n", power);
+        std::printf("%s", curInfo);
+        fp->write(curInfo);
+    }
 }
 void Motors::drive2(bool print)
 {
@@ -91,8 +103,11 @@ void Motors::drive2(bool print)
         drivetrain[i] ->Set(power);
 
     if (print)
-        std::printf("Drivetrain Power: %f\n", power);
-
+    {
+        snprintf(curInfo, 100, "Drivetrain Power: %f\n", power);
+        std::printf("%s", curInfo);
+        fp->write(curInfo);
+    }
 }
 void Motors::disable()
 {
@@ -113,11 +128,15 @@ void Motors::setTalon(Talon* t, bool print, int motor) //bool print, int motor, 
 {
     if (print == true && motor == 5)
     {
-        std::printf("%d: Talon (Roller) %u : %f\n",motor, 0, power);
+        snprintf(curInfo, 100, "%d: Talon (Roller) %u : %f\n",motor, 0, power);
+        std::printf("%s", curInfo);
+        fp->write(curInfo);
     }
     else if (print == true && motor == 8)
     {
-        std::printf("%d: Talon (Worm Drive) %u : %f\n",motor, 0, power);
+        snprintf(curInfo, 100, "%d: Talon (Worm Drive) %u : %f\n",motor, 0, power);
+        std::printf("%s", curInfo);
+        fp->write(curInfo);
     }
     if (power > 0.1 || power < -0.1)
     {
@@ -134,7 +153,9 @@ void Motors::setTalon(int motor, bool print)
 {
     if (print)
     {
-        std::printf("%d: Talon %u : %f\n",motor, 0, power); //0 is placeholder
+        snprintf(curInfo, 100, "%d: Talon %u : %f\n",motor, 0, power);
+        std::printf("%s", curInfo);
+        fp->write(curInfo);
     }
     if (power > 0.1 || power < -0.1)
     {
@@ -158,20 +179,32 @@ void Motors::runJag(CANJaguar* jag, float power, bool print)
             jag -> Set(-power);
         }
         if (print)
-            std::printf("7: Jag Tilt: %f\n", power);
+        {
+            snprintf(curInfo, 100, "7: Jag Tilt: %f\n", power);
+            std::printf("%s", curInfo);
+            fp->write(curInfo);
+        }
     }
     else 
     {
         jag -> Set(0.0);
         if (print)
-            std::printf("7: Jag Tilt: off\n");
+        {
+            snprintf(curInfo, 100, "7: Jag Tilt: off\n");
+            std::printf("%s", curInfo);
+            fp->write(curInfo);
+        }
     }
 }
 
 void Motors::runCompressor(Relay* relay, float power, bool print)
 {
     if (print)
-        std::printf("Compressor\n");
+    {
+        snprintf(curInfo, 100, "Compressor\n");
+        std::printf("%s", curInfo);
+        fp->write(curInfo);
+    }
     static bool warned = false;
     static Relay::Value compressorDirection = Relay::kReverse;
     if (robot->driverJoy->GetRawButton(BUTTON_START) && ((power > JOYSTICK_ZERO_TOLERANCE) || (power < JOYSTICK_ZERO_TOLERANCE*-1)))
@@ -182,9 +215,11 @@ void Motors::runCompressor(Relay* relay, float power, bool print)
             if (!warned)
             {
                 std::printf("RELAY OVERRIDE: WILL NOT TURN OFF AUTOMATICALLY\n");
+                fp->write(curInfo);
                 warned = true;
             }
             std::printf("Compressor: kForward\n");
+            fp->write(curInfo);
             compressorDirection = Relay::kForward;
         }
     }
@@ -195,6 +230,7 @@ void Motors::runCompressor(Relay* relay, float power, bool print)
             compressorDirection = Relay::kForward;
         {
             std::printf("Compressor: kForward\n");
+            fp->write(curInfo);
         }
     }
     else 
@@ -204,6 +240,7 @@ void Motors::runCompressor(Relay* relay, float power, bool print)
         if (compressorDirection != Relay::kOff)
         {
             std::printf("Compressor: kOff\n");
+            fp->write(curInfo);
             compressorDirection = Relay::kOff;
         }
     }
@@ -217,3 +254,4 @@ void Motors::controlPiston()
     else
         robot->pneumatics->piston->Set(DoubleSolenoid::kOff);        
 }
+

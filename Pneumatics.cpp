@@ -10,6 +10,10 @@ Pneumatics::Pneumatics()
     
 //     compressor = new Relay(PNUM_RELAY_MODULE, PNUM_RELAY_CHANNEL);
 //     digiSwitch = new DigitalInput(PNUM_DIGIN_MODULE, PNUM_DIGIN_CHANNEL);
+    
+    filename = "Pneumatics.txt";
+    fp = new FileProcessor(filename, rw);
+    
 }
 
 void Pneumatics::runPneumatics(int pnum)
@@ -23,7 +27,9 @@ void Pneumatics::runPneumatics(int pnum)
         toggleSolenoid(shift1);
         if (prevPnum != pnum)
         {
-            std::printf("Shift Solenoid\n");
+            snprintf(curInfo, 100, "Shift Solenoid\n");
+            std::printf("%s", curInfo);
+            fp->write(curInfo);
         }
     }
     else if (pnum == 1)
@@ -31,7 +37,9 @@ void Pneumatics::runPneumatics(int pnum)
         toggleSolenoid(clamp);
         if (prevPnum != pnum)
         {
-            std::printf("Clamp Solenoid\n");
+            snprintf(curInfo, 100, "Clamp Solenoid\n");
+            std::printf("%s", curInfo);
+            fp->write(curInfo);
         }
     }
     else if (pnum == 2)
@@ -40,8 +48,11 @@ void Pneumatics::runPneumatics(int pnum)
         if (count % 50 == 0)
         {
             if (robot->sense->pnumSwitch->Get() != prevVal)
-            {
-                std::printf("DigitalInput: %ld\n", robot->sense->pnumSwitch->Get()); 
+            { 
+                snprintf(curInfo, 100, "DigitalInput: %ld\n", robot->sense->pnumSwitch->Get());
+                std::printf("%s", curInfo);
+                fp->write(curInfo);
+                
             }
         }
         count++;
@@ -51,12 +62,16 @@ void Pneumatics::runPneumatics(int pnum)
         toggleSolenoid(piston);
         if (prevPnum = pnum)
         {
-            std::printf("!!Piston!!\n");
+            snprintf(curInfo, 100, "!!Piston!!\n");
+            std::printf("%s", curInfo);
+            fp->write(curInfo);
         }
     }
     else if(pnum >= 4)
     {
-        std::printf("MAX");
+        snprintf(curInfo, 100, "MAX");
+        std::printf("%s", curInfo);
+        fp->write(curInfo);
         robot->selection = 30;
     }
     prevPnum = pnum;
@@ -70,7 +85,9 @@ void Pneumatics::toggleSolenoid(DoubleSolenoid* sol)
         sol->Set(DoubleSolenoid::kForward);
         if (solToggled != DoubleSolenoid::kForward)
         {
-            std::printf("Solenoid Forward\n");
+            snprintf(curInfo, 100, "Solenoid Forward\n");
+            std::printf("%s", curInfo);
+            fp->write(curInfo);
             solToggled = DoubleSolenoid::kForward;
         }
     }
@@ -79,7 +96,9 @@ void Pneumatics::toggleSolenoid(DoubleSolenoid* sol)
         sol->Set(DoubleSolenoid::kReverse);
         if (solToggled != DoubleSolenoid::kReverse)
         {
-            std::printf("Solenoid Reverse\n");
+            snprintf(curInfo, 100, "Solenoid Reverse\n");
+            std::printf("%s", curInfo);
+            fp->write(curInfo);
             solToggled = DoubleSolenoid::kReverse;
         }
     }
@@ -88,7 +107,9 @@ void Pneumatics::toggleSolenoid(DoubleSolenoid* sol)
         sol->Set(DoubleSolenoid::kOff);
         if (solToggled != DoubleSolenoid::kOff)
         {
-            std::printf("Solenoid Off\n");
+            snprintf(curInfo, 100, "Solenoid Off\n");
+            std::printf("%s", curInfo);
+            fp->write(curInfo);
             solToggled = DoubleSolenoid::kOff;
         }
     }
