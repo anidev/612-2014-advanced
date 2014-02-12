@@ -11,7 +11,8 @@ static const float ARM_SPEED  = 0.6f;
 
 Arm::Arm(uint8_t tiltDev, 
          uint8_t grabMod, uint32_t grabChan, 
-         uint8_t SolMod, uint32_t SolPort1, uint32_t SolPort2)
+         uint8_t SolMod, uint32_t SolPort1, uint32_t SolPort2,
+         uint8_t tiltModA, uint32_t tiltChanA)
 {
     SmoothJoystick* joy = robot->gunnerJoy;
 
@@ -24,6 +25,11 @@ Arm::Arm(uint8_t tiltDev,
     openArm();
     isAdjusting = false;
     robot->updateRegistry.add((void*)this,&updateHelper);
+    
+    tiltAngle = new AnalogChannel(tiltModA, tiltChanA);
+    accel = new ADXL345_I2C(1);
+    pitch = 0.0f;
+    raw_val = 0.0f;
 }
 void Arm::openArm()
 {
@@ -37,25 +43,7 @@ void Arm::closeArm()
     robot->pnum->addSolenoid(waitTime, clamp, DoubleSolenoid::kReverse);
     clampPos = LOW;
 }
-void Arm::setAngle(float ang) // should work if being periodically called
-{
-    //Adjust to whatever value is given
-    if (accel->GetAngle() > ang+MAX_TOL)
-    {
-        isAdjusting = true;
-        tiltControl->Set(-ARM_SPEED);
-    }
-    else if (accel->GetAngle() < ang-MAX_TOL)
-    {
-        isAdjusting = true;
-        tiltControl->Set(ARM_SPEED);
-    }
-    else
-    {
-        isAdjusting = false;
-        tiltControl->Set(0.0f);
-    }
-}
+
 void Arm::grab()
 {
     //make CANJaguar move
@@ -99,7 +87,8 @@ void Arm::update()
     }
 }
 
-void Arm::buttonHelper(void* o, unsigned int btn) {
+void Arm::buttonHelper(void* o, unsigned int btn) 
+{
     ((Arm*)o) -> armButtons(btn);
 }
 
@@ -122,3 +111,45 @@ void Arm::tiltZero()
 {
     tiltControl->Set(0);
 }
+
+float Arm::voltageToDegree(float angle) 
+{
+    return angle*60;
+}
+
+void Arm::setAngle(float angle) 
+{
+    if (!isAdjusting) 
+    {
+        isAdjusting = true;
+    }
+    float newAngle = Arm::voltageToDegree(angle); 
+    float accel_x = accel->GetAcceleration(ADXL345_I2C::kAxis_X);
+    float accel_y = accel->GetAcceleration(ADXL345_I2C::kAxis_Y);
+    float accel_z = accel->GetAcceleration(ADXL345_I2C::kAxis_Z);
+    pitch = (atan2(accel_x, sqrt(accel_y * accel_y + accel_z * accel_z))) / PI;
+    printf("%f\n", pitch);
+    if (fabs(curAngle - newAngle) > VOLT_THRESH) 
+    {
+        if (curAngle > newAngle) 
+        {
+            tiltDown();
+        } 
+        else 
+        {
+            tiltUp();
+        }
+    }
+    else 
+    {
+        isAdjusting = false;
+        tiltZero();
+        return;
+    }
+}
+
+double Arm::getAngle() 
+{
+    return pitch;
+}
+

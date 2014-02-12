@@ -14,6 +14,8 @@ enum side
     LEFT
 };
 
+static const float robot_circumference = 2.0f;
+
 class DerekDrive : public RobotDrive 
 {
     public:
@@ -30,13 +32,14 @@ class DerekDrive : public RobotDrive
                                uint8_t modFR,uint32_t chanFR,
                                uint8_t modRR,uint32_t chanRR);
         ~DerekDrive();
-        void autoDrive(float);
-        void autoRotate();
+        bool autoDrive(float);
+        bool autoTurn(float);
         void doTeleOp();
         void stop();
         void setSafety();
         static void update(void*);
         void shiftGear();
+        static double getDriverLeftAxis(void*);
     private:
         /*
         SpeedController frontLeft;
@@ -55,5 +58,8 @@ class DerekDrive : public RobotDrive
         Shift* shifter;
         
         SmoothJoystick* driver;
+        
+        //file stuff
+        char* fname;
 };
 #endif

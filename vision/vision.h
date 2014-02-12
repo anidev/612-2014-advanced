@@ -26,8 +26,8 @@ public:
     
     static int vision_entry(void*);
     
-    static void processContinuous();
-    static void getHotGoal();
+    static void processContinuous(int);
+    int getHotGoal();
     
 };
 

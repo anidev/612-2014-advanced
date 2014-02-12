@@ -1,5 +1,4 @@
 #include "SmoothJoystick.h"
-#include "UpdateRegistry.h"
 #include "612.h"
 #include "main.h"
 
@@ -7,7 +6,7 @@
 
 SmoothJoystick::SmoothJoystick(UINT32 a) : Joystick(a) 
 {
-    robot->updateRegistry.add(this, &updateHelper);
+    
 }
 
 SmoothJoystick::~SmoothJoystick() 
@@ -54,11 +53,11 @@ void SmoothJoystick::updateHelper(obj o) {
 Trigger SmoothJoystick::GetTriggerState() 
 {
     float value=GetRawAxis(TRIGGER_AXIS);
-    if(value<TRIGGER_TOLERANCE-1) 
+    if(value<JOYSTICK_ZERO_TOLERANCE-1) 
     {
         return TRIG_R;
     } 
-    else if(value>1-TRIGGER_TOLERANCE) 
+    else if(value>1-JOYSTICK_ZERO_TOLERANCE) 
     {
         return TRIG_L;
     }
@@ -84,6 +83,6 @@ bool SmoothJoystick::GetRawButton(UINT32 btn)
 }
 
 bool SmoothJoystick::IsAxisZero(unsigned int btn) {
-    return (fabs(Joystick::GetRawAxis(btn)) < TRIGGER_TOLERANCE);
+     return (fabs(Joystick::GetRawAxis(btn)) < JOYSTICK_ZERO_TOLERANCE);
 }
 

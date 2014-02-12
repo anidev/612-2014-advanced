@@ -1,4 +1,5 @@
 #include "vision.h"
+#include "Timer.h"
 
 std::string TABLE_NAME="PCVision";
 
@@ -32,18 +33,43 @@ void vision::stopContinuous() {
 }
 
 int vision::vision_entry(void* obj){
-    //vision* engine = (vision*)obj;
+    vision* engine = (vision*)obj;
     while(true) {
-        vision::processContinuous(/*engine->getHotGoal()*/);
+        vision::processContinuous(engine->getHotGoal());
     }
     return 0;
 }
 
-void vision::processContinuous() {
-    
+void vision::processContinuous(int goalIndic) {
+    static Timer output;
+    static bool outputStarted=false;
+    if(!outputStarted) {
+        output.Start();
+        outputStarted=true;
+    }
+    if(output.Get()<0.5) {
+        return;
+    }
+    output.Reset();
+    if(goalIndic == 0) {
+        printf("the hot goal is far\n");
+        return;
+    }
+    printf("the hot goal is near");
 }
 
-void getHotGoal(BinaryImage* image) {
-    //Image* imaq = image -> GetImaqImage(); 
+int vision::getHotGoal() {
+    if (table == NULL) {
+        table=NetworkTable::GetTable(TABLE_NAME);
+        if(table==NULL) {
+            return 0;
+        }
+    }
+    bool available=table->GetBoolean("1/Available",false);
+    if(!available) {
+        return 0;
+    }
+    int goalAvail = (int)table->GetNumber("1/HotGoalIndicator",0);
+    return goalAvail;
 }
 
