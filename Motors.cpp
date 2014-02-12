@@ -2,6 +2,7 @@
 #include "main.h"
 #include "612.h"
 #include <Relay.h>
+
 Motors::Motors()
 {
     FR = new Talon(1,7); //drivetrain
@@ -42,88 +43,21 @@ void Motors::runMotor(int motor)
     {
         print = false;
     }
+    
     if (motor == 0 && (power > 0.1 || power < -0.1))
     {
         if (print)
             std::printf("Drivetrain\n");
         drive(print); //implementation of RobotDrive
     }
-        
     else if (motor >= 1 && motor <=4)
         setTalon(motor,print);
-                 
-    
     else if (motor == 5)
         setTalon(grabber,print,motor);
-
     else if (motor == 6) //Compressor NEVER SET TO REVERSE
-    {
-        if (print)
-            std::printf("Compressor\n");
-        static bool warned = false;
-        static Relay::Value compressorDirection = Relay::kReverse;
-        if (robot->driverJoy->GetRawButton(BUTTON_START) && ((power > JOYSTICK_ZERO_TOLERANCE) || (power < JOYSTICK_ZERO_TOLERANCE*-1)))
-        {
-            compressor->Set(Relay::kForward);
-            if (compressorDirection != Relay::kForward)
-            {
-                if (!warned)
-                {
-                    std::printf("RELAY OVERRIDE: WILL NOT TURN OFF AUTOMATICALLY\n");
-                    warned = true;
-                }
-                std::printf("Compressor: kForward\n");
-                compressorDirection = Relay::kForward;
-            }
-        }
-        else if ((robot->driverJoy -> IsAxisZero(DRIVER_LEFT_DRIVE_AXIS) == false) && (robot->sense->pnumSwitch->Get() == 0))
-        {
-            compressor->Set(Relay::kForward);
-            if (compressorDirection != Relay::kForward)
-                compressorDirection = Relay::kForward;
-            {
-                std::printf("Compressor: kForward\n");
-            }
-        }
-        else 
-        {
-            warned = false;
-            compressor->Set(Relay::kOff);
-            if (compressorDirection != Relay::kOff)
-            {
-                std::printf("Compressor: kOff\n");
-                compressorDirection = Relay::kOff;
-            }
-        }
-    }        
-    
+        runCompressor(compressor, power, print);
     else if (motor == 7) //tilt JAG
-    {
-        if (power > 0.15 || power < -0.15)
-        {
-            if (robot->driverJoy->GetRawButton(BUTTON_START))
-            {
-                if (power < 0)
-                    power = 0.6;
-                else
-                    power = -0.6;
-                tilt -> Set(power);
-            }
-            else
-            {
-                tilt -> Set(-power);
-            }
-            if (print)
-                std::printf("7: Jag Tilt: %f\n", power);
-        }
-        else 
-        {
-            tilt->Set(0.0);
-            if (print)
-                std::printf("7: Jag Tilt: off\n");
-        }
-    }
-    
+        runJag(tilt, power, print);
     else if (motor >= 8)
     {
         std::printf("MAX\n");
@@ -196,5 +130,72 @@ void Motors::setTalon(int motor, bool print)
     if (power > 0.1 || power < -0.1)
     {
         drivetrain[motor-1] -> Set(power);   
+    }
+}
+void Motors::runJag(CANJaguar* jag, float power, bool print)
+{
+    if (power > 0.15 || power < -0.15)
+    {
+        if (robot->driverJoy->GetRawButton(BUTTON_START))
+        {
+            if (power < 0)
+                power = 0.6;
+            else
+                power = -0.6;
+            jag -> Set(power);
+        }
+        else
+        {
+            jag -> Set(-power);
+        }
+        if (print)
+            std::printf("7: Jag Tilt: %f\n", power);
+    }
+    else 
+    {
+        jag -> Set(0.0);
+        if (print)
+            std::printf("7: Jag Tilt: off\n");
+    }
+}
+
+void Motors::runCompressor(Relay* relay, float power, bool print)
+{
+    if (print)
+        std::printf("Compressor\n");
+    static bool warned = false;
+    static Relay::Value compressorDirection = Relay::kReverse;
+    if (robot->driverJoy->GetRawButton(BUTTON_START) && ((power > JOYSTICK_ZERO_TOLERANCE) || (power < JOYSTICK_ZERO_TOLERANCE*-1)))
+    {
+        relay->Set(Relay::kForward);
+        if (compressorDirection != Relay::kForward)
+        {
+            if (!warned)
+            {
+                std::printf("RELAY OVERRIDE: WILL NOT TURN OFF AUTOMATICALLY\n");
+                warned = true;
+            }
+            std::printf("Compressor: kForward\n");
+            compressorDirection = Relay::kForward;
+        }
+    }
+    else if ((robot->driverJoy -> IsAxisZero(DRIVER_LEFT_DRIVE_AXIS) == false) && (robot->sense->pnumSwitch->Get() == 0))
+    {
+        relay->Set(Relay::kForward);
+        if (compressorDirection != Relay::kForward)
+            compressorDirection = Relay::kForward;
+        {
+            std::printf("Compressor: kForward\n");
+        }
+    }
+    else 
+    {
+        warned = false;
+        relay->Set(Relay::kOff);
+        if (compressorDirection != Relay::kOff)
+        {
+            std::printf("Compressor: kOff\n");
+            compressorDirection = Relay::kOff;
+        }
     }
 }

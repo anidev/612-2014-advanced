@@ -59,5 +59,8 @@ private:
     Talon* grabber; //Talon 3
     
     CANJaguar* tilt;
+    
+    void runJag(CANJaguar* jag, float power, bool print);
+    void runCompressor(Relay* relay, float power, bool print);
 };
 #endif
