@@ -15,11 +15,10 @@ Motors::Motors()
     drivetrain [2] = RR;
     drivetrain [3] = RL;
     
-    
     grabber = new Talon(1,3);
     
     tilt = new CANJaguar(1);
-    wormDrive = new Talon(1,1); //TODO NOT THE REAL PORTS
+    wormDrive = new CANJaguar(2); //TODO NOT THE REAL PORTS
     
     compressor = new Relay(1,8);
     filename = "Motors.txt";
@@ -64,9 +63,15 @@ void Motors::runMotor(int motor)
     else if (motor == 6) //Compressor NEVER SET TO REVERSE
         runCompressor(compressor, power, print);
     else if (motor == 7) //tilt JAG
+    {
         runJag(tilt, power, print);
-    else if (motor == 8)
-        setTalon(wormDrive,print,motor);
+        if (print)
+        {
+            std::printf("!!Worm Drive!!\n");
+        }
+    }
+    else if (motor == 8) //Worm Drive
+        launcher(print,power);
     else if (motor >= 9)
     {
         snprintf(curInfo, 100, "MAX\n");
@@ -159,7 +164,7 @@ void Motors::setTalon(int motor, bool print)
     }
     if (power > 0.1 || power < -0.1)
     {
-        drivetrain[motor-1] -> Set(power);   
+        drivetrain[motor-1] -> Set(power);
     }
 }
 void Motors::runJag(CANJaguar* jag, float power, bool print)
@@ -245,6 +250,30 @@ void Motors::runCompressor(Relay* relay, float power, bool print)
         }
     }
 }
+void Motors::launcher(bool print, float power)
+{
+    controlPiston();
+    if (power > 0.15)
+    {
+        wormDrive->Set(power);
+    }
+    else if (power < -0.15)
+    {
+        wormDrive->Set(power);
+    }
+    else
+    {
+        wormDrive->Set(0.0);
+    }
+    if (print && (power < -0.15 || power > 0.15))
+    {
+        std::printf("Worm Drive: %f\n", power);
+    }
+    else if (print)
+    {
+        std::printf("Worm Drive: 0.0\n");
+    }
+}
 void Motors::controlPiston()
 {
     if (robot->driverJoy->GetRawAxis(5) > 0.15)
@@ -252,6 +281,5 @@ void Motors::controlPiston()
     else if (robot->driverJoy->GetRawAxis(5) < -0.15)
         robot->pneumatics->piston->Set(DoubleSolenoid::kReverse);
     else
-        robot->pneumatics->piston->Set(DoubleSolenoid::kOff);        
+        robot->pneumatics->piston->Set(DoubleSolenoid::kOff);
 }
-

@@ -36,17 +36,17 @@ public:
     Motors::~Motors();
     void runMotor(int motor);
     void disable();
+    void setTalon(Talon* t, bool print, int motor);
+    void setTalon(int motor, bool print);
+    void launcher(bool print, float power);
     motor_info mot;
     std::vector<motor_info> motors;
     Relay* compressor; //Spike 1,1
-    void setTalon(Talon* t, bool print, int motor);
-    void setTalon(int motor, bool print);
     Talon* drivetrain[4];
 
     char* curInfo;
     char* filename;
     FileProcessor* fp;
-    
 private:
     //SmoothJoystick* joy;
     float joy;
@@ -63,7 +63,7 @@ private:
     Talon* RL; //T2
     
     Talon* grabber; //Talon 3
-    Talon* wormDrive;
+    CANJaguar* wormDrive;
     
     CANJaguar* tilt;
     
