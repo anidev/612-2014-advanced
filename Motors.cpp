@@ -67,7 +67,7 @@ void Motors::runMotor(int motor)
         runJag(tilt, power, print, previousPower);
     else if (motor == 8) //Worm Drive
     {
-        
+        launcher(print,power, previousPower);
     }
     else if (motor >= 9)
     {
@@ -164,7 +164,7 @@ void Motors::setTalon(int motor, bool print)
         drivetrain[motor-1] -> Set(power);
     }
 }
-void Motors::runJag(CANJaguar* jag, float power, bool print)
+void Motors::runJag(CANJaguar* jag, float power, bool print, float previousPower)
 {
     if (power > 0.15 || power < -0.15)
     {
@@ -247,7 +247,7 @@ void Motors::runCompressor(Relay* relay, float power, bool print)
         }
     }
 }
-void Motors::launcher(bool print, float power. float previousPower)
+void Motors::launcher(bool print, float power, float previousPower)
 {
     controlPiston();
     if (power > 0.15)

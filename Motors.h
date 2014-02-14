@@ -38,7 +38,7 @@ public:
     void disable();
     void setTalon(Talon* t, bool print, int motor);
     void setTalon(int motor, bool print);
-    void launcher(bool print, float power);
+    void launcher(bool print, float power, float previousPower);
     motor_info mot;
     std::vector<motor_info> motors;
     Relay* compressor; //Spike 1,1
@@ -67,7 +67,7 @@ private:
     
     CANJaguar* tilt;
     
-    void runJag(CANJaguar* jag, float power, bool print);
+    void runJag(CANJaguar* jag, float power, bool print, float previousPower);
     void runCompressor(Relay* relay, float power, bool print);
     void controlPiston();
 };
