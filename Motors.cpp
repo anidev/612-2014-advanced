@@ -64,15 +64,11 @@ void Motors::runMotor(int motor)
     else if (motor == 6) //Compressor NEVER SET TO REVERSE
         runCompressor(compressor, power, print);
     else if (motor == 7) //tilt JAG
-    {
-        runJag(tilt, power, print);
-        if (print)
-        {
-            std::printf("!!Worm Drive!!\n");
-        }
-    }
+        runJag(tilt, power, print, previousPower);
     else if (motor == 8) //Worm Drive
-        launcher(print,power);
+    {
+        
+    }
     else if (motor >= 9)
     {
         snprintf(curInfo, 100, "MAX\n");
@@ -251,7 +247,7 @@ void Motors::runCompressor(Relay* relay, float power, bool print)
         }
     }
 }
-void Motors::launcher(bool print, float power)
+void Motors::launcher(bool print, float power. float previousPower)
 {
     controlPiston();
     if (power > 0.15)
@@ -266,11 +262,11 @@ void Motors::launcher(bool print, float power)
     {
         wormDrive->Set(0.0);
     }
-    if (print && (power < -0.15 || power > 0.15))
+    if (previousPower != power && (power < -0.15 || power > 0.15))
     {
         std::printf("Worm Drive: %f\n", power);
     }
-    else if (print)
+    else if (previousPower != power && (power > -0.15 && power < 0.15))
     {
         std::printf("Worm Drive: 0.0\n");
     }
