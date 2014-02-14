@@ -38,7 +38,7 @@ public:
     void disable();
     void setTalon(Talon* t, bool print, int motor);
     void setTalon(int motor, bool print);
-    void launcher(bool print, float power, float previousPower);
+    void launcher(bool print, float power);
     motor_info mot;
     std::vector<motor_info> motors;
     Relay* compressor; //Spike 1,1

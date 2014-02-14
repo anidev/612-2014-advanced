@@ -17,7 +17,7 @@ Motors::Motors()
     
     grabber = new Talon(1,5);
     
-    tilt = new CANJaguar(1);
+//    tilt = new CANJaguar(1);
     wormDrive = new CANJaguar(2); //TODO NOT THE REAL PORTS
     
     compressor = new Relay(1,8);
@@ -63,11 +63,11 @@ void Motors::runMotor(int motor)
         setTalon(grabber,print,motor);
     else if (motor == 6) //Compressor NEVER SET TO REVERSE
         runCompressor(compressor, power, print);
-    else if (motor == 7) //tilt JAG
-        runJag(tilt, power, print, previousPower);
+    else if (motor == 7) //tilt JAG 
+    {}//runJag(tilt, power, print, previousPower);
     else if (motor == 8) //Worm Drive
     {
-        launcher(print,power, previousPower);
+        launcher(print,power);
     }
     else if (motor >= 9)
     {
@@ -120,7 +120,7 @@ void Motors::disable()
     
     grabber->Set(0.0);
     
-    tilt->Set(0.0);
+//    tilt->Set(0.0);
     
     compressor->Set(Relay::kOff);
     
@@ -247,7 +247,7 @@ void Motors::runCompressor(Relay* relay, float power, bool print)
         }
     }
 }
-void Motors::launcher(bool print, float power, float previousPower)
+void Motors::launcher(bool print, float power)
 {
     controlPiston();
     if (power > 0.15)
@@ -262,11 +262,11 @@ void Motors::launcher(bool print, float power, float previousPower)
     {
         wormDrive->Set(0.0);
     }
-    if (previousPower != power && (power < -0.15 || power > 0.15))
+    if (print && (power < -0.15 || power > 0.15))
     {
         std::printf("Worm Drive: %f\n", power);
     }
-    else if (previousPower != power && (power > -0.15 && power < 0.15))
+    else if (print && (power > -0.15 && power < 0.15))
     {
         std::printf("Worm Drive: 0.0\n");
     }
