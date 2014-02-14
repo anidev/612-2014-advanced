@@ -5,17 +5,17 @@
 
 Motors::Motors()
 {
-    FR = new Talon(1,7); //drivetrain
-    FL = new Talon(1,1);
-    RR = new Talon(1,6);
-    RL = new Talon(1,2);
+    FR = new Talon(1,1); //drivetrain
+    FL = new Talon(1,3);
+    RR = new Talon(1,2);
+    RL = new Talon(1,4);
 
     drivetrain [0] = FR;
     drivetrain [1] = FL;
     drivetrain [2] = RR;
     drivetrain [3] = RL;
     
-    grabber = new Talon(1,3);
+    grabber = new Talon(1,5);
     
     tilt = new CANJaguar(1);
     wormDrive = new CANJaguar(2); //TODO NOT THE REAL PORTS
@@ -23,6 +23,7 @@ Motors::Motors()
     compressor = new Relay(1,8);
     filename = "Motors.txt";
     fp = new FileProcessor(filename, rw);
+    curInfo = new char[256];
 }
 
 Motors::~Motors()

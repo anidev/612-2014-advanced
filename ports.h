@@ -9,10 +9,10 @@ const static uint8_t  TALON_RL_MODULE  = 1; //real
 const static uint8_t  TALON_RR_MODULE  = 1; //real
 
 // DriveTrain Channels
-const static uint32_t TALON_FL_CHANNEL = 1; //real
-const static uint32_t TALON_FR_CHANNEL = 6; //real
-const static uint32_t TALON_RL_CHANNEL = 2; //real
-const static uint32_t TALON_RR_CHANNEL = 7; //real
+const static uint32_t TALON_FL_CHANNEL = 3; //real
+const static uint32_t TALON_FR_CHANNEL = 1; //real
+const static uint32_t TALON_RL_CHANNEL = 4; //real
+const static uint32_t TALON_RR_CHANNEL = 2; //real
 
 // Pneumatics Modules
 const static uint8_t  PNUM_DIGIN_MODULE  = 1;

@@ -6,7 +6,7 @@
 
 Sensors::Sensors()
 {
-    pnumSwitch = new DigitalInput(PNUM_DIGIN_MODULE, PNUM_DIGIN_CHANNEL);
+    pnumSwitch = new DigitalInput(1, 8);
     left = new Encoder(LEFT_ENCODER_A_MOD,LEFT_ENCODER_A_CHAN,LEFT_ENCODER_B_MOD,LEFT_ENCODER_B_CHAN);
     right = new Encoder(RIGHT_ENCODER_A_MOD,RIGHT_ENCODER_A_CHAN,RIGHT_ENCODER_B_MOD,RIGHT_ENCODER_B_CHAN);
     ultrasonic = new AnalogChannel(ULTRASONIC_MODULE, ULTRASONIC_CHANNEL);
@@ -16,7 +16,7 @@ Sensors::Sensors()
     
     filename = "Sensors.txt";
     fp = new FileProcessor(filename, rw);
-    
+    curInfo = new char[256];
 }
 void Sensors::runSensors(int sense)
 {
