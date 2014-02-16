@@ -4,6 +4,8 @@
 #include "main.h"
 #include "612.h"
 
+#include <cmath>
+
 Sensors::Sensors()
 {
     pnumSwitch = new DigitalInput(1, 8);
@@ -149,6 +151,14 @@ void Sensors::runSensors(int sense)
             double xAxis = accel->GetAcceleration(ADXL345_I2C::kAxis_X);
             double yAxis = accel->GetAcceleration(ADXL345_I2C::kAxis_Y);
             double zAxis = accel->GetAcceleration(ADXL345_I2C::kAxis_Z);
+            
+            double roll = atan(-xAxis/zAxis)*(180/3.141592654);
+            double pitch = atan(yAxis/(sqrt((xAxis*xAxis) + (zAxis*zAxis))))*(180/3.141592654);
+            
+            
+            std::printf("Pitch: %f\n", pitch);
+            std::printf("Roll: %f\n\n", roll);
+            /*
             if(zAxis != prevVal)
             {
                 snprintf(curInfo, 100, "Accelerometer X: %f\n",xAxis);
@@ -163,6 +173,7 @@ void Sensors::runSensors(int sense)
                 std::printf("%s", curInfo);
                 fp->write(curInfo);
             }
+            */
         }
     }
     else if (sense >= 7)
