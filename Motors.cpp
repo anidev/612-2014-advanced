@@ -17,7 +17,7 @@ Motors::Motors()
     
     grabber = new Talon(1,5);
     
-//    tilt = new CANJaguar(1);
+    tilt = new CANJaguar(1);
     wormDrive = new CANJaguar(2); //TODO NOT THE REAL PORTS
     
     compressor = new Relay(1,8);
@@ -64,7 +64,7 @@ void Motors::runMotor(int motor)
     else if (motor == 6) //Compressor NEVER SET TO REVERSE
         runCompressor(compressor, power, print);
     else if (motor == 7) //tilt JAG 
-    {}//runJag(tilt, power, print, previousPower);
+        runJag(tilt, power, print, previousPower);
     else if (motor == 8) //Worm Drive
     {
         launcher(print,power);
@@ -120,7 +120,7 @@ void Motors::disable()
     
     grabber->Set(0.0);
     
-//    tilt->Set(0.0);
+    tilt->Set(0.0);
     
     compressor->Set(Relay::kOff);
     
