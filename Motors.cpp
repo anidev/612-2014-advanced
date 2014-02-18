@@ -249,6 +249,7 @@ void Motors::runCompressor(Relay* relay, float power, bool print)
 }
 void Motors::launcher(bool print, float power)
 {
+    double infaredDistance =  (double)((robot->sense->infared->GetVoltage())*18.777777777777777);
     controlPiston();
     if (power > 0.15)
     {
@@ -265,10 +266,12 @@ void Motors::launcher(bool print, float power)
     if (print && (power < -0.15 || power > 0.15))
     {
         std::printf("Worm Drive: %f\n", power);
+        std::printf("Distance: %f\n\n", infaredDistance);
     }
     else if (print && (power > -0.15 && power < 0.15))
     {
         std::printf("Worm Drive: 0.0\n");
+        std::printf("Distance: %f\n\n", infaredDistance);
     }
 }
 void Motors::controlPiston()
