@@ -11,8 +11,8 @@ Motors::Motors()
     RL = new Talon(1,4);
 
     drivetrain [0] = FR;
-    drivetrain [1] = FL;
-    drivetrain [2] = RR;
+    drivetrain [1] = RR;
+    drivetrain [2] = FL;
     drivetrain [3] = RL;
     
     grabber = new Talon(1,5);
