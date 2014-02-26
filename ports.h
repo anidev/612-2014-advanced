@@ -56,11 +56,11 @@ const uint8_t  RIGHT_ENCODER_B_MOD  = 1;
 const uint32_t RIGHT_ENCODER_B_CHAN = 6;
 
 //Ultrasonic
-const uint8_t ULTRASONIC_MODULE = 1; //FILLER
-const uint32_t ULTRASONIC_CHANNEL = 1; //FILLER
+const uint8_t ULTRASONIC_MODULE = 1;
+const uint32_t ULTRASONIC_CHANNEL = 3;
 
 //Infared Sensor
 const uint8_t IR_MODULE = 1;
-const uint32_t IR_CHANNEL = 2;
+const uint32_t IR_CHANNEL = 4;
 
 #endif

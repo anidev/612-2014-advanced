@@ -13,6 +13,7 @@ Sensors::Sensors()
     right = new Encoder(RIGHT_ENCODER_A_MOD,RIGHT_ENCODER_A_CHAN,RIGHT_ENCODER_B_MOD,RIGHT_ENCODER_B_CHAN);
     ultrasonic = new AnalogChannel(ULTRASONIC_MODULE, ULTRASONIC_CHANNEL);
     infared = new AnalogChannel(IR_MODULE,IR_CHANNEL);
+    infared2 = new AnalogChannel(IR_MODULE,IR_CHANNEL+1);
     ultrasonic2 = new Ultrasonic(2,1);
     accel = new ADXL345_I2C(1);
     
@@ -141,6 +142,27 @@ void Sensors::runSensors(int sense)
     {
         if (previousSense != sense)
         {
+            snprintf(curInfo, 100, "!!Infared2!!\n");
+            std::printf("%s", curInfo);
+            fp->write(curInfo);
+            prevVal = -99.9;
+        }
+        if (count % 50 == 0)
+        {
+            double distance = (double)(infared->GetVoltage()*18.777777777777777); // about 1 cm off
+            if ((double)infared->GetVoltage() != prevVal)
+            {
+                snprintf(curInfo, 100, "Infared Voltage: %f\nInfared Value: %f\nInfared Distance (cm): %f\n\n", (double)infared->GetVoltage(), (double)infared->GetValue(), distance);
+                std::printf("%s", curInfo);
+                fp->write(curInfo);
+            }
+        }
+        prevVal = (double)infared->GetValue();
+    }
+    else if (sense == 7)
+    {
+        if (previousSense != sense)
+        {
             snprintf(curInfo, 100, "!!Accelorometer!!\n");
             std::printf("%s", curInfo);
             fp->write(curInfo);
@@ -176,12 +198,12 @@ void Sensors::runSensors(int sense)
             */
         }
     }
-    else if (sense >= 7)
+    else if (sense >= 8)
     {
         snprintf(curInfo, 100, "MAX\n");
         std::printf("%s", curInfo);
         fp->write(curInfo);
-        robot->selection = 60;
+        robot->selection = 70;
     }
     previousSense = sense;
     count++;
