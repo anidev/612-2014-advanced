@@ -174,8 +174,8 @@ void Sensors::runSensors(int sense)
             double yAxis = accel->GetAcceleration(ADXL345_I2C::kAxis_Y);
             double zAxis = accel->GetAcceleration(ADXL345_I2C::kAxis_Z);
             
-            double roll = atan(-xAxis/zAxis)*(180/3.141592654);
-            double pitch = atan(yAxis/(sqrt((xAxis*xAxis) + (zAxis*zAxis))))*(180/3.141592654);
+            double roll = atan(-yAxis/zAxis)*(180/3.141592654);
+            double pitch = atan(xAxis/(sqrt((yAxis*yAxis) + (zAxis*zAxis))))*(180/3.141592654);
             
             
             std::printf("Pitch: %f\n", pitch);
