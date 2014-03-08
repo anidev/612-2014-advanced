@@ -26,7 +26,8 @@ public:
     Encoder* right; //6,7
     AnalogChannel* ultrasonic;
     AnalogChannel* infared;
-
+    AnalogChannel* infared2;
+    
     ADXL345_I2C* accel;
     
     char* curInfo;

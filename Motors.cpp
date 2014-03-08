@@ -163,6 +163,10 @@ void Motors::setTalon(int motor, bool print)
     {
         drivetrain[motor-1] -> Set(power);
     }
+    else
+    {
+        drivetrain[motor-1] -> Set(0.0);
+    }
 }
 void Motors::runJag(CANJaguar* jag, float power, bool print, float previousPower)
 {

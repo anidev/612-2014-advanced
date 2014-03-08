@@ -82,10 +82,10 @@ void robot_class::TestPeriodic()
 void robot_class::printStuff()
 {
     std::printf("R1: Increment selection\nL1: Decrement selection\nLeft Analog stick for control\n\n");
-    std::printf("TRIANGLE: Print instructions\n");
-    std::printf("CIRCLE: Pneumatics\n\t0:Shifters\n\t1:Clamp\n\t2:Digital Input\n");
-    std::printf("SQUARE: Sensors\n\t0: Digital Switch\n\t1: Left Encoder\n\t2:Right Encoder\n\t3:Analog Ultrasonic\n\t4:Digital Ultrasonic\n\t5:Infared\n");
-    std::printf("X: MOTORS\n\t0: Drivetrain\n\t1: Talon 1\n\t2: Talon 2\n\t3: Talon 3\n\t4: Talon 4\n\n\t5: Grabber\n\t6: Compressor (Start to override safety)\n");
+    std::printf("TRIANGLE(Y): Print instructions\n");
+    std::printf("CIRCLE(B): Pneumatics\n\t0:Shifters\n\t1:Clamp\n\t2:Digital Input\n");
+    std::printf("SQUARE(X): Sensors\n\t0: Digital Switch\n\t1: Left Encoder\n\t2:Right Encoder\n\t3:Analog Ultrasonic\n\t4:Digital Ultrasonic\n\t5:Infared\n");
+    std::printf("X(A): MOTORS\n\t0: Drivetrain\n\t1: Talon 1\n\t2: Talon 2\n\t3: Talon 3\n\t4: Talon 4\n\n\t5: Grabber\n\t6: Compressor (Start to override safety)\n");
 }
 void robot_class::getButtons()
 {
