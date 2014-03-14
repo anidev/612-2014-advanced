@@ -4,9 +4,9 @@
 
 Pneumatics::Pneumatics()
 {
-    shift1 = new DoubleSolenoid(SHIFT_MOD,SHIFT_CHAN_F,SHIFT_CHAN_R);
-    clamp = new DoubleSolenoid(CLAMP_MOD,CLAMP_PORT_1,CLAMP_PORT_2);
-    piston = new DoubleSolenoid(1,3,4); //TODO NOT REAL PORTS
+    shift1 = new DoubleSolenoid(7,8);
+    clamp = new DoubleSolenoid(5,6);
+    piston = new DoubleSolenoid(3,4); //TODO NOT REAL PORTS
     
 //     compressor = new Relay(PNUM_RELAY_MODULE, PNUM_RELAY_CHANNEL);
 //     digiSwitch = new DigitalInput(PNUM_DIGIN_MODULE, PNUM_DIGIN_CHANNEL);

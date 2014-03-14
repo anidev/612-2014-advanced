@@ -47,6 +47,11 @@ public:
     char* curInfo;
     char* filename;
     FileProcessor* fp;
+    
+    Talon* FR; //Talon 7
+    Talon* FL; //Talon 1
+    Talon* RR; //Talon 6
+    Talon* RL; //T2
 private:
     //SmoothJoystick* joy;
     float joy;
@@ -55,12 +60,8 @@ private:
     float right;
     void drive(bool print);
     void drive2(bool print);
+    bool over_thresh;
     //const float THRESHHOLD = 0.1;
-
-    Talon* FR; //Talon 7
-    Talon* FL; //Talon 1
-    Talon* RR; //Talon 6
-    Talon* RL; //T2
     
     Talon* grabber; //Talon 3
     CANJaguar* wormDrive;

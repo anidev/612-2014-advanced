@@ -94,12 +94,14 @@ void robot_class::getButtons()
         button = SENSORS;
         std::printf("SENSORS\n");
         selection = 0;
+        motors->compressor->Set(Relay::kOff);
     }
     if (driverJoy->GetRawButton(BUTTON_A))
     {
         button = MOTORS;
         std::printf("MOTORS\n");
         selection = 0;
+        motors->compressor->Set(Relay::kOff);
     }
     else if (driverJoy->GetRawButton(BUTTON_B))
     {

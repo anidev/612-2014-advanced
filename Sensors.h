@@ -15,6 +15,7 @@ class Sensors
 public:
     Sensors::Sensors();
     void runSensors(int sense);
+    void drive();
     
     DigitalInput* pnumSwitch; //DIO 8
     

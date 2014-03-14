@@ -24,6 +24,7 @@ Motors::Motors()
     filename = "Motors.txt";
     fp = new FileProcessor(filename, rw);
     curInfo = new char[256];
+    over_thresh = false;
 }
 
 Motors::~Motors()
@@ -36,6 +37,7 @@ void Motors::runMotor(int motor)
     static int previousMotor = -1;
     static float previousPower = 0.0;
     power = robot->driverJoy -> GetRawAxis(DRIVER_LEFT_DRIVE_AXIS);
+    right = robot->driverJoy->GetRawAxis(DRIVER_RIGHT_DRIVE_AXIS);
     if ((previousMotor != motor) || previousPower != power) 
     {
         print = true;
@@ -47,7 +49,7 @@ void Motors::runMotor(int motor)
         print = false;
     }
     
-    if (motor == 0 && (power > 0.1 || power < -0.1))
+    if (motor == 0 && ((power > 0.1 || power < -0.1) || (right > 0.1 || right < -0.1)))
     {
         if (print)
         {
@@ -55,7 +57,7 @@ void Motors::runMotor(int motor)
             std::printf("%s", curInfo);
             fp->write(curInfo);
         }
-        drive(print); //implementation of RobotDrive
+        //drive(print); //implementation of RobotDrive
     }
     else if (motor >= 1 && motor <=4)
         setTalon(motor,print);
@@ -130,9 +132,14 @@ void Motors::setTalon(Talon* t, bool print, int motor) //bool print, int motor, 
 {
     if (print == true && motor == 5)
     {
-        snprintf(curInfo, 100, "%d: Talon (Roller) %u : %f\n",motor, 0, power);
-        std::printf("%s", curInfo);
-        fp->write(curInfo);
+        static int count = 0;
+        if (count % 25 == 0)
+        {
+            snprintf(curInfo, 100, "%d: Talon (Roller) %u : %f\n",motor, 0, power);
+            std::printf("%s", curInfo);
+            fp->write(curInfo);
+        }
+        count++;
     }
     else if (print == true && motor == 8)
     {

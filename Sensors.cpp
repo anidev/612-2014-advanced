@@ -9,17 +9,19 @@
 Sensors::Sensors()
 {
     pnumSwitch = new DigitalInput(1, 8);
-    left = new Encoder(LEFT_ENCODER_A_MOD,LEFT_ENCODER_A_CHAN,LEFT_ENCODER_B_MOD,LEFT_ENCODER_B_CHAN);
-    right = new Encoder(RIGHT_ENCODER_A_MOD,RIGHT_ENCODER_A_CHAN,RIGHT_ENCODER_B_MOD,RIGHT_ENCODER_B_CHAN);
-    ultrasonic = new AnalogChannel(ULTRASONIC_MODULE, ULTRASONIC_CHANNEL);
-    infared = new AnalogChannel(IR_MODULE,IR_CHANNEL);
-    infared2 = new AnalogChannel(IR_MODULE,IR_CHANNEL+1);
-    ultrasonic2 = new Ultrasonic(2,1);
+    left = new Encoder(5,6);
+    right = new Encoder(1,2);
+    ultrasonic = new AnalogChannel(3);
+    infared = new AnalogChannel(4);
+    infared2 = new AnalogChannel(5);
+    ultrasonic2 = new Ultrasonic(6,7); //FAKE NOTHING THERE
     accel = new ADXL345_I2C(1);
     
     filename = "Sensors.txt";
     fp = new FileProcessor(filename, rw);
     curInfo = new char[256];
+    left->Start();
+    right->Start();
 }
 void Sensors::runSensors(int sense)
 {
@@ -174,7 +176,7 @@ void Sensors::runSensors(int sense)
             double yAxis = accel->GetAcceleration(ADXL345_I2C::kAxis_Y);
             double zAxis = accel->GetAcceleration(ADXL345_I2C::kAxis_Z);
             
-            double roll = atan(-yAxis/zAxis)*(180/3.141592654);
+            //double roll = atan(-yAxis/zAxis)*(180/3.141592654);
             double pitch = atan(xAxis/(sqrt((yAxis*yAxis) + (zAxis*zAxis))))*(180/3.141592654);
             
             std::printf("Pitch: %f\n", pitch);
@@ -197,14 +199,49 @@ void Sensors::runSensors(int sense)
             */
         }
     }
-    else if (sense >= 8)
+    else if (sense == 8)
+    {
+        static int rightPrev = 0;
+        static int leftPrev = 0;
+        static int count = 0;
+        int leftVal = left->Get();
+        int rightVal = right->Get();
+        if (count % 15 == 0)
+        {
+            if (leftVal != leftPrev || rightVal != rightPrev)
+            {
+                std::printf("Left encoder: %i\nRight encoder: %i\n\n", leftVal, rightVal);
+            }
+        }
+        drive();
+        count++;
+        rightPrev = rightVal;
+        leftPrev = leftVal;
+        if (robot->driverJoy->GetRawButton(8))
+        {
+            left->Reset();
+            right->Reset();
+        }
+    }
+    else if (sense >= 9)
     {
         snprintf(curInfo, 100, "MAX\n");
         std::printf("%s", curInfo);
         fp->write(curInfo);
-        robot->selection = 70;
+        robot->selection = 80;
     }
     previousSense = sense;
     count++;
     //prevVal = sense;
+}
+void Sensors::drive()
+{
+    float l = robot->driverJoy->GetRawAxis(DRIVER_LEFT_DRIVE_AXIS);
+    float r = robot->driverJoy->GetRawAxis(DRIVER_RIGHT_DRIVE_AXIS);
+    
+    robot->motors->FL -> Set(-l);
+    robot->motors->RL -> Set(-l);
+    
+    robot->motors->FR -> Set(r);
+    robot->motors->RR -> Set(r);
 }
