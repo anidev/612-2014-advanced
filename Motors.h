@@ -52,6 +52,7 @@ public:
     Talon* FL; //Talon 1
     Talon* RR; //Talon 6
     Talon* RL; //T2
+    int previousMotor;
 private:
     //SmoothJoystick* joy;
     float joy;

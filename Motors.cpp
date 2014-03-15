@@ -18,13 +18,14 @@ Motors::Motors()
     grabber = new Talon(1,5);
     
     tilt = new CANJaguar(1);
-    wormDrive = new CANJaguar(2); //TODO NOT THE REAL PORTS
+    wormDrive = new CANJaguar(2); 
     
     compressor = new Relay(1,8);
     filename = "Motors.txt";
     fp = new FileProcessor(filename, rw);
     curInfo = new char[256];
     over_thresh = false;
+    previousMotor = -1;
 }
 
 Motors::~Motors()
@@ -34,7 +35,6 @@ Motors::~Motors()
 void Motors::runMotor(int motor)
 {
     static bool print = false;
-    static int previousMotor = -1;
     static float previousPower = 0.0;
     power = robot->driverJoy -> GetRawAxis(DRIVER_LEFT_DRIVE_AXIS);
     right = robot->driverJoy->GetRawAxis(DRIVER_RIGHT_DRIVE_AXIS);
@@ -51,6 +51,8 @@ void Motors::runMotor(int motor)
     
     if (motor == 0 && ((power > 0.1 || power < -0.1) || (right > 0.1 || right < -0.1)))
     {
+        if (motor != previousMotor)
+            std::printf("!!Drivetrain!!\n");
         if (print)
         {
             snprintf(curInfo, 100, "Drivetrain\n");
@@ -82,20 +84,24 @@ void Motors::runMotor(int motor)
 }
 void Motors::drive(bool print)
 {
+    static int count = 0;
     left = robot->driverJoy->GetRawAxis(DRIVER_LEFT_DRIVE_AXIS);
     right = robot->driverJoy->GetRawAxis(DRIVER_RIGHT_DRIVE_AXIS);
-    
-    FL -> Set(left);
-    RL -> Set(left);
-    
-    FR -> Set(right);
-    RR -> Set(right);
-    if (print)
+    if (left > 0.1 || left < -0.1)
     {
-        snprintf(curInfo, 100, "Drivetrain: %f\n", power);
-        std::printf("%s", curInfo);
-        fp->write(curInfo);
+        FL -> Set(left);
+        RL -> Set(left);
     }
+    if (right > 0.1 || right < -0.1)
+    {
+        FR -> Set(right);
+        RR -> Set(right);
+    }
+    if (count % 10 == 0)
+    {
+        std::printf("Drivetrain: %f\n", power);
+    }
+    count++;
 }
 void Motors::drive2(bool print)
 {
@@ -130,33 +136,15 @@ void Motors::disable()
 }
 void Motors::setTalon(Talon* t, bool print, int motor) //bool print, int motor, Talon* t = null
 {
-    if (print == true && motor == 5)
+    if (previousMotor != motor)
+        std::printf("!!Rollers!!\n");
+    static int count = 0;
+    t->Set(power);
+    if (count % 10 == 0)
     {
-        static int count = 0;
-        if (count % 25 == 0)
-        {
-            snprintf(curInfo, 100, "%d: Talon (Roller) %u : %f\n",motor, 0, power);
-            std::printf("%s", curInfo);
-            fp->write(curInfo);
-        }
-        count++;
+        std::printf("%d: Talon (Roller) %u : %f\n",motor, 0, t->Get());
     }
-    else if (print == true && motor == 8)
-    {
-        snprintf(curInfo, 100, "%d: Talon (Worm Drive) %u : %f\n",motor, 0, power);
-        std::printf("%s", curInfo);
-        fp->write(curInfo);
-    }
-    if (power > 0.1 || power < -0.1)
-    {
-        t -> Set(power);
-    }
-    else
-    {
-        t -> Set(0.0);
-    }
-    if (motor == 8)
-        controlPiston();
+    count++;
 }
 void Motors::setTalon(int motor, bool print)
 {
@@ -177,37 +165,41 @@ void Motors::setTalon(int motor, bool print)
 }
 void Motors::runJag(CANJaguar* jag, float power, bool print, float previousPower)
 {
+    static int count = 0;
+    static float setPower = 0.0;
+    if (robot->driverJoy->GetRawButton(BUTTON_START))
+    {
+        setPower += 0.1;
+        if (setPower > 1.0)
+            setPower = 1.0;
+        std::printf("Power: %f\n", setPower);
+    }
+    else if (robot->driverJoy->GetRawButton(BUTTON_BACK))
+    {
+        setPower -= 0.1;
+        if (setPower < -1.0)
+            setPower = -1.0;
+        std::printf("Power: %f\n", setPower);
+    }
     if (power > 0.15 || power < -0.15)
     {
-        if (robot->driverJoy->GetRawButton(BUTTON_START))
+        jag -> Set(setPower);
+        if (count % 10 == 0)
         {
-            if (power < 0)
-                power = 0.6;
-            else
-                power = -0.6;
-            jag -> Set(power);
-        }
-        else
-        {
-            jag -> Set(-power);
-        }
-        if (print)
-        {
-            snprintf(curInfo, 100, "7: Jag Tilt: %f\n", power);
-            std::printf("%s", curInfo);
-            fp->write(curInfo);
+            std::printf("7: Jag Tilt: %f\n", jag->Get());
         }
     }
     else 
     {
         jag -> Set(0.0);
-        if (print)
+        if (previousPower != power)
         {
-            snprintf(curInfo, 100, "7: Jag Tilt: off\n");
-            std::printf("%s", curInfo);
-            fp->write(curInfo);
+            std::printf("7: Jag Tilt: off\n");
         }
     }
+    if (count % 10 == 0)
+        std::printf("Acceleromoter: %f\n", robot->sense->getPitch());
+    count++;
 }
 
 void Motors::runCompressor(Relay* relay, float power, bool print)
