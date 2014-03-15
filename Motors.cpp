@@ -92,10 +92,17 @@ void Motors::drive(bool print)
         FL -> Set(left);
         RL -> Set(left);
     }
-    if (right > 0.1 || right < -0.1)
+    else if (right > 0.1 || right < -0.1)
     {
         FR -> Set(right);
         RR -> Set(right);
+    }
+    else 
+    {
+	FR->Set(0.0);
+	RR->Set(0.0);
+	FL->Set(0.0);
+	RL->Set(0.0);
     }
     if (count % 10 == 0)
     {
