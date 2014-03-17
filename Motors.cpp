@@ -176,14 +176,14 @@ void Motors::runJag(CANJaguar* jag, float power, bool print, float previousPower
     static float setPower = 0.0;
     if (robot->driverJoy->GetRawButton(BUTTON_START))
     {
-        setPower += 0.1;
+        setPower += 0.01;
         if (setPower > 1.0)
             setPower = 1.0;
         std::printf("Power: %f\n", setPower);
     }
     else if (robot->driverJoy->GetRawButton(BUTTON_BACK))
     {
-        setPower -= 0.1;
+        setPower -= 0.01;
         if (setPower < -1.0)
             setPower = -1.0;
         std::printf("Power: %f\n", setPower);
@@ -191,7 +191,7 @@ void Motors::runJag(CANJaguar* jag, float power, bool print, float previousPower
     if (power > 0.15 || power < -0.15)
     {
         jag -> Set(setPower);
-        if (count % 10 == 0)
+        if (count % 25 == 0)
         {
             std::printf("7: Jag Tilt: %f\n", jag->Get());
         }
@@ -204,8 +204,8 @@ void Motors::runJag(CANJaguar* jag, float power, bool print, float previousPower
             std::printf("7: Jag Tilt: off\n");
         }
     }
-    if (count % 10 == 0)
-        std::printf("Acceleromoter: %f\n", robot->sense->getPitch());
+    if (count % 25 == 0)
+        std::printf("Acceleromoter: %f\n\n", robot->sense->getPitch());
     count++;
 }
 
